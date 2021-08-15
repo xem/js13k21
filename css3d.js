@@ -55,14 +55,14 @@ init: t => {
 group: t => { 
   t.d||t.d===0||(t.d=t.h),
   C.init(t),
-  C.$(t.g).innerHTML+=`<div id="${t.n}"class="group ${t.css}"style="position:absolute;width:${t.w}px;height:${t.d}px;transform:${C.tr(t)}">`
+  C.$(t.g).insertAdjacentHTML("beforeEnd",`<div id="${t.n}"class="group ${t.css}"style="position:absolute;width:${t.w}px;height:${t.d}px;transform:${C.tr(t)}">`)
 },
 
 // Plane
 plane: t => {
   t.n||(t.n=`plane${C.plane_count++}`),
   C.init(t),
-  C.$(t.g).innerHTML+=`<div id="${t.n}"class="plane ${t.css}"style="position:absolute;width:${t.w}px;height:${t.h}px;transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`,
+  C.$(t.g).insertAdjacentHTML("beforeEnd",`<div id="${t.n}"class="plane ${t.css}"style="position:absolute;width:${t.w}px;height:${t.h}px;transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`),
   C.camera()
 },
 
@@ -70,7 +70,7 @@ plane: t => {
 sprite: t => {
   t.n||(t.n=`sprite${C.sprite_count++}`),
   C.init(t),
-  C.$(t.g).innerHTML+=`<div id="${t.n}"class="sprite ${t.css}"style="position:absolute;width:${t.w}px;height:${t.h}px;transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`,
+  C.$(t.g).insertAdjacentHTML("beforeEnd",`<div id="${t.n}"class="sprite ${t.css}"style="position:absolute;width:${t.w}px;height:${t.h}px;transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`),
   C.sprites.push(t.n),
   C.camera()
 },
@@ -120,16 +120,16 @@ camera: t => {
 // Move an object
 move: t => {
   if(t.n){
-   var r=C.$(t.n),
-   n=C.options[t.n];
-   (t.x||0===t.x)&&(n.x=t.x),
-   (t.y||0===t.y)&&(n.y=t.y),
-   (t.z||0===t.z)&&(n.z=t.z),
-   (t.rx||0===t.rx)&&(n.rx=t.rx),
-   (t.ry||0===t.ry)&&(n.ry=t.ry),
-   (t.rz||0===t.rz)&&(n.rz=t.rz),
-   C.options[t.n]=n,
-   r.style.transform=C.tr(n)
+    var r=C.$(t.n),
+    n=C.options[t.n];
+    (t.x||0===t.x)&&(n.x=t.x),
+    (t.y||0===t.y)&&(n.y=t.y),
+    (t.z||0===t.z)&&(n.z=t.z),
+    (t.rx||0===t.rx)&&(n.rx=t.rx),
+    (t.ry||0===t.ry)&&(n.ry=t.ry),
+    (t.rz||0===t.rz)&&(n.rz=t.rz),
+    C.options[t.n]=n,
+    r.style.transform=C.tr(n)
  }
 },
 
