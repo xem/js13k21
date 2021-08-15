@@ -90,7 +90,7 @@ svg = [
 ]
 
 // Draw screen
-draw = () => {
+drawmenu = () => {
   var html, i;
   html = "";
   
@@ -99,39 +99,71 @@ draw = () => {
     html += `<h1>TITLE</h1>`;
     for(i in data){
       if(i > 0)
-        html += `<div class="b w w${i} ${i == 1 ? "" : "lock"}" onclick="draw(world=${i})">${svg[+i]}<h2>${i==5 ? "SPACE" : "World " + i}</h2><p>${i == 1 ? "0 / 100" : ("<span class=emoji>🔒</span> " + i * 20 + " stars to unlock")}</div></div>`
+        html += `<div class="b w w${i} ${i == 1 ? "" : "lock"}" onclick="drawmenu(world=${i})">${svg[+i]}<h2>${i==5 ? "SPACE" : "World " + i}</h2><p>${i == 1 ? "0 / 100" : ("<span class=emoji>🔒</span> " + i * 20 + " stars to unlock")}</div></div>`
     }
   }
   
   // Levels
   else if(level == 0){
     
-    html += `<h1>World ${world}</h1><div class="back" onclick="draw(world=0)">&lt;</div>`;
+    html += `<h1>World ${world}</h1><div class="back" onclick="drawmenu(world=0)">&lt;</div>`;
     for(i in data[world]){
       if(i > 0)
-        html += `<div class="b w${world} l l${i} ${i < 2 ? "" : "lock"}" onclick="draw(level=${i})"><h2>Level ${i}</h2></div>`
+        html += `<div class="b w${world} l l${i} ${i < 2 ? "" : "lock"}" onclick="drawmenu(level=${i})"><h2>Level ${i}</h2></div>`
     }
   }
   
   // Puzzles
   else if(puzzle == 0){
     
-    html += `<h1>World ${world} - Level ${level}</h1><div class=back onclick="draw(level=0)">&lt;</div>`;
+    html += `<h1>World ${world} - Level ${level}</h1><div class=back onclick="drawmenu(level=0)">&lt;</div>`;
     for(i in data[world][level]){
       if(i > 0)
-        html += `<div class="b w${world} l l${i} p p${i} ${i < 2 ? "" : "lock"}" onclick="draw(puzzle=${i})"><h2>${i}</h2></div>`
+        html += `<div class="b w${world} l l${i} p p${i} ${i < 2 ? "" : "lock"}" onclick="drawpuzzle(puzzle=${i})"><h2>${i}</h2></div>`
     }
   }
-  
-  // Puzzle
   else {
-    html += `<div id=viewport><div id=camera><div id=scene></div></div></div><div class=back onclick="draw(puzzle=0)">&lt;</div>`;
+    drawpuzzle();
+    return;
   }
-  
   b.innerHTML = html;
 
   // Fill star svg if present
   if(top.star)setTimeout(()=>{for(i=300;i--;)star.innerHTML+=`<text x=${Math.random()*500} y=${Math.random()*500}>.`},50);
-}
+};
 
-draw();
+drawpuzzle = () => {
+  var i, j, html;
+
+  // Setup
+  C.reset();  
+  html = `<div id=viewport><div id=camera><div id=scene></div></div></div><!--div class=back onclick="drawmenu(puzzle=0)">&lt;</div-->`;
+  b.innerHTML = html;
+  
+  // Scene
+  C.plane({w:2000,h:2000,css:"floor"});
+  C.camera({z:0,rx:60});
+  C.sprite({x:-180,y:-180,z:5,w:80,h:100,css:"tree emoji",html:"🌳",o:"bottom center"});
+  C.plane({x:-180,y:-180,z:1,rz:280,w:80,h:93,sy:1.8,css:"tree shadow emoji",html:"🌳",o:"bottom center"});
+  
+  for(i = 0; i < 5; i++){
+    for(j = 0; j < 5; j++){
+      C.plane({x:(i-2)*50,y:(j-2)*50,z:1,w:55,h:55,css:"tile"});
+    }
+  }
+  
+  // Snake
+  C.group({n:"head",x:0,y:-10});
+  C.sprite({g:"head",x:0,y:0,w:50,h:50,z:2,css:"head circle",o:"bottom center"});
+  C.plane({g:"head",x:0,y:10,z:40,w:30,h:15,rx:-45,css:"eyes emoji",html:"👀"});
+  C.plane({g:"head",x:0,y:37,z:17,w:13,h:20,rx:180,css:"tongue",html:"Y"});
+  
+  for(i = -10; i >= -100; i-=10) C.sprite({x:0,y:i,w:30,h:30,z:2,css:"body circle v",o:"bottom center"});
+  for(i = 0; i >= -100; i-=4) C.sprite({x:i,y:-100,w:30,h:30,z:2,css:"body circle h",o:"bottom center"});
+  for(i = 10; i <= 50; i+=10) C.sprite({x:-100,y:-100,w:30,h:30,z:2+i,css:"body circle t",o:"bottom center"});
+ 
+z = 0; 
+setInterval(()=>C.camera({rx:(z ^= 1) ? 10 : 60}), 3000);
+};
+
+drawmenu();

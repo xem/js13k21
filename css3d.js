@@ -14,7 +14,14 @@ pyramid_count: 0,
 options: {},
 $: t => self[t],
 set_unit: t => C.unit=t,
-set_perspective: t => viewport.style.perspective=`${t}${C.unit}`,
+set_perspective: t => viewport.style.perspective=`${t}px`,
+
+reset: t => {
+  C.sprite_count = C.plane_count = C.cube_count = 0;
+  C.sprites = [];
+  C.planes = [];
+  C.cubes = [];
+},
 
 // Initialize an object's properties
 init: t => {
@@ -48,14 +55,14 @@ init: t => {
 group: t => { 
   t.d||t.d===0||(t.d=t.h),
   C.init(t),
-  C.$(t.g).innerHTML+=`<div id="${t.n}"class="group ${t.css}"style="position:absolute;width:${t.w}${C.unit};height:${t.d}${C.unit};transform:${C.tr(t)}">`
+  C.$(t.g).innerHTML+=`<div id="${t.n}"class="group ${t.css}"style="position:absolute;width:${t.w}px;height:${t.d}px;transform:${C.tr(t)}">`
 },
 
 // Plane
 plane: t => {
   t.n||(t.n=`plane${C.plane_count++}`),
   C.init(t),
-  C.$(t.g).innerHTML+=`<div id="${t.n}"class="plane ${t.css}"style="position:absolute;width:${t.w}${C.unit};height:${t.h}${C.unit};background:${t.b};transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`,
+  C.$(t.g).innerHTML+=`<div id="${t.n}"class="plane ${t.css}"style="position:absolute;width:${t.w}px;height:${t.h}px;transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`,
   C.camera()
 },
 
@@ -63,7 +70,7 @@ plane: t => {
 sprite: t => {
   t.n||(t.n=`sprite${C.sprite_count++}`),
   C.init(t),
-  C.$(t.g).innerHTML+=`<div id="${t.n}"class="sprite ${t.css}"style="position:absolute;width:${t.w}${C.unit};height:${t.h}${C.unit};background:${t.b};transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`,
+  C.$(t.g).innerHTML+=`<div id="${t.n}"class="sprite ${t.css}"style="position:absolute;width:${t.w}px;height:${t.h}px;transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`,
   C.sprites.push(t.n),
   C.camera()
 },
@@ -82,7 +89,7 @@ cube: t => {
 },
 
 // Pyramid (optional)
-pyramid: t => {
+/*pyramid: t => {
   t.n||(t.n=`pyramid${C.pyramid_count++}`),
   C.init(t),
   C.group({n:t.n,g:t.g,x:t.x,y:t.y,z:t.z,w:100,d:100,rx:t.rx,ry:t.ry,rz:t.rz,sx:t.w/100,sy:t.d/100,sz:t.h/86.6025,css:t.css}),
@@ -91,7 +98,7 @@ pyramid: t => {
   C.plane({g:t.n,x:100,y:50,w:100,h:100,b:t.b2||t.b,ry:-120,rz:90,css:"triangle right",o:"bottom"}),
   C.plane({g:t.n,x:50,y:0,w:100,h:100,b:t.b,rx:-120,css:"triangle back",o:"bottom"}),
   C.plane({g:t.n,x:50,y:100,w:100,h:100,b:t.b1||t.b,rx:-60,css:"triangle front",o:"bottom"})
-},
+},*/
 
 // Move the camera
 camera: t => {
@@ -102,7 +109,7 @@ camera: t => {
   t&&(t.ry||0===t.ry)&&(C.camRY=t.ry),
   t&&(t.rz||0===t.rz)&&(C.camRZ=t.rz),
   C.camX+=(Math.random()-.5)/1e3,
-  scene.style.transform=`translateX(${-C.camX}${C.unit})translateY(${-C.camY}${C.unit})translateZ(${-C.camZ}${C.unit})rotateX(${C.camRX}deg)rotateY(${C.camRY}deg)rotateZ(${C.camRZ}deg)`;
+  scene.style.transform=`translateX(${-C.camX}px)translateY(${-C.camY}px)translateZ(${-C.camZ}px)rotateX(${C.camRX}deg)rotateY(${C.camRY}deg)rotateZ(${C.camRZ}deg)`;
   for(var r in C.sprites){
     var n=C.$(C.sprites[r]),
     o=n.style.transform.replace(/ *rotate.*\(.*?deg\)/g,"");
@@ -127,6 +134,6 @@ move: t => {
 },
 
 // CSS3D transform string
-tr: t => `translateX(-50%)translateY(-50%)translateX(${t.x}${C.unit})translateY(${t.y}${C.unit})translateZ(${t.z}${C.unit})rotateX(${t.rx}deg)rotateY(${t.ry}deg)rotateZ(${t.rz}deg)scaleX(${t.sx})scaleY(${t.sy})scaleZ(${t.sz})`
+tr: t => `translateX(-50%)translateY(-50%)translateX(${t.x}px)translateY(${t.y}px)translateZ(${t.z}px)rotateX(${t.rx}deg)rotateY(${t.ry}deg)rotateZ(${t.rz}deg)scaleY(${t.sy})`
 
 }
