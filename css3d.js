@@ -134,6 +134,6 @@ move: t => {
 },
 
 // CSS3D transform string
-tr: t => `translateX(-50%)translateY(-50%)translateX(${t.x}px)translateY(${t.y}px)translateZ(${t.z}px)rotateX(${t.rx}deg)rotateY(${t.ry}deg)rotateZ(${t.rz}deg)`
+tr: t => `translateX(-50%)translateY(-50%)translateX(${t.x}px)translateY(${t.y}px)translateZ(${t.z}px)rotateX(${t.rx}deg)rotateY(${t.ry}deg)rotateZ(${t.rz}deg)scaleY(${t.sy})`
 
 }

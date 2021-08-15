@@ -39,10 +39,10 @@ p { font-size: 18px }
 }
 
 /* Puzzle */
-.floor { background: radial-gradient(#8D8,#010) }
+.floor { background: radial-gradient(#8D8,#010); }
 .tile { background: #fff; border: 5px solid #000 }
 .tree { font-size: 75px }
-.shadow { color: transparent; text-shadow: 0 0 #0008; }
+.shadow { color: transparent; text-shadow: 0 0 #000; opacity: .5 }
 
 /* snake */
 .head { background: radial-gradient(circle at 77%,#fa0,#a50) }

@@ -1,4 +1,4 @@
-world = 1; // 0: main menu, 1-5: current world
+﻿world = 1; // 0: main menu, 1-5: current world
 level = 1; // 0: world menu, 1-n: current level
 puzzle = 1; // 0: level menu, 1-n: current puzzle
 data = [
@@ -137,14 +137,14 @@ drawpuzzle = () => {
 
   // Setup
   C.reset();  
-  html = `<div id=viewport><div id=camera><div id=scene></div></div></div><!--div class=back onclick="drawmenu(puzzle=0)">&lt;</div-->`;
+  html = `<div id=viewport><div id=camera><div id=scene></div></div></div><div class=back onclick="drawmenu(puzzle=0)">&lt;</div>`;
   b.innerHTML = html;
   
   // Scene
-  C.plane({w:2000,h:2000,css:"floor"});
+  C.plane({w:2000,h:2000,css:"floor circle"});
   C.camera({z:0,rx:60});
   C.sprite({x:-180,y:-180,z:5,w:65,h:75,css:"tree emoji",html:"🌳",o:"bottom center"});
-  C.plane({x:-180,y:-180,z:1,rz:280,w:65,h:75,css:"tree shadow emoji",html:"🌳",o:"bottom center"});
+  C.plane({x:-180,y:-180,z:1,rz:280,w:65,h:75,sy:1.8,css:"tree shadow emoji",html:"🌳",o:"bottom center"});
   
   for(i = 0; i < 5; i++){
     for(j = 0; j < 5; j++){
