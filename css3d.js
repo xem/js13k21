@@ -113,7 +113,7 @@ camera: t => {
   for(var r in C.sprites){
     var n=C.$(C.sprites[r]),
     o=n.style.transform.replace(/ *rotate.*\(.*?deg\)/g,"");
-    n.style.transform=o+`rotateZ(${-C.camRZ}deg)rotateX(${-C.camRX}deg)`
+    n.style.transform=o+`rotateZ(${-C.camRZ+1}deg)rotateX(${-C.camRX}deg)`
   }
 },
 
