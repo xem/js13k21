@@ -186,7 +186,7 @@ pointerstartY = 0;
 pointermode = null;
 
 
-ontouchstart = onmousedown = e => {
+b.ontouchstart = b.onmousedown = e => {
   if(e.touches) e = e.touches[0];
   pointerdown = 1;
   pointerstartX = e.pageX;
@@ -196,12 +196,13 @@ ontouchstart = onmousedown = e => {
   }
 }
 
-ontouchend = onmouseup = e => {
+b.ontouchend = b.onmouseup = e => {
   pointerdown = 0;
   pointermode = null;
 }
 
-ontouchmove = onmousemove = e => {
+b.ontouchmove = b.onmousemove = e => {
+  e.preventDefault();
   var dX, dY;
   if(e.touches) e = e.touches[0];
   if(pointermode == "cam"){

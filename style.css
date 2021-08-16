@@ -5,7 +5,7 @@ body { background: #000; user-select: none; -webkit-tap-highlight-color: transpa
 ::-webkit-scrollbar-thumb { background: #666; }
 h1 { margin: 30px }
 h2 { margin: 10px }
-#b { max-width: 1000px; margin: 10px auto; color: #fff; border: 1px solid #fff; text-align: center; box-shadow: 5px 5px 5px #444; perspective: 700px; height: calc(100vh - 30px); position: relative; overflow: auto; }
+#b { max-width: 1000px; margin: 10px auto; color: #fff; border: 1px solid #fff; text-align: center; box-shadow: 5px 5px 5px #444; perspective: 700px; height: calc(100vh - 30px); position: relative; overflow: auto;  -webkit-overflow-scrolling: touch; }
 .menu #b { max-width: 500px; border: none; box-shadow: none; height: auto; }
 p { font-size: 18px }
 @font-face { font-family: emoji; src: url(//xem.github.io/unicode13/Twemoji.ttf) }
