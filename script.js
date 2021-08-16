@@ -5,9 +5,9 @@ if(navigator.platform.match(/iP|Mac/)){
   document.body.classList.add("ios");
 }
 
-world = 0; // 0: main menu, 1-5: current world
-level = 0; // 0: world menu, 1-n: current level
-puzzle = 0; // 0: level menu, 1-n: current puzzle
+world = 1; // 0: main menu, 1-5: current world
+level = 1; // 0: world menu, 1-n: current level
+puzzle = 1; // 0: level menu, 1-n: current puzzle
 camrx = 20;
 camrz = 0;
 
@@ -157,12 +157,13 @@ drawpuzzle = () => {
   camrz = 0;
   C.plane({w:1500,h:1500,css:"floor circle"});
   C.camera({z:0,rx:camrx,rz:camrz});
-  C.sprite({x:-180,y:-180,z:5,w:65,h:75,css:"tree emoji",html:"🌳",o:"bottom center"});
-  C.plane({x:-180,y:-180,z:1,rz:280,w:65,h:ios?88:75,sy:1.8,css:"tree shadow emoji",html:"🌳",o:"bottom center"});
+  C.sprite({x:-180,y:-250,z:5,w:65,h:75,sx:2,sy:2,sz:2,css:"tree emoji",html:"🌳",o:"bottom center"});
+  C.plane({x:-180,y:-250,z:1,rz:280,w:65,h:ios?88:75,sx:2,sy:2.8,sz:2,css:"tree shadow emoji",html:"🌳",o:"bottom center"});
   
-  for(i = 0; i < 5; i++){
-    for(j = 0; j < 5; j++){
-      C.plane({x:(i-2)*50,y:(j-2)*50,z:1,w:55,h:55,css:"tile"});
+  C.group({n:"board",w:200,h:200});
+  for(j = 0; j < 5; j++){
+    for(i = 0; i < 5; i++){
+      C.plane({g:"board",x:(i)*50,y:(j)*50,z:1,w:55,h:55,css:"tile"});
     }
   }
   
@@ -172,12 +173,9 @@ drawpuzzle = () => {
   C.plane({g:"head",x:0,y:5,z:50,w:30,h:15,rx:-20,css:"eyes emoji",html:"👀"});
   C.plane({g:"head",x:0,y:40,z:28,w:13,h:20,rx:180,css:"tongue",html:"Y"});
   
-  for(i = -20; i >= -100; i-=10) C.sprite({x:0,y:i,w:30,h:30,z:2,css:"body circle " + ((i/20 != ~~(i/20)) ? "odd" : ""),o:"bottom center"});
-  for(i = -10; i >= -100; i-=10) C.sprite({x:i,y:-100,w:30,h:30,z:2,css:"body circle " + ((i/20 != ~~(i/20)) ? "odd" : ""),o:"bottom center"});
-  for(i = 10; i <= 50; i+=10) C.sprite({x:-100,y:-100,w:30,h:30,z:2+i,css:"body circle " + ((i/20 == ~~(i/20)) ? "odd" : ""),o:"bottom center"});
- 
-z = 0; 
-//setInterval(()=>C.camera({rx:(z ^= 1) ? 10 : 60}), 3000);
+  for(i = -20; i >= -90; i-=10) C.sprite({x:0,y:i,w:30,h:30,z:15,css:"body circle " + ((i/20 != ~~(i/20)) ? "odd" : "")});
+  for(i = -5; i >= -100; i-=10) C.sprite({x:i,y:-100,w:30,h:30,z:15,css:"body circle " + (((i-5)/20 == ~~((i-5)/20)) ? "odd" : "")});
+  for(i = 10; i <= 50; i+=10) C.sprite({x:-100,y:-100,w:30,h:30,z:15+i,css:"body circle " + ((i/20 == ~~(i/20)) ? "odd" : "")});
 };
 
 drawmenu();

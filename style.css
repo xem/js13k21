@@ -40,19 +40,20 @@ p { font-size: 18px }
 }
 
 /* Puzzle */
-.floor { background: url(grass.svg),radial-gradient(#8D8,#010); }
+.floor { background: radial-gradient(#0000,#000),url(grass.svg); }
+#xboard { filter: url(#f); }
 .tile { background: #fff; border: 5px solid #000; }
-.tile:nth-of-type(5) { background: #000 }
-.tile:nth-of-type(6) { background: #000 }
 .tile:nth-of-type(7) { background: #000 }
 .tile:nth-of-type(12) { background: #000 }
+.tile:nth-of-type(17) { background: #000 }
+.tile:nth-of-type(18) { background: #000 }
 .tree { font-size: 75px }
 .ios .tree.shadow { font-family: unset }
 .shadow { color: transparent; text-shadow: 0 0 #000; opacity: .5 }
 
 /* snake */
-.head { background: radial-gradient(circle at 77%,#fa0,#a50) }
-.body { background: linear-gradient(-90deg,#fa0,#a50) }
+.head { background: radial-gradient(circle at 77%,#fa0,#a50); box-shadow: 0 0 5px #000; }
+.body { background: linear-gradient(-90deg,#fa0,#a50); box-shadow: 0 0 5px #000; }
 .body.odd {background: #000 }
 .eyes { font-size: 30px }
 .tongue { font-size: 25px; color: red; font-weight: bold; }
