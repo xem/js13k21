@@ -2,12 +2,15 @@
 ios = 0;
 if(navigator.platform.match(/iP|Mac/)){
   ios = 1;
-  document.body.className = "ios";
+  document.body.classList.add("ios");
 }
 
-world = 1; // 0: main menu, 1-5: current world
-level = 1; // 0: world menu, 1-n: current level
-puzzle = 1; // 0: level menu, 1-n: current puzzle
+world = 0; // 0: main menu, 1-5: current world
+level = 0; // 0: world menu, 1-n: current level
+puzzle = 0; // 0: level menu, 1-n: current puzzle
+camrx = 20;
+camrz = 0;
+
 data = [
 
   // No world 0
@@ -93,11 +96,12 @@ svg = [
   '<svg width=99 height=99><rect x=80 y=10 width=10 height=80 stroke="#000000"/><path d="M90 90L80 80L90 80L80 70L90 70L80 60L90 60L80 50L90 50L80 40L90 40L80 30L90 30L80 20L90 20L80 10" stroke="#000000"/><rect x=55 y=25 width=25 height=3 stroke="#000000"/><rect x=55 y=50 width=25 height=3 stroke="#000000"/></svg>',
   
   // Stars
-  '<svg id="star" fill="#aaa"></svg>'
+  '<svg id="star" fill="#aaa"></svg>',
 ]
 
 // Draw screen
 drawmenu = () => {
+  document.body.classList.add("menu");
   var html, i;
   html = "";
   
@@ -140,6 +144,7 @@ drawmenu = () => {
 };
 
 drawpuzzle = () => {
+  document.body.classList.remove("menu");
   var i, j, html;
 
   // Setup
@@ -148,8 +153,10 @@ drawpuzzle = () => {
   b.innerHTML = html;
   
   // Scene
-  C.plane({w:2000,h:2000,css:"floor circle"});
-  C.camera({z:0,rx:10});
+  camrx = 20;
+  camrz = 0;
+  C.plane({w:1500,h:1500,css:"floor circle"});
+  C.camera({z:0,rx:camrx,rz:camrz});
   C.sprite({x:-180,y:-180,z:5,w:65,h:75,css:"tree emoji",html:"🌳",o:"bottom center"});
   C.plane({x:-180,y:-180,z:1,rz:280,w:65,h:ios?88:75,sy:1.8,css:"tree shadow emoji",html:"🌳",o:"bottom center"});
   
@@ -160,13 +167,13 @@ drawpuzzle = () => {
   }
   
   // Snake
-  C.group({n:"head",x:0,y:-10});
-  C.sprite({g:"head",x:0,y:0,w:50,h:50,z:2,css:"head circle",o:"bottom center"});
-  C.plane({g:"head",x:0,y:10,z:40,w:30,h:15,rx:-45,css:"eyes emoji",html:"👀"});
-  C.plane({g:"head",x:0,y:37,z:17,w:13,h:20,rx:180,css:"tongue",html:"Y"});
+  C.group({n:"head",x:0,y:0});
+  C.sprite({g:"head",x:0,y:0,w:50,h:50,z:25,css:"head circle"});
+  C.plane({g:"head",x:0,y:5,z:50,w:30,h:15,rx:-20,css:"eyes emoji",html:"👀"});
+  C.plane({g:"head",x:0,y:40,z:28,w:13,h:20,rx:180,css:"tongue",html:"Y"});
   
-  for(i = -10; i >= -100; i-=10) C.sprite({x:0,y:i,w:30,h:30,z:2,css:"body circle " + ((i/20 != ~~(i/20)) ? "odd" : ""),o:"bottom center"});
-  for(i = 0; i >= -100; i-=10) C.sprite({x:i,y:-100,w:30,h:30,z:2,css:"body circle " + ((i/20 == ~~(i/20)) ? "odd" : ""),o:"bottom center"});
+  for(i = -20; i >= -100; i-=10) C.sprite({x:0,y:i,w:30,h:30,z:2,css:"body circle " + ((i/20 != ~~(i/20)) ? "odd" : ""),o:"bottom center"});
+  for(i = -10; i >= -100; i-=10) C.sprite({x:i,y:-100,w:30,h:30,z:2,css:"body circle " + ((i/20 != ~~(i/20)) ? "odd" : ""),o:"bottom center"});
   for(i = 10; i <= 50; i+=10) C.sprite({x:-100,y:-100,w:30,h:30,z:2+i,css:"body circle " + ((i/20 == ~~(i/20)) ? "odd" : ""),o:"bottom center"});
  
 z = 0; 
@@ -174,3 +181,46 @@ z = 0;
 };
 
 drawmenu();
+
+pointerdown = 0;
+pointerstartX = 0;
+pointerstartY = 0;
+pointermode = null;
+
+
+ontouchstart = onmousedown = e => {
+  pointerdown = 1;
+  pointerstartX = e.pageX;
+  pointerstartY = e.pageY;
+  if(e.target.classList.contains("floor") || e.target.classList.contains("tile")) {
+    pointermode = "cam";
+  }
+  console.log(e);
+}
+
+ontouchend = onmouseup = e => {
+  pointerdown = 0;
+  pointermode = null;
+  console.log(e);
+}
+
+ontouchmove = onmousemove = e => {
+  
+  var dX, dY;
+  if(pointermode == "cam"){
+    dX = pointerstartX - e.pageX; 
+    dY = pointerstartY - e.pageY;
+    camrx += dY / 10;
+    if(camrx < 10) camrx = 10;
+    if(camrx > 40) camrx = 40;
+    pointerstartY = e.pageY;
+    
+    camrz += dX / 10;
+    if(camrz < -30) camrz = -30;
+    if(camrz > 30) camrz = 30;
+    pointerstartX = e.pageX;
+    
+    console.log(camrz);
+    C.camera({rx:camrx,rz:camrz}) 
+  }
+}

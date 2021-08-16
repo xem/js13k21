@@ -66,7 +66,7 @@ plane: t => {
   C.camera()
 },
 
-// Sprite (optional)
+// Sprite
 sprite: t => {
   t.n||(t.n=`sprite${C.sprite_count++}`),
   C.init(t),
@@ -75,7 +75,7 @@ sprite: t => {
   C.camera()
 },
 
-// Cube (optional)
+// Cube
 cube: t => {
   t.n||(t.n=`cube${C.cube_count++}`),
   C.init(t),
@@ -88,7 +88,7 @@ cube: t => {
   C.plane({g:t.n,x:t.w/2,y:t.d/2,z:t.h,w:t.w,h:t.d,b:t.b,css:"top"})
 },
 
-// Pyramid (optional)
+// Pyramid
 /*pyramid: t => {
   t.n||(t.n=`pyramid${C.pyramid_count++}`),
   C.init(t),
@@ -111,9 +111,10 @@ camera: t => {
   C.camX+=(Math.random()-.5)/1e3,
   scene.style.transform=`translateX(${-C.camX}px)translateY(${-C.camY}px)translateZ(${-C.camZ}px)rotateX(${C.camRX}deg)rotateY(${C.camRY}deg)rotateZ(${C.camRZ}deg)`;
   for(var r in C.sprites){
-    var n=C.$(C.sprites[r]),
+    var n=C.$(C.sprites[r]);
     o=n.style.transform.replace(/ *rotate.*\(.*?deg\)/g,"");
-    n.style.transform=o+`rotateZ(${-C.camRZ+1}deg)rotateX(${-C.camRX}deg)`
+    rz = n.classList.contains("body")?1:(-C.camRZ+1);
+    n.style.transform=o+`rotateZ(${rz}deg)rotateX(${-C.camRX}deg)`
   }
 },
 
@@ -134,6 +135,6 @@ move: t => {
 },
 
 // CSS3D transform string
-tr: t => `translateX(-50%)translateY(-50%)translateX(${t.x}px)translateY(${t.y}px)translateZ(${t.z}px)rotateX(${t.rx}deg)rotateY(${t.ry}deg)rotateZ(${t.rz}deg)scaleY(${t.sy})`
+tr: t => `translateX(-50%)translateY(-50%)translateX(${t.x}px)translateY(${t.y}px)translateZ(${t.z}px)rotateX(${t.rx}deg)rotateY(${t.ry}deg)rotateZ(${t.rz}deg)scaleX(${t.sx})scaleY(${t.sy})`
 
 }
