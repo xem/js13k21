@@ -42,13 +42,12 @@ p { font-size: 18px }
 .floor { background: radial-gradient(#8D8,#010); }
 .tile { background: #fff; border: 5px solid #000 }
 .tree { font-size: 75px }
+.ios .tree {font-family: unset }
 .shadow { color: transparent; text-shadow: 0 0 #000; opacity: .5 }
 
 /* snake */
 .head { background: radial-gradient(circle at 77%,#fa0,#a50) }
-.body.v { background: linear-gradient(-90deg,#fa0,#a50) }
-.body.h { background: linear-gradient(-90deg,#fa0,#a50) }
-.body.t { background: linear-gradient(-90deg,#fa0,#a50) }
+.body { background: linear-gradient(-90deg,#fa0,#a50) }
 .body.odd {background: #000 }
 .eyes { font-size: 30px }
 .tongue { font-size: 25px; color: red; font-weight: bold; }

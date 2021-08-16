@@ -1,4 +1,8 @@
-﻿world = 1; // 0: main menu, 1-5: current world
+﻿// Detect iOS / Mac
+if(navigator.platform.match(/iP|Mac/))document.body.className = "ios";
+
+
+world = 1; // 0: main menu, 1-5: current world
 level = 1; // 0: world menu, 1-n: current level
 puzzle = 1; // 0: level menu, 1-n: current puzzle
 data = [
@@ -142,7 +146,7 @@ drawpuzzle = () => {
   
   // Scene
   C.plane({w:2000,h:2000,css:"floor circle"});
-  C.camera({z:0,rx:60});
+  C.camera({z:0,rx:10});
   C.sprite({x:-180,y:-180,z:5,w:65,h:75,css:"tree emoji",html:"🌳",o:"bottom center"});
   C.plane({x:-180,y:-180,z:1,rz:280,w:65,h:75,sy:1.8,css:"tree shadow emoji",html:"🌳",o:"bottom center"});
   
@@ -158,12 +162,12 @@ drawpuzzle = () => {
   C.plane({g:"head",x:0,y:10,z:40,w:30,h:15,rx:-45,css:"eyes emoji",html:"👀"});
   C.plane({g:"head",x:0,y:37,z:17,w:13,h:20,rx:180,css:"tongue",html:"Y"});
   
-  for(i = -10; i >= -90; i-=10) C.sprite({x:0,y:i,w:30,h:30,z:2,css:"body circle v " + ((i/20 != ~~(i/20)) ? "odd" : ""),o:"bottom center"});
-  for(i = -10; i >= -100; i-=10) C.sprite({x:i,y:-100,w:30,h:30,z:2,css:"body circle h " + ((i/20 == ~~(i/20)) ? "odd" : ""),o:"bottom center"});
-  for(i = 10; i <= 50; i+=10) C.sprite({x:-100,y:-100,w:30,h:30,z:2+i,css:"body circle t " + ((i/20 == ~~(i/20)) ? "odd" : ""),o:"bottom center"});
+  for(i = -10; i >= -90; i-=10) C.sprite({x:0,y:i,w:30,h:30,z:2,css:"body circle " + ((i/20 != ~~(i/20)) ? "odd" : ""),o:"bottom center"});
+  for(i = 0; i >= -100; i-=10) C.sprite({x:i,y:-100,w:30,h:30,z:2,css:"body circle " + ((i/20 == ~~(i/20)) ? "odd" : ""),o:"bottom center"});
+  for(i = 10; i <= 50; i+=10) C.sprite({x:-100,y:-100,w:30,h:30,z:2+i,css:"body circle " + ((i/20 == ~~(i/20)) ? "odd" : ""),o:"bottom center"});
  
 z = 0; 
-setInterval(()=>C.camera({rx:(z ^= 1) ? 10 : 60}), 3000);
+//setInterval(()=>C.camera({rx:(z ^= 1) ? 10 : 60}), 3000);
 };
 
 drawmenu();
