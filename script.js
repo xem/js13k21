@@ -189,24 +189,23 @@ pointermode = null;
 
 
 ontouchstart = onmousedown = e => {
+  if(e.touches) e = e.touches[0];
   pointerdown = 1;
   pointerstartX = e.pageX;
   pointerstartY = e.pageY;
   if(e.target.classList.contains("floor") || e.target.classList.contains("tile")) {
     pointermode = "cam";
   }
-  console.log(e);
 }
 
 ontouchend = onmouseup = e => {
   pointerdown = 0;
   pointermode = null;
-  console.log(e);
 }
 
 ontouchmove = onmousemove = e => {
-  
   var dX, dY;
+  if(e.touches) e = e.touches[0];
   if(pointermode == "cam"){
     dX = pointerstartX - e.pageX; 
     dY = pointerstartY - e.pageY;
@@ -219,8 +218,6 @@ ontouchmove = onmousemove = e => {
     if(camrz < -30) camrz = -30;
     if(camrz > 30) camrz = 30;
     pointerstartX = e.pageX;
-    
-    console.log(camrz);
     C.camera({rx:camrx,rz:camrz}) 
   }
 }
