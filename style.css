@@ -12,9 +12,10 @@ p { font-size: 18px }
 .emoji { font-family: emoji; }
 
 /* CSS3D framework */
-#viewport { width: 100%; height: 100%; overflow: hidden; border: 1px solid; position: relative; perspective: 500px; background: linear-gradient(#257, #8be 25%); }
+#viewport { width: 100%; height: 100%; overflow: hidden; border: 1px solid; position: relative; perspective: 500px; background: linear-gradient(#039, #fff 25%); }
 #viewport * { transform-style: preserve-3d; box-sizing: border-box }
 #camera { width: 0; height: 0; position: absolute; top: 50%; left: 50% }
+#scene * { pointer-events: none; }
 /*#scene, .sprite { transition: 2s; }*/
 .circle{ border-radius: 50% }
 
@@ -40,18 +41,23 @@ p { font-size: 18px }
 }
 
 /* Puzzle */
-.floor { background: radial-gradient(#0000,#000),url(grass.svg); pointer-events: all; }
+#scene .floor { background: radial-gradient(#0000,#000e 80%),url(grass.svg); pointer-events: all; cursor: pointer; }
+#board { }
 .tile { background: #fff; border: 5px solid #000; }
-.tile:nth-of-type(7) { background: #000 }
-.tile:nth-of-type(12) { background: #000 }
 .tile:nth-of-type(17) { background: #000 }
 .tile:nth-of-type(18) { background: #000 }
-.tree { font-size: 75px }
+.tile:nth-of-type(19) { background: #000 }
+.tile:nth-of-type(14) { background: #000 }
+.tree { font-size: 75px; filter: brightness(0.9); }
 .shadow { filter: contrast(0)brightness(0); opacity: .6 }
 
 /* snake */
 .head { background: radial-gradient(circle at 77%,#fa0,#a50); box-shadow: 0 0 5px #000; }
-.body { background: linear-gradient(-90deg,#fa0,#a50); box-shadow: 0 0 5px #000; }
+#head,  #headcircle { transition: transform .2s }
+.body { background: linear-gradient(-90deg,#fa0,#a50); filter: drop-shadow(-10px 10px 5px #0004); }
+.body.high { filter: none; }
 .body.odd {background: #000 }
 .eyes { font-size: 30px }
 .tongue { font-size: 25px; color: red; font-weight: bold; }
+
+.red { background: red }

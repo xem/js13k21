@@ -1,4 +1,7 @@
-﻿world = 1; // 0: main menu, 1-5: current world
+﻿// Firefox detection
+fx = navigator.userAgent.includes("Firefox");
+
+world = 1; // 0: main menu, 1-5: current world
 level = 1; // 0: world menu, 1-n: current level
 puzzle = 1; // 0: level menu, 1-n: current puzzle
 camrx = 20;
@@ -153,23 +156,35 @@ drawpuzzle = () => {
   C.sprite({x:-180,y:-250,z:5,w:65,h:75,sx:2,sy:2,sz:2,css:"tree emoji",html:"🌳",o:"bottom center"});
   C.plane({x:-180,y:-250,z:1,rz:280,w:65,h:75,sx:2,sy:2.8,sz:2,css:"tree shadow emoji",html:"🌳",o:"bottom center"});
   
-  C.group({n:"board",w:200,h:200});
-  for(j = 0; j < 5; j++){
-    for(i = 0; i < 5; i++){
-      C.plane({g:"board",x:(i)*50,y:(j)*50,z:1,w:55,h:55,css:"tile"});
+  var w = 5;
+  var h = 5;
+  C.group({n:"board",w:250,h:250,z:2});
+  for(j = 0; j < h; j++){
+    for(i = 0; i < w; i++){
+      C.plane({g:"board",x:25+i*50,y:25+j*50,w:55,h:55,css:"tile"});
     }
   }
   
   // Snake
-  C.group({n:"head",x:0,y:0});
-  C.sprite({g:"head",x:0,y:0,w:50,h:50,z:25,css:"head circle"});
-  C.plane({g:"head",x:0,y:5,z:50,w:30,h:15,rx:-20,css:"eyes emoji",html:"👀"});
-  C.plane({g:"head",x:0,y:40,z:28,w:13,h:20,rx:180,css:"tongue",html:"Y"});
+  C.group({n:"head",x:0,y:0,z:4});
+  C.sprite({n:"headcircle",x:0,y:0,w:50,h:50,z:25,css:"head circle"});
+  C.plane({g:"head",x:0,y:-10,z:52,w:30,h:15,rx:-20,css:"eyes emoji",html:"👀"});
+  C.plane({g:"head",x:0,y:38,z:28,w:13,h:20,rx:180,css:"tongue",html:"Y"});
   
-  for(i = -20; i >= -90; i-=10) C.sprite({x:0,y:i,w:30,h:30,z:15,css:"body circle " + ((i/20 != ~~(i/20)) ? "odd" : "")});
-  for(i = -5; i >= -100; i-=10) C.sprite({x:i,y:-100,w:30,h:30,z:15,css:"body circle " + (((i-5)/20 == ~~((i-5)/20)) ? "odd" : "")});
-  for(i = 10; i <= 50; i+=10) C.sprite({x:-100,y:-100,w:30,h:30,z:15+i,css:"body circle " + ((i/20 == ~~(i/20)) ? "odd" : "")});
+  //for(i = -20; i >= -90; i-=10) C.plane({x:0,y:i,w:30,h:30,z:21,rx:-45,rz:1,css:"body circle " + ((i/20 != ~~(i/20)) ? "odd" : "")});
+  //for(i = -5; i >= -100; i-=10) C.plane({x:i,y:-100,w:30,h:30,z:21,rx:-45,rz:1,css:"body circle " + (((i-5)/20 == ~~((i-5)/20)) ? "odd" : "")});
+  //for(i = 10; i <= 50; i+=10) C.plane({x:-100,y:-100,w:30,h:30,z:21+i,rx:-45,rz:1,css:"body circle high " + ((i/20 == ~~(i/20)) ? "odd" : "")});
+  
+  C.plane({n:"toto",w:50,h:50,z:5,css:"red"});
 };
+
+totox = 2;
+totoy = 2;
+totodir = 0;
+totodirmodulo = 0;
+
+w = 250;
+h = 250;
 
 drawmenu();
 
@@ -177,39 +192,82 @@ pointerdown = 0;
 pointerstartX = 0;
 pointerstartY = 0;
 pointermode = null;
+pointerinverted = 0;
 
 
-b.ontouchstart = b.onmousedown = e => {
+p0.ontouchstart = p0.onmousedown = e => {
   if(e.touches) e = e.touches[0];
   pointerdown = 1;
   pointerstartX = e.pageX;
   pointerstartY = e.pageY;
-  if(e.target.classList.contains("floor") || e.target.classList.contains("tile")) {
-    pointermode = "cam";
+  pointermode = "cam";
+  if(pointerstartY < innerHeight / 2){ pointerinverted = 1 }
+  else { pointerinverted = 0 }
+  
+  var x, y;
+  x = Math.floor(((fx ? e.layerX : e.offsetX) - 750 + w / 2) / 50);
+  y = Math.floor(((fx ? e.layerY : e.offsetY) - 750 + w / 2) / 50);
+  //console.log(x, y);
+  if(x == totox && y == totoy){
+    pointermode = "move";
   }
+  //console.log(pointermode);
 }
 
-b.ontouchend = b.onmouseup = e => {
+p0.ontouchend = p0.onmouseup = e => {
   pointerdown = 0;
   pointermode = null;
 }
 
-b.ontouchmove = b.onmousemove = e => {
+p0.ontouchmove = p0.onmousemove = e => {
   e.preventDefault();
   var dX, dY;
   if(e.touches) e = e.touches[0];
   if(pointermode == "cam"){
-    dX = pointerstartX - e.pageX; 
+    dX = pointerstartX  -e.pageX; 
     dY = pointerstartY - e.pageY;
     camrx += dY / 10;
     if(camrx < 10) camrx = 10;
     if(camrx > 40) camrx = 40;
     pointerstartY = e.pageY;
     
-    camrz += dX / 10;
+    if(pointerinverted) camrz -= dX / 10;
+    else camrz += dX / 10;
+    
     if(camrz < -45) camrz = -45;
     if(camrz > 45) camrz = 45;
     pointerstartX = e.pageX;
     C.camera({rx:camrx,rz:camrz}) 
+  }
+  else if(pointermode == "move"){
+    var x, y;
+    x = Math.floor(((fx ? e.layerX : e.offsetX) - 750 + w / 2) / 50);
+    y = Math.floor(((fx ? e.layerY : e.offsetY) - 750 + w / 2) / 50);
+    console.log(x, y, totox, totoy, totodir%360);
+    if(x != totox || y != totoy){
+      if(x > totox){
+        if(totodirmodulo == 180) totodir += 90;
+        if(totodirmodulo == 0) totodir -= 90;
+      }
+      else if(y > totoy){
+        if(totodirmodulo == 270) totodir += 90;
+        if(totodirmodulo == 90) totodir -= 90;
+      }
+      else if(x < totox){
+        if(totodirmodulo == 0) totodir += 90;
+        if(totodirmodulo == 180) totodir -= 90;;
+      }
+      else if(y < totoy){
+        if(totodirmodulo == 90) totodir += 90;
+        if(totodirmodulo == 270) totodir -= 90;
+      }
+      totodirmodulo = (totodir + 360) % 360;
+      totox = x;
+      totoy = y;
+      C.move({n:"toto",x:50*(x - Math.floor(w/100)), y: 50*(y - Math.floor(h/100))});
+      C.move({n:"head",x:50*(x - Math.floor(w/100)), y: 50*(y - Math.floor(h/100)),rz:totodir});
+      C.move({n:"headcircle",x:50*(x - Math.floor(w/100)), y: 50*(y - Math.floor(h/100))});
+      C.camera();
+    }
   }
 }

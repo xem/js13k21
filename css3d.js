@@ -13,8 +13,6 @@ cube_count: 0,
 pyramid_count: 0,
 options: {},
 $: t => self[t],
-set_unit: t => C.unit=t,
-set_perspective: t => viewport.style.perspective=`${t}px`,
 
 reset: t => {
   C.sprite_count = C.plane_count = C.cube_count = 0;
@@ -60,7 +58,7 @@ group: t => {
 
 // Plane
 plane: t => {
-  t.n||(t.n=`plane${C.plane_count++}`),
+  t.n||(t.n=`p${C.plane_count++}`),
   C.init(t),
   C.$(t.g).insertAdjacentHTML("beforeEnd",`<div id="${t.n}"class="plane ${t.css}"style="position:absolute;width:${t.w}px;height:${t.h}px;transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`),
   C.camera()
@@ -68,7 +66,7 @@ plane: t => {
 
 // Sprite
 sprite: t => {
-  t.n||(t.n=`sprite${C.sprite_count++}`),
+  t.n||(t.n=`s${C.sprite_count++}`),
   C.init(t),
   C.$(t.g).insertAdjacentHTML("beforeEnd",`<div id="${t.n}"class="sprite ${t.css}"style="position:absolute;width:${t.w}px;height:${t.h}px;transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`),
   C.sprites.push(t.n),
@@ -77,7 +75,7 @@ sprite: t => {
 
 // Cube
 cube: t => {
-  t.n||(t.n=`cube${C.cube_count++}`),
+  t.n||(t.n=`c${C.cube_count++}`),
   C.init(t),
   C.group(t),
   C.plane({g:t.n,x:t.w/2,y:t.d/2,w:t.w,h:t.d,b:t.b,css:"bottom"}),
@@ -90,7 +88,7 @@ cube: t => {
 
 // Pyramid
 /*pyramid: t => {
-  t.n||(t.n=`pyramid${C.pyramid_count++}`),
+  t.n||(t.n=`py${C.pyramid_count++}`),
   C.init(t),
   C.group({n:t.n,g:t.g,x:t.x,y:t.y,z:t.z,w:100,d:100,rx:t.rx,ry:t.ry,rz:t.rz,sx:t.w/100,sy:t.d/100,sz:t.h/86.6025,css:t.css}),
   C.plane({g:t.n,x:50,y:50,w:100,h:100,b:t.b,css:"bottom"}),
@@ -114,7 +112,8 @@ camera: t => {
     var n=C.$(C.sprites[r]);
     o=n.style.transform.replace(/ *rotate.*\(.*?deg\)/g,"");
     rz = n.classList.contains("body")?1:(-C.camRZ+1);
-    n.style.transform=o+`rotateZ(${rz}deg)rotateX(${-C.camRX}deg)`
+    rx = n.classList.contains("body")?-45:(-C.camRX+1);
+    n.style.transform=o+`rotateZ(${rz}deg)rotateX(${rx}deg)`
   }
 },
 
