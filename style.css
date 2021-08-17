@@ -48,7 +48,7 @@ p { font-size: 18px }
 .tile:nth-of-type(18) { background: #000 }
 .tile:nth-of-type(19) { background: #000 }
 .tile:nth-of-type(14) { background: #000 }
-.tree { font-size: 75px; filter: brightness(0.9); }
+.tree { font-size: 75px; filter: brightness(0.7); }
 .shadow { filter: contrast(0)brightness(0); opacity: .6 }
 
 /* snake */

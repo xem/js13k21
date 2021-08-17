@@ -113,7 +113,7 @@ drawmenu = () => {
   // Levels
   else if(level == 0){
     
-    html += `<h1>World ${world}</h1><div class="back" onclick="drawmenu(world=0)">&lt;</div>`;
+    html += `<h1>World ${world}</h1><div id=back class="back" onclick="drawmenu(world=0)">&lt;</div>`;
     for(i in data[world]){
       if(i > 0)
         html += `<div class="b w${world} l l${i} ${i < 2 ? "" : "lock"}" onclick="drawmenu(level=${i})"><h2>Level ${i}</h2></div>`
@@ -123,7 +123,7 @@ drawmenu = () => {
   // Puzzles
   else if(puzzle == 0){
     
-    html += `<h1>World ${world} - Level ${level}</h1><div class=back onclick="drawmenu(level=0)">&lt;</div>`;
+    html += `<h1>World ${world} - Level ${level}</h1><div id=back class=back onclick="drawmenu(level=0)">&lt;</div>`;
     for(i in data[world][level]){
       if(i > 0)
         html += `<div class="b w${world} l l${i} p p${i} ${i < 2 ? "" : "lock"}" onclick="drawpuzzle(puzzle=${i})"><h2>${i}</h2></div>`
@@ -145,7 +145,7 @@ drawpuzzle = () => {
 
   // Setup
   C.reset();  
-  html = `<div id=viewport><div id=camera><div id=scene></div></div></div><div class=back onclick="drawmenu(puzzle=0)">&lt;</div>`;
+  html = `<div id=viewport><div id=camera><div id=scene></div></div></div><div id=back class=back onclick="drawmenu(puzzle=0)">&lt;</div>`;
   b.innerHTML = html;
   
   // Scene
@@ -201,7 +201,7 @@ p0.ontouchstart = p0.onmousedown = e => {
   pointerstartX = e.pageX;
   pointerstartY = e.pageY;
   pointermode = "cam";
-  if(pointerstartY < innerHeight / 2){ pointerinverted = 1 }
+  if(pointerstartY < innerHeight / 3){ pointerinverted = 1 }
   else { pointerinverted = 0 }
   
   var x, y;
@@ -211,6 +211,8 @@ p0.ontouchstart = p0.onmousedown = e => {
   if(x == totox && y == totoy){
     pointermode = "move";
   }
+  
+  back.innerHTML = `${x}, ${y}, ${totox}, ${totoy}, ${totodirmodulo}, ${pointermode}`;
   //console.log(pointermode);
 }
 
@@ -244,6 +246,7 @@ p0.ontouchmove = p0.onmousemove = e => {
     x = Math.floor(((fx ? e.layerX : e.offsetX) - 750 + w / 2) / 50);
     y = Math.floor(((fx ? e.layerY : e.offsetY) - 750 + w / 2) / 50);
     console.log(x, y, totox, totoy, totodir%360);
+    back.innerHTML = `${x}, ${y}, ${totox}, ${totoy}, ${totodirmodulo}`;
     if(x != totox || y != totoy){
       if(x > totox){
         if(totodirmodulo == 180) totodir += 90;
