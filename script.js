@@ -1,11 +1,4 @@
-﻿// Detect iOS / Mac
-ios = 0;
-if(navigator.platform.match(/iP|Mac/)){
-  ios = 1;
-  document.body.classList.add("ios");
-}
-
-world = 1; // 0: main menu, 1-5: current world
+﻿world = 1; // 0: main menu, 1-5: current world
 level = 1; // 0: world menu, 1-n: current level
 puzzle = 1; // 0: level menu, 1-n: current puzzle
 camrx = 20;
@@ -158,7 +151,7 @@ drawpuzzle = () => {
   C.plane({w:1500,h:1500,css:"floor circle"});
   C.camera({z:0,rx:camrx,rz:camrz});
   C.sprite({x:-180,y:-250,z:5,w:65,h:75,sx:2,sy:2,sz:2,css:"tree emoji",html:"🌳",o:"bottom center"});
-  C.plane({x:-180,y:-250,z:1,rz:280,w:65,h:ios?88:75,sx:2,sy:2.8,sz:2,css:"tree shadow emoji",html:"🌳",o:"bottom center"});
+  C.plane({x:-180,y:-250,z:1,rz:280,w:65,h:75,sx:2,sy:2.8,sz:2,css:"tree shadow emoji",html:"🌳",o:"bottom center"});
   
   C.group({n:"board",w:200,h:200});
   for(j = 0; j < 5; j++){
@@ -214,8 +207,8 @@ b.ontouchmove = b.onmousemove = e => {
     pointerstartY = e.pageY;
     
     camrz += dX / 10;
-    if(camrz < -30) camrz = -30;
-    if(camrz > 30) camrz = 30;
+    if(camrz < -45) camrz = -45;
+    if(camrz > 45) camrz = 45;
     pointerstartX = e.pageX;
     C.camera({rx:camrx,rz:camrz}) 
   }
