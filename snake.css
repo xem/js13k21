@@ -1,0 +1,10 @@
+.head { background: radial-gradient(circle at 77%,#fa0,#a50); box-shadow: 0 0 5px #000; }
+#headcircle { pointer-events: all; cursor: pointer; }
+#head,  #headcircle, #head_decoration, .body { transition: transform .2s }
+.body { background: linear-gradient(-90deg,#fa0,#a50); }
+.body.high { filter: none; }
+.body.odd {background: linear-gradient(-90deg,#c70,#720); }
+.eyes { font-size: 30px }
+.tongue { font-size: 25px; color: red; font-weight: bold; }
+#scene .red { background: #0001; pointer-events: all; }
+#body1, #body2 { display: none }

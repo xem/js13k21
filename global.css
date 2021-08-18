@@ -1,0 +1,11 @@
+* { margin: 0; padding: 0; box-sizing: border-box; transform-style: preserve-3d; }
+body { background: #000; user-select: none; -webkit-tap-highlight-color: transparent; font: 14px calibri,arial; text-shadow: 0 0 5px #000; scrollbar-width: thin; }
+::-webkit-scrollbar { width: 8px; height: 8px; background: #000; }
+::-webkit-scrollbar-thumb { background: #666; }
+h1 { margin: 30px }
+h2 { margin: 10px }
+#b { max-width: 1000px; margin: 10px auto; color: #fff; border: 1px solid #fff; text-align: center; box-shadow: 5px 5px 5px #444; perspective: 700px; height: calc(100vh - 30px); position: relative; overflow: auto;  -webkit-overflow-scrolling: touch; }
+.menu #b { max-width: 500px; border: none; box-shadow: none; height: auto; }
+p { font-size: 18px }
+@font-face { font-family: emoji; src: url(//xem.github.io/unicode13/Twemoji.ttf) }
+.emoji { font-family: emoji; }
