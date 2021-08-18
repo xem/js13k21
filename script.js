@@ -139,6 +139,8 @@ drawmenu = () => {
   if(top.star)setTimeout(()=>{for(i=300;i--;)star.innerHTML+=`<text x=${Math.random()*500} y=${Math.random()*500}>.`},50);
 };
 
+pos = [[0,0,0]];
+
 drawpuzzle = () => {
   document.body.classList.remove("menu");
   var i, j, html;
@@ -151,7 +153,7 @@ drawpuzzle = () => {
   // Scene
   camrx = 20;
   camrz = 0;
-  C.plane({w:1500,h:1500,css:"floor circle"});
+  C.plane({n:"floor",w:1500,h:1500,css:"floor circle"});
   C.camera({z:0,rx:camrx,rz:camrz});
   C.sprite({x:-180,y:-250,z:5,w:65,h:75,sx:2,sy:2,sz:2,css:"tree emoji",html:"🌳",o:"bottom center"});
   C.plane({x:-180,y:-250,z:1,rz:280,w:65,h:75,sx:2,sy:2.8,sz:2,css:"tree shadow emoji",html:"🌳",o:"bottom center"});
@@ -167,21 +169,31 @@ drawpuzzle = () => {
   
   // Snake
   C.group({n:"head",x:0,y:0,z:4});
-  C.sprite({n:"headcircle",x:0,y:0,w:50,h:50,z:25,css:"head circle"});
-  C.plane({g:"head",x:0,y:-10,z:52,w:30,h:15,rx:-20,css:"eyes emoji",html:"👀"});
-  C.plane({g:"head",x:0,y:38,z:28,w:13,h:20,rx:180,css:"tongue",html:"Y"});
+  C.sprite({g:"head",n:"headcircle",x:0,y:0,w:50,h:50,z:25,css:"head circle"});
+  C.group({g:"head",n:"deco",rz:0});
+  C.plane({g:"deco",x:0,y:-10,z:52,w:30,h:15,rx:-20,css:"eyes emoji",html:"👀"});
+  C.plane({g:"deco",x:0,y:38,z:28,w:13,h:20,rx:180,css:"tongue",html:"Y"});
   
-  //for(i = -20; i >= -90; i-=10) C.plane({x:0,y:i,w:30,h:30,z:21,rx:-45,rz:1,css:"body circle " + ((i/20 != ~~(i/20)) ? "odd" : "")});
+  C.plane({n:"left",g:"head",x:-20,y:0,z:2,w:200,h:200,rz:135,css:"red",o:"top left"});
+  C.plane({n:"up",g:"head",x:0,y:-20,z:2,w:200,h:200,rz:-135,css:"red",o:"top left"});
+  C.plane({n:"right",g:"head",x:20,y:0,z:2,w:200,h:200,rz:-45,css:"red",o:"top left"});
+  C.plane({n:"down",g:"head",x:0,y:20,z:2,w:200,h:200,rz:45,css:"red",o:"top left"});
+  
+  for(i = 0; i < snakelen*5; i++){
+    C.sprite({n:"body" + i,x:0,y:0-i*10,w:30,h:30,z:21,rx:-45,rz:1,css:"body circle " + (i%2 ? "odd" : "")});
+    pos.unshift([0, 0-i/5, 0]);
+  }
   //for(i = -5; i >= -100; i-=10) C.plane({x:i,y:-100,w:30,h:30,z:21,rx:-45,rz:1,css:"body circle " + (((i-5)/20 == ~~((i-5)/20)) ? "odd" : "")});
   //for(i = 10; i <= 50; i+=10) C.plane({x:-100,y:-100,w:30,h:30,z:21+i,rx:-45,rz:1,css:"body circle high " + ((i/20 == ~~(i/20)) ? "odd" : "")});
   
-  C.plane({n:"toto",w:50,h:50,z:5,css:"red"});
+  //C.plane({n:"head",w:50,h:50,z:5,css:"red"});
 };
 
-totox = 2;
-totoy = 2;
-totodir = 0;
-totodirmodulo = 0;
+headx = 0;
+heady = 0;
+headdir = 0;
+headdirmodulo = 0;
+snakelen = 5;
 
 w = 250;
 h = 250;
@@ -195,7 +207,9 @@ pointermode = null;
 pointerinverted = 0;
 
 
-p0.ontouchstart = p0.onmousedown = e => {
+
+
+scene.onmousedown = scene.ontouchstart = e => {
   if(e.touches) e = e.touches[0];
   pointerdown = 1;
   pointerstartX = e.pageX;
@@ -205,28 +219,32 @@ p0.ontouchstart = p0.onmousedown = e => {
   else { pointerinverted = 0 }
   
   var x, y;
-  x = Math.floor(((fx ? e.layerX : e.offsetX) - 750 + w / 2) / 50);
-  y = Math.floor(((fx ? e.layerY : e.offsetY) - 750 + w / 2) / 50);
-  //console.log(x, y);
-  if(x == totox && y == totoy){
+  if(e.target == headcircle){
     pointermode = "move";
   }
   
-  back.innerHTML = `${x}, ${y}, ${totox}, ${totoy}, ${totodirmodulo}, ${pointermode}`;
+  //back.innerHTML = e.target.id;//back.innerHTML = `${[e.layerX, e.layerY, e.offsetX, e.offsetY]}`;
+  //back.innerHTML = `${x}, ${y}, ${headx}, ${heady}, ${headdirmodulo}, ${pointermode}`;
   //console.log(pointermode);
 }
 
-p0.ontouchend = p0.onmouseup = e => {
+scene.ontouchend = scene.onmouseup = e => {
   pointerdown = 0;
   pointermode = null;
 }
 
-p0.ontouchmove = p0.onmousemove = e => {
+wait = 0;
+
+scene.onmousemove = scene.ontouchmove = e => {
+  var i, currpos;
   e.preventDefault();
-  var dX, dY;
   if(e.touches) e = e.touches[0];
+  //console.log(e, e.target.id, pointermode, .id);
+  var realtarget = document.elementFromPoint(e.clientX, e.clientY);
+  
+  var dX, dY;
   if(pointermode == "cam"){
-    dX = pointerstartX  -e.pageX; 
+    dX = pointerstartX - e.pageX; 
     dY = pointerstartY - e.pageY;
     camrx += dY / 10;
     if(camrx < 10) camrx = 10;
@@ -241,36 +259,60 @@ p0.ontouchmove = p0.onmousemove = e => {
     pointerstartX = e.pageX;
     C.camera({rx:camrx,rz:camrz}) 
   }
-  else if(pointermode == "move"){
-    var x, y;
-    x = Math.floor(((fx ? e.layerX : e.offsetX) - 750 + w / 2) / 50);
-    y = Math.floor(((fx ? e.layerY : e.offsetY) - 750 + w / 2) / 50);
-    console.log(x, y, totox, totoy, totodir%360);
-    back.innerHTML = `${x}, ${y}, ${totox}, ${totoy}, ${totodirmodulo}`;
-    if(x != totox || y != totoy){
-      if(x > totox){
-        if(totodirmodulo == 180) totodir += 90;
-        if(totodirmodulo == 0) totodir -= 90;
-      }
-      else if(y > totoy){
-        if(totodirmodulo == 270) totodir += 90;
-        if(totodirmodulo == 90) totodir -= 90;
-      }
-      else if(x < totox){
-        if(totodirmodulo == 0) totodir += 90;
-        if(totodirmodulo == 180) totodir -= 90;;
-      }
-      else if(y < totoy){
-        if(totodirmodulo == 90) totodir += 90;
-        if(totodirmodulo == 270) totodir -= 90;
-      }
-      totodirmodulo = (totodir + 360) % 360;
-      totox = x;
-      totoy = y;
-      C.move({n:"toto",x:50*(x - Math.floor(w/100)), y: 50*(y - Math.floor(h/100))});
-      C.move({n:"head",x:50*(x - Math.floor(w/100)), y: 50*(y - Math.floor(h/100)),rz:totodir});
-      C.move({n:"headcircle",x:50*(x - Math.floor(w/100)), y: 50*(y - Math.floor(h/100))});
-      C.camera();
+  else if(pointermode == "move" && !wait){
+    //ev = e;
+    //if(e.touches) ev = e.touches[0];
+    //console.log(e, ev);
+
+
+    //console.log(x, y, headx, heady, headdir%360);
+    //back.innerHTML = `${[e.layerX, e.layerY, e.offsetX, e.offsetY]}`;
+    //back.innerHTML = `${x}, ${y}, ${headx}, ${heady}, ${headdirmodulo}`;
+    //console.log(headdir, headdirmodulo);
+    if(realtarget.id == "right"){
+      if(headdirmodulo == 180){ headdir += 90; headdirmodulo += 90; }
+      else if(headdirmodulo == 0){ headdir -= 90; headdirmodulo -= 90; }
+      //else headdir = 270;
+      headx ++;
+      //console.log("right", headdir);
+      for(i = 5; i--;) pos.push([headx - i/5, heady, 0]);
     }
+    else if(realtarget.id == "down"){
+      if(headdirmodulo == 270){ headdir += 90; headdirmodulo += 90; }
+      else if(headdirmodulo == 90){ headdir -= 90; headdirmodulo -= 90; }
+      //else headdir = 0;
+      heady ++;
+      //console.log("down", headdir);
+      for(i = 5; i--;) pos.push([headx, heady - i/5, 0]);
+    }
+    else if(realtarget.id == "left"){
+      if(headdirmodulo == 0){ headdir += 90; headdirmodulo += 90; }
+      else if(headdirmodulo == 180){ headdir -= 90; headdirmodulo -= 90; }
+      //else headdir = 90;
+      headx--;
+      //console.log("left", headdir);
+      for(i = 5; i--;) pos.push([headx + i/5, heady, 0]);
+    }
+    else if(realtarget.id == "up"){
+      if(headdirmodulo == 90){ headdir += 90; headdirmodulo += 90; }
+      else if(headdirmodulo == 270){ headdir -= 90; headdirmodulo -= 90; }
+      //else headdir = 180;
+      heady--;
+      //console.log("up", headdir);
+      for(i = 5; i--;) pos.push([headx, heady + i/5, 0]);
+    }
+    headdirmodulo = (headdirmodulo + 360) % 360;
+    C.move({n:"head",x:50*(headx), y: 50*(heady)});
+    for(i = 0; i < snakelen * 5; i++){
+      currpos = pos[pos.length - i - 1];
+      console.log(currpos);
+      C.move({n:"body" + i, x: (currpos[0])*50, y: (currpos[1]) * 50, z: currpos[2] * 50 + 21}); 
+    }
+    //C.move({n:"head",x:50*(headx - Math.floor(w/100)), y: 50*(heady - Math.floor(h/100))});
+    C.move({n:"deco",rz:headdir});
+    //C.move({n:"headcircle",x:50*(headx - Math.floor(w/100)), y: 50*(heady - Math.floor(h/100))});
+    wait = 1;
+    setTimeout(()=>{wait = 0}, 100);
+    C.camera();
   }
 }

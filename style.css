@@ -41,7 +41,7 @@ p { font-size: 18px }
 }
 
 /* Puzzle */
-#scene .floor { background: radial-gradient(#0000,#000e 80%),url(grass.svg); pointer-events: all; cursor: pointer; }
+#scene .floor { background: radial-gradient(#080,#000 80%)/*radial-gradient(#0000,#000e 80%),green/*,url(grass.svg)*/; pointer-events: all; }
 #board { }
 .tile { background: #fff; border: 5px solid #000; }
 .tile:nth-of-type(17) { background: #000 }
@@ -53,11 +53,12 @@ p { font-size: 18px }
 
 /* snake */
 .head { background: radial-gradient(circle at 77%,#fa0,#a50); box-shadow: 0 0 5px #000; }
-#head,  #headcircle { transition: transform .2s }
-.body { background: linear-gradient(-90deg,#fa0,#a50); filter: drop-shadow(-10px 10px 5px #0004); }
+#headcircle { pointer-events: all; cursor: pointer; }
+#head,  #headcircle, #deco, .body { transition: transform .2s }
+.body { background: linear-gradient(-90deg,#fa0,#a50);  }
 .body.high { filter: none; }
-.body.odd {background: #000 }
+.body.odd {background: linear-gradient(-90deg,#c70,#720); }
 .eyes { font-size: 30px }
 .tongue { font-size: 25px; color: red; font-weight: bold; }
 
-.red { background: red }
+#scene .red { background: #0001; pointer-events: all;  }

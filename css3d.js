@@ -111,8 +111,9 @@ camera: t => {
   for(var r in C.sprites){
     var n=C.$(C.sprites[r]);
     o=n.style.transform.replace(/ *rotate.*\(.*?deg\)/g,"");
-    rz = n.classList.contains("body")?1:(-C.camRZ+1);
-    rx = n.classList.contains("body")?-45:(-C.camRX+1);
+    rz = n.classList.contains("body")?1:(-C.camRZ);
+    //rx = n.classList.contains("body")?-45:(-C.camRX+1);
+    rx = -C.camRX;
     n.style.transform=o+`rotateZ(${rz}deg)rotateX(${rx}deg)`
   }
 },
