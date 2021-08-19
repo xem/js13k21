@@ -1,8 +1,7 @@
 #scene .floor { background: radial-gradient(#080,#000 80%); pointer-events: all; }
 .tile { background: #fff; border: 5px solid #000; }
-.tile:nth-of-type(17) { background: #000 }
-.tile:nth-of-type(18) { background: #000 }
-.tile:nth-of-type(19) { background: #000 }
-.tile:nth-of-type(14) { background: #000 }
+.tile.black { background: #000 }
+.tile.red { background: #F00 }
+.tile.blue { background: #00F }
 .tree { font-size: 75px; filter: brightness(0.7); }
 .shadow { filter: contrast(0)brightness(0); opacity: .6 }

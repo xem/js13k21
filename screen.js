@@ -12,27 +12,27 @@ draw_screen = () => {
     html += `<h1>TITLE</h1>`;
     for(i in data){
       if(i > 0)
-        html += `<div class="b w w${i} ${i == 1 ? "" : "lock"}" onclick="drawmenu(world=${i})">${svg[+i]}<h2>${i==5 ? "SPACE" : "World " + i}</h2><p>${i == 1 ? "0 / 100" : ("<span class=emoji>🔒</span> " + i * 20 + " stars to unlock")}</div></div>`
+        html += `<div class="b w w${i} ${i == 1 ? "" : "lock"}" onclick="draw_screen(world=${i})">${svg[+i]}<h2>${i==5 ? "SPACE" : "World " + i}</h2><p>${i == 1 ? "0 / 100" : ("<span class=emoji>🔒</span> " + i * 20 + " stars to unlock")}</div></div>`
     }
   }
   
   // Menu: Levels list
   else if(level == 0){
     
-    html += `<h1>World ${world}</h1><div id=back class="back" onclick="drawmenu(world=0)">&lt;</div>`;
+    html += `<h1>World ${world}</h1><div id=back class="back" onclick="draw_screen(world=0)">&lt;</div>`;
     for(i in data[world]){
       if(i > 0)
-        html += `<div class="b w${world} l l${i} ${i < 2 ? "" : "lock"}" onclick="drawmenu(level=${i})"><h2>Level ${i}</h2></div>`
+        html += `<div class="b w${world} l l${i} ${i < 2 ? "" : "lock"}" onclick="draw_screen(level=${i})"><h2>Level ${i}</h2></div>`
     }
   }
   
   // Menu: Puzzles list
   else if(puzzle == 0){
     
-    html += `<h1>World ${world} - Level ${level}</h1><div id=back class=back onclick="drawmenu(level=0)">&lt;</div>`;
+    html += `<h1>World ${world} - Level ${level}</h1><div id=back class=back onclick="draw_screen(level=0)">&lt;</div>`;
     for(i in data[world][level]){
       if(i > 0)
-        html += `<div class="b w${world} l l${i} p p${i} ${i < 2 ? "" : "lock"}" onclick="drawpuzzle(puzzle=${i})"><h2>${i}</h2></div>`
+        html += `<div class="b w${world} l l${i} p p${i} ${i < 2 ? "" : "lock"}" onclick="draw_puzzle(puzzle=${i})"><h2>${i}</h2></div>`
     }
   }
   

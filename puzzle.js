@@ -2,12 +2,33 @@
 w = 250;
 h = 250;
 
+// Puzzle
+current_puzzle = [
+  [0,0,0,0,0],
+  [0,0,0,0,0],
+  [0,0,0,1,0],
+  [0,1,1,1,0],
+  [0,0,0,0,0]
+];
+
+var w = 5;
+var h = 5;
+  
 // Camera angles
 camrx = 20;
 camrz = 0;
 
 // Draw current puzzle
 draw_puzzle = () => {
+  
+  // Snake globals
+  snake_position = [[0,0,0]];
+  head_angles = [0];
+  head_angles_modulo = [0];
+  head_angle = 0;
+  head_angle_modulo = 0;
+  snake_length = 3; // total length with head = this number + 1
+  body_moves = 0;
   
   var i, j;
   
@@ -16,7 +37,7 @@ draw_puzzle = () => {
 
   // UI
   C.reset();  
-  b.innerHTML = `<div id=viewport><div id=camera><div id=scene></div></div></div><div id=back class=back onclick="drawmenu(puzzle=0)">&lt;</div>`;
+  b.innerHTML = `<div id=viewport><div id=camera><div id=scene></div></div></div><div id=back class=back onclick="draw_screen(puzzle=0)">&lt;</div>`;
   
   // Scene
   camrx = 20;
@@ -29,12 +50,10 @@ draw_puzzle = () => {
   C.plane({x:-180,y:-250,z:1,rz:280,w:65,h:75,sx:2,sy:2.8,sz:2,css:"tree shadow emoji",html:"🌳",o:"bottom center"});
   
   // Puzzle
-  var w = 5;
-  var h = 5;
   C.group({n:"board",w:250,h:250,z:2});
   for(j = 0; j < h; j++){
     for(i = 0; i < w; i++){
-      C.plane({g:"board",x:25+i*50,y:25+j*50,w:55,h:55,css:"tile"});
+      C.plane({g:"board",n:"tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:55,h:55,css:"tile "+(current_puzzle[j][i] ? "black" : "")});
     }
   }
   
@@ -51,8 +70,45 @@ draw_puzzle = () => {
   C.plane({n:"down",g:"head",x:0,y:10,z:2,w:200,h:200,rz:45,css:"trigger",o:"top left"});
   
   // Snake's body
-  for(i = 1; i < snake_length*5 + 1; i++){
-    C.plane({n:"body" + (snake_length * 5 - i),x:0,y:0-i*10,w:30,h:30,z:21,rx:-45,rz:4,css:"body circle " + (i%2 ? "odd" : "")});
+  for(i = 1; i < snake_length * 5 + 1; i++){
+    C.plane({n:"body" + (snake_length * 5 - i),x:0,y:0-i*10,w:30,h:30,z:21,rx:-45,rz:1,css:"body circle " + (i%2 ? "odd" : "")});
     snake_position.unshift([0, 0-i/5, 0]);
   }
 };
+
+check_puzzle = () => {
+  var i, j, val, snake_on_current_cell, ok = 1;
+  console.log("===");
+  var current_positions = snake_position.slice(-(snake_length + 1) * 5);
+  //console.log(current_positions);
+  for(j in current_puzzle){
+    for(i in current_puzzle[j]){
+      val = current_puzzle[j][i];
+      snake_on_current_cell = current_positions.find(a => a[0] == (i - 2) && a[1] == (j - 2) && a[2] == 0);
+      console.log(i, j, val, snake_on_current_cell);
+      
+      // Not ok if there's a snake body part on a white cell
+      if(val == 0){
+        if(snake_on_current_cell){
+          ok = 0;
+          C.$("tile_"+i+"_"+j).classList.add("red");
+        }
+        else {
+          C.$("tile_"+i+"_"+j).classList.remove("red");
+        }
+      }
+      
+      // Not ok if there's no snake body part on a black cell
+      if(val == 1){
+        if(!snake_on_current_cell){
+          ok = 0;
+          C.$("tile_"+i+"_"+j).classList.remove("blue");
+        }
+        else {
+          C.$("tile_"+i+"_"+j).classList.add("blue");
+        }
+      }
+    }
+  }
+  if(ok) setTimeout(()=>alert("ok"),500);
+}
