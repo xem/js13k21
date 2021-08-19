@@ -7,9 +7,11 @@ halt = 0;
 
 // Snake globals
 snake_position = [[0,0,0]];
+head_angles = [0];
+head_angles_modulo = [0];
 head_angle = 0;
 head_angle_modulo = 0;
-snake_length = 10;
+snake_length = 4;
 
 // Pointer down (mouse or finger)
 onmousedown = ontouchstart = e => {
@@ -48,7 +50,7 @@ ontouchend = onmouseup = e => {
 // Pointer move
 onmousemove = ontouchmove = e => {
   
-  var i, current_position, previous_position, next_position, offset, real_target, dx, dy;
+  var i, current_position, target_position, offset, real_target, dx, dy;
   
   // When we're in-game (not in menu), prevent native scroll/reload on mobile
   if(world && level && puzzle){
@@ -104,80 +106,140 @@ onmousemove = ontouchmove = e => {
     // As soon as the right trigger is touched
     if(real_target.id == "right"){
       
-      // Rotate right if the snake's head is facing up
-      if(head_angle_modulo == 180){ head_angle += 90; head_angle_modulo += 90; }
+      // Next position
+      target_position = [current_position[0] + 1, current_position[1], current_position[2]];
       
-      // Rotate left if the snake's head is facing down
-      else if(head_angle_modulo == 0){ head_angle -= 90; head_angle_modulo -= 90; }
-      
-      // Add new head position on the right + 5 intermediate for the body parts
-      for(i = 1; i <= 5; i++){
-        snake_position.push([current_position[0] + i/5, current_position[1], current_position[2]]);
+      // Backwards if going left
+      if(head_angle_modulo == 90){
+        go_back();
+        return;
       }
+      
+      // No self collision
+      if(!snake_position.slice(-snake_length * 5).find(a => a[0] == target_position[0] && a[1] == target_position[1] && a[2] == target_position[2])){
+      
+        // Rotate right if the snake's head is facing up
+        if(head_angle_modulo == 180){ head_angle += 90; head_angle_modulo += 90; }
+        
+        // Rotate left if the snake's head is facing down
+        else if(head_angle_modulo == 0){ head_angle -= 90; head_angle_modulo -= 90; }
+        
+        // Add new head position on the right + 5 intermediate for the body parts
+        for(i = 1; i <= 5; i++){
+          snake_position.push([current_position[0] + i/5, current_position[1], current_position[2]]);
+          head_angles.push(head_angle);
+        }
+      }
+      else return;
     }
     
     // As soon as the down trigger is touched
     else if(real_target.id == "down"){
       
-      // Rotate right if the snake's head is facing right
-      if(head_angle_modulo == 270){ head_angle += 90; head_angle_modulo += 90; }
+      // Next position
+      target_position = [current_position[0], current_position[1] + 1, current_position[2]];
       
-      // Rotate left if the snake's head is facing left
-      else if(head_angle_modulo == 90){ head_angle -= 90; head_angle_modulo -= 90; }
-      
-      // Add new head position on the down + 5 intermediate for the body parts
-      for(i = 1; i <= 5; i++){
-        snake_position.push([current_position[0], current_position[1] + i/5, current_position[2]]);
+      // Backwards if going up
+      if(head_angle_modulo == 180){
+        go_back();
+        return;
       }
+      
+      // No self collision
+      if(!snake_position.slice(-snake_length * 5).find(a => a[0] == target_position[0] && a[1] == target_position[1] && a[2] == target_position[2])){
+      
+        // Rotate right if the snake's head is facing right
+        if(head_angle_modulo == 270){ head_angle += 90; head_angle_modulo += 90; }
+        
+        // Rotate left if the snake's head is facing left
+        else if(head_angle_modulo == 90){ head_angle -= 90; head_angle_modulo -= 90; }
+        
+        // Add new head position on the down + 5 intermediate for the body parts
+        for(i = 1; i <= 5; i++){
+          snake_position.push([current_position[0], current_position[1] + i/5, current_position[2]]);
+          head_angles.push(head_angle);
+        }
+      }
+      else return;
     }
     
     // As soon as the left trigger is touched
     else if(real_target.id == "left"){
       
-      // Rotate right if the snake's head is facing down
-      if(head_angle_modulo == 0){ head_angle += 90; head_angle_modulo += 90; }
+      // Next position
+      target_position = [current_position[0] - 1, current_position[1], current_position[2]];
       
-      // Rotate left if the snake's head is facing up
-      else if(head_angle_modulo == 180){ head_angle -= 90; head_angle_modulo -= 90; }
-      
-      // Add new head position on the left + 5 intermediate for the body parts
-      for(i = 1; i <= 5; i++){
-        snake_position.push([current_position[0] - i/5, current_position[1], current_position[2]]);
+      // Backwards if going right
+      if(head_angle_modulo == 270){
+        go_back();
+        return;
       }
+      
+      // No self collision
+      if(!snake_position.slice(-snake_length * 5).find(a => a[0] == target_position[0] && a[1] == target_position[1] && a[2] == target_position[2])){
+      
+        // Rotate right if the snake's head is facing down
+        if(head_angle_modulo == 0){ head_angle += 90; head_angle_modulo += 90; }
+        
+        // Rotate left if the snake's head is facing up
+        else if(head_angle_modulo == 180){ head_angle -= 90; head_angle_modulo -= 90; }
+        
+        // Add new head position on the left + 5 intermediate for the body parts
+        for(i = 1; i <= 5; i++){
+          snake_position.push([current_position[0] - i/5, current_position[1], current_position[2]]);
+          head_angles.push(head_angle);
+        }
+      }
+      else return;
     }
     
     // As soon as the up trigger is touched
     else if(real_target.id == "up"){
       
-      // Rotate right if the snake's head is facing left
-      if(head_angle_modulo == 90){ head_angle += 90; head_angle_modulo += 90; }
+      // Next position
+      target_position = [current_position[0], current_position[1] - 1, current_position[2]];
       
-      // Rotate left if the snake's head is facing right
-      else if(head_angle_modulo == 270){ head_angle -= 90; head_angle_modulo -= 90; }
-      
-      // Add new head position on the up + 5 intermediate for the body parts
-      for(i = 1; i <= 5; i++){
-        snake_position.push([current_position[0], current_position[1] - i/5, current_position[2]]);
+      // Backwards if going down
+      if(head_angle_modulo == 0){
+        go_back();
+        return;
       }
+      
+      // No self collision
+      if(!snake_position.slice(-snake_length * 5).find(a => a[0] == target_position[0] && a[1] == target_position[1] && a[2] == target_position[2])){
+        
+        // Rotate right if the snake's head is facing left
+        if(head_angle_modulo == 90){ head_angle += 90; head_angle_modulo += 90; }
+        
+        // Rotate left if the snake's head is facing right
+        else if(head_angle_modulo == 270){ head_angle -= 90; head_angle_modulo -= 90; }
+        
+        // Add new head position on the up + 5 intermediate for the body parts
+        for(i = 1; i <= 5; i++){
+          snake_position.push([current_position[0], current_position[1] - i/5, current_position[2]]);
+          head_angles.push(head_angle);
+        }
+      }
+      else return;
     }
+    else return;
 
     // Clamp modulo angle between 0 and 360
     head_angle_modulo = (head_angle_modulo + 360) % 360;
+    for(i = 1; i <= 5; i++){
+      head_angles_modulo.push(head_angle_modulo);
+    }
     
     // Move whole head
     current_position = snake_position[snake_position.length - 1];
     C.move({n:"head", x:current_position[0]*50, y:current_position[1]*50, z:current_position[2]*50+4});
     
-    // Move body parts behind the head
-    for(i = 1; i < snake_length * 5 + 1; i++){
-      current_position = snake_position[snake_position.length - i - 1];
-      previous_position = snake_position[snake_position.length - i - 2];
-      next_position = snake_position[snake_position.length - i];
-      console.log(i, current_position, previous_position, next_position);
-      offset = 0;
-      
-      C.move({n:"body"+i, x:current_position[0]*50, y:current_position[1]*50+offset, z:current_position[2]*50+21});
-    }
+    // Make the body parts advance 5 steps
+    move_body();
+    setTimeout(move_body, 40);
+    setTimeout(move_body, 80);
+    setTimeout(move_body, 120);
+    setTimeout(move_body, 160);
     
     // Rotate head's decoration (eyes, tongue, but not the circle itself, because it's a sprite)
     C.move({n:"head_decoration", rz:head_angle});
@@ -186,9 +248,57 @@ onmousemove = ontouchmove = e => {
     halt = 1;
     setTimeout(()=>{
       halt = 0
-    }, 100);
+    }, 200);
     
     // Call camera() to update the sprites in the scene
     C.camera();
+  }
+}
+
+body_moves = 0;
+
+move_body = () => {
+  console.log("insert");
+  var pos = snake_position[snake_length * 5 + body_moves];
+  C.plane({n:"body" + (snake_length * 5 + body_moves), x:pos[0]*50,y:pos[1]*50,w:30,h:30,z:pos[2]*50+21,rx:-45,rz:4,css:"body circle " + (body_moves%2 ? "odd" : "")});
+  C.$("body" + body_moves).remove();
+  body_moves++;
+  //b.classList.toggle("toggle")
+}
+
+move_body_back = () => {
+  //console.log("move back");
+  body_moves--;
+  var pos = snake_position[body_moves];
+  C.plane({n:"body" + body_moves, x:pos[0]*50,y:pos[1]*50,w:30,h:30,z:pos[2]*50+21,rx:-45,rz:4,css:"body circle " + (body_moves%2 ? "odd" : ""),i:"afterBegin"});
+  C.$("body" + (snake_length * 5 + body_moves)).remove();
+  b.classList.toggle("toggle");
+  snake_position.pop();
+  head_angles.pop();
+  head_angles_modulo.pop();
+}
+
+go_back = () => {
+  if(body_moves >= 5){
+    console.log("go_back");
+    
+    var current_position = snake_position[snake_position.length - 5 - 1];
+    head_angle = head_angles[head_angles.length - 5 - 1];
+    head_angle_modulo = head_angles_modulo[head_angles.length - 5 - 1];
+    
+    C.move({n:"head", x:current_position[0]*50, y:current_position[1]*50, z:current_position[2]*50+4});
+    
+    C.move({n:"head_decoration", rz:head_angle});
+    
+    move_body_back();
+    setTimeout(move_body_back, 40);
+    setTimeout(move_body_back, 80);
+    setTimeout(move_body_back, 120);
+    setTimeout(move_body_back, 160);
+    
+    halt = 1;
+    setTimeout(()=>{
+      halt = 0
+    }, 200);
   }
 }

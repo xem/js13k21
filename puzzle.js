@@ -45,14 +45,14 @@ draw_puzzle = () => {
   C.plane({g:"head_decoration",x:0,y:-10,z:52,w:30,h:15,rx:-20,css:"eyes emoji",html:"👀"});
   C.plane({g:"head_decoration",x:0,y:38,z:28,w:13,h:20,rx:180,css:"tongue",html:"Y"});
   
-  C.plane({n:"left",g:"head",x:-10,y:0,z:2,w:200,h:200,rz:135,css:"red",o:"top left"});
-  C.plane({n:"up",g:"head",x:0,y:-10,z:2,w:200,h:200,rz:-135,css:"red",o:"top left"});
-  C.plane({n:"right",g:"head",x:10,y:0,z:2,w:200,h:200,rz:-45,css:"red",o:"top left"});
-  C.plane({n:"down",g:"head",x:0,y:10,z:2,w:200,h:200,rz:45,css:"red",o:"top left"});
+  C.plane({n:"left",g:"head",x:-10,y:0,z:2,w:200,h:200,rz:135,css:"trigger",o:"top left"});
+  C.plane({n:"up",g:"head",x:0,y:-10,z:2,w:200,h:200,rz:-135,css:"trigger",o:"top left"});
+  C.plane({n:"right",g:"head",x:10,y:0,z:2,w:200,h:200,rz:-45,css:"trigger",o:"top left"});
+  C.plane({n:"down",g:"head",x:0,y:10,z:2,w:200,h:200,rz:45,css:"trigger",o:"top left"});
   
   // Snake's body
   for(i = 1; i < snake_length*5 + 1; i++){
-    C.sprite({n:"body" + i,x:0,y:0-i*10,w:30,h:30,z:21,rx:-45,rz:1,css:"body circle " + (i%2 ? "odd" : "")});
+    C.plane({n:"body" + (snake_length * 5 - i),x:0,y:0-i*10,w:30,h:30,z:21,rx:-45,rz:4,css:"body circle " + (i%2 ? "odd" : "")});
     snake_position.unshift([0, 0-i/5, 0]);
   }
 };

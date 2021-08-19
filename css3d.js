@@ -39,21 +39,23 @@ C = {
     t.sx||(t.sx=1),
     t.sy||(t.sy=1),
     t.sz||(t.sz=1),
+    t.i||(t.i="beforeEnd"),
     C.options[t.n]=t
+    
   },
 
   // Group of objects
   group: t => { 
     t.d||t.d===0||(t.d=t.h),
     C.init(t),
-    C.$(t.g).insertAdjacentHTML("beforeEnd",`<div id="${t.n}"class="group ${t.css}"style="position:absolute;width:${t.w}px;height:${t.d}px;transform:${C.tr(t)}">`)
+    C.$(t.g).insertAdjacentHTML(t.i,`<div id="${t.n}"class="group ${t.css}"style="position:absolute;width:${t.w}px;height:${t.d}px;transform:${C.tr(t)}">`)
   },
 
   // Plane
   plane: t => {
     t.n||(t.n=`p${C.plane_count++}`),
     C.init(t),
-    C.$(t.g).insertAdjacentHTML("beforeEnd",`<div id="${t.n}"class="plane ${t.css}"style="position:absolute;width:${t.w}px;height:${t.h}px;transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`),
+    C.$(t.g).insertAdjacentHTML(t.i,`<div id="${t.n}"class="plane ${t.css}"style="position:absolute;width:${t.w}px;height:${t.h}px;transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`),
     C.camera()
   },
 
@@ -61,7 +63,7 @@ C = {
   sprite: t => {
     t.n||(t.n=`s${C.sprite_count++}`),
     C.init(t),
-    C.$(t.g).insertAdjacentHTML("beforeEnd",`<div id="${t.n}"class="sprite ${t.css}"style="position:absolute;width:${t.w}px;height:${t.h}px;transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`),
+    C.$(t.g).insertAdjacentHTML(t.i,`<div id="${t.n}"class="sprite ${t.css}"style="position:absolute;width:${t.w}px;height:${t.h}px;transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`),
     C.sprites.push(t.n),
     C.camera()
   },
@@ -104,7 +106,7 @@ C = {
     for(var r in C.sprites){
       var n=C.$(C.sprites[r]);
       o=n.style.transform.replace(/ *rotate.*\(.*?deg\)/g,"");
-      rz = n.classList.contains("body")?1:(-C.camRZ);
+      rz = -C.camRZ;//n.classList.contains("body")?4:(-C.camRZ);
       rx = -C.camRX;
       n.style.transform=o+`rotateZ(${rz}deg)rotateX(${rx}deg)`
     }
@@ -112,7 +114,7 @@ C = {
 
   // Move an object
   move: t => {
-    if(t.n){
+    if(t.n && C.$(t.n)){
       var r=C.$(t.n),
       n=C.options[t.n];
       (t.x||0===t.x)&&(n.x=t.x),
