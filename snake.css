@@ -1,10 +1,12 @@
 .head { background: radial-gradient(circle at 77%,#fa0,#a50); box-shadow: 0 0 5px #000; }
 #headcircle { pointer-events: all; cursor: pointer; }
-#head,  #headcircle, #head_decoration { transition: transform .20s }
-.body, .toggle .body.odd { background: linear-gradient(-90deg,#fa0,#a50); transition: transform .04s; }
+#head, #head_decoration { transition: transform .2s }
+.body, .toggle .body.odd { background: linear-gradient(-90deg,#fa0,#a50); transition: transform .03s; }
 .body.high { filter: none; }
 .body.odd, .toggle .body { background: linear-gradient(-90deg,#c70,#720); }
 .eyes { font-size: 30px }
 .tongue { font-size: 25px; color: red; font-weight: bold; }
 #scene .trigger { background: rgba(0,0,0,.001); pointer-events: all; }
+.on_wall.high #scene .trigger { display: none; }
 .body:last-of-type { display: none }
+.body:nth-last-of-type(2) { display: none }

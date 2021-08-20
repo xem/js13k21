@@ -1,4 +1,6 @@
 #scene .floor { background: radial-gradient(#080,#000 80%); pointer-events: all; }
+#puzzlefloor { background: #0003; }
+.on_wall #puzzlefloor, .on_wall #puzzlewall * { pointer-events: all; }
 .tile { background: #fff; border: 5px solid #000; }
 .tile.black { background: #000 }
 .tile.red { background: #F00 }

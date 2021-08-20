@@ -41,14 +41,13 @@ C = {
     t.sz||(t.sz=1),
     t.i||(t.i="beforeEnd"),
     C.options[t.n]=t
-    
   },
 
   // Group of objects
   group: t => { 
     t.d||t.d===0||(t.d=t.h),
     C.init(t),
-    C.$(t.g).insertAdjacentHTML(t.i,`<div id="${t.n}"class="group ${t.css}"style="position:absolute;width:${t.w}px;height:${t.d}px;transform:${C.tr(t)}">`)
+    C.$(t.g).insertAdjacentHTML(t.i,`<div id="${t.n}"class="group ${t.css}"style="position:absolute;width:${t.w}px;height:${t.d}px;transform-origin:${t.o};transform:${C.tr(t)}">`)
   },
 
   // Plane
@@ -129,6 +128,6 @@ C = {
   },
 
   // CSS3D transform string
-  tr: t => `translateX(-50%)translateY(-50%)translateX(${t.x}px)translateY(${t.y}px)translateZ(${t.z}px)rotateX(${t.rx}deg)rotateY(${t.ry}deg)rotateZ(${t.rz}deg)scaleX(${t.sx})scaleY(${t.sy})scaleZ(${t.sz})`
+  tr: t => `translateX(-50%)translateY(-50%) translateX(${t.x}px)translateY(${t.y}px)translateZ(${t.z}px) rotateX(${t.rx}deg)rotateY(${t.ry}deg)rotateZ(${t.rz}deg) scaleX(${t.sx})scaleY(${t.sy})scaleZ(${t.sz})`
 
 }
