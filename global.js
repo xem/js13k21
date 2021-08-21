@@ -3,6 +3,11 @@ world = 1; // 0: main menu, 1-5: current world
 level = 1; // 0: world menu, 1-n: current level
 puzzle = 1; // 0: level menu, 1-n: current puzzle
 
+if(fx = navigator.userAgent.includes("Firefox")){
+  b.classList.add("fx");
+}
+
+
 // List of SVGs
 svg = [
   

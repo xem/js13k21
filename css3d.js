@@ -107,6 +107,7 @@ C = {
       o=n.style.transform.replace(/ *rotate.*\(.*?deg\)/g,"");
       rz = -C.camRZ;//n.classList.contains("body")?4:(-C.camRZ);
       rx = -C.camRX;
+      if(rx > -15) rx = -15;
       n.style.transform=o+`rotateZ(${rz}deg)rotateX(${rx}deg)`
     }
   },

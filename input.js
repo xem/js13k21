@@ -16,6 +16,7 @@ snake_length = 0; // total length with head = this number + 1
 body_moves = 0;
 on_wall = 0;
 high = 0;
+behind = 0;
 
 // Pointer down (mouse or finger)
 onmousedown = ontouchstart = e => {

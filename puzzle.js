@@ -61,7 +61,7 @@ draw_puzzle = () => {
   
   // Puzzle
   C.group({n:"puzzlefloor",w:250,h:250,z:2});
-  C.group({n:"puzzlewall",w:250,h:250,y:-125,z:8,rx:-90,o:"bottom"});
+  C.group({n:"puzzlewall",w:250,h:250,y:-125,z:2,rx:-90,o:"bottom"});
   
   if(current_puzzle.floor){
     for(j = 0; j < h; j++){
@@ -138,7 +138,7 @@ check_puzzle = () => {
     for(j in current_puzzle.wall){
       for(i in current_puzzle.wall[j]){
         val = current_puzzle.wall[j][i];
-        snake_on_current_cell = current_positions.find(a => a[0] == i && a[2] == h - j - 1);
+        snake_on_current_cell = current_positions.find(a => a[0] == i &&  a[1] < h && a[2] == h - j - 1);
         
         // Not ok if there's a snake body part on a white cell
         if(val == 0){

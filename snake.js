@@ -1,6 +1,6 @@
 move_snake = target => {
   
-  console.clear();
+  //console.clear();
   
   var i, target_position, x, y, z, match;
   
@@ -15,26 +15,65 @@ move_snake = target => {
     console.log("move on wall");
 
     // Get touched tile coordinates
-    //if(target.classList.contains("wall_tile")){
-      [match,x,z] = target.id.match(/wall_tile_(\d*)_(\d*)/);
-      x = +x; z = h - +z - 1;
+    [match,x,z] = target.id.match(/wall_tile_(\d*)_(\d*)/);
+    x = +x; z = h - +z - 1;
     
-      console.log(x, z, head_position);
+    // Try to move on the touched tile if it's a neighbour of the current head position
+    
+    // Left
+    if(x == head_position[0] - 1 && z == head_position[2]){
       
-      // Try to move on the touched tile if it's a neighbour of the current head position
-      if(x == head_position[0] - 1 && z == head_position[2]){
-        target_position = move_left();
+      // Backtrack if head is turned to the right
+      if(head_angle_modulo == 270){
+        go_back();
+        return;
       }
-      else if(x == head_position[0] + 1 && z == head_position[2]){
-        target_position = move_right();
+      
+      target_position = move_left();
+    }
+    
+    // Right
+    else if(x == head_position[0] + 1 && z == head_position[2]){
+      
+      // Backtrack if head is turned to the left
+      if(head_angle_modulo == 90){
+        go_back();
+        return;
       }
-      else if(x == head_position[0] && z == head_position[2] + 1){
-        target_position = move_up();
+      
+      target_position = move_right();
+    }
+    
+    // Up
+    else if(x == head_position[0] && z == head_position[2] + 1){
+      
+      // Backtrack if head is turned to the bottom
+      if(head_angle_modulo == 0){
+        go_back();
+        return;
       }
-      else if(x == head_position[0] && z == head_position[2] - 1){
-        target_position = move_down();
+      
+      target_position = move_up();
+    }
+    
+    // Down
+    else if(x == head_position[0] && z == head_position[2] - 1){
+      
+      // Backtrack if head is turned to the top
+      if(head_angle_modulo == 180){
+        go_back();
+        return;
       }
-    //}
+      
+      target_position = move_down();
+    }
+  }
+  
+  // If the serpent is trying to quit the wall, try to move to the front:
+  if(on_wall && target.id == "puzzlefloor"){
+    
+    console.log("quit wall");
+    target_position = move_front();
   }
   
   else {
@@ -218,13 +257,13 @@ go_back = () => {
 
 check_wall = () => {
   on_wall = 0;
+  behind = 0;
   var pos = snake_position[snake_position.length - 1];
-  if(current_puzzle.wall && (pos[1] == 0 || pos[2] > 0)){
+  
+  // Snake is "on wall" if there's a wall and head is inbounds and Y == 0
+  if(current_puzzle.wall && pos[1] == 0 && pos[0] >= 0 && pos[0] < w /* || pos[2] > 0*/){
     on_wall = 1;
     C.move({n:"head",y:35});
-  }
-  //console.log(on_wall, pos[1])
-  if(on_wall){
     b.classList.add("on_wall");
     C.move({n:"head_decoration",rx:head_position[2] > 0 ? -90 : -45});
     C.camera({rx:70});
@@ -232,6 +271,17 @@ check_wall = () => {
   else {
     b.classList.remove("on_wall");
     C.move({n:"head_decoration",rx:0});
+    C.camera({rx:30});
+  }
+  
+  // Snake is "behind" if there's a wall and Y < 0
+  if(current_puzzle.wall && pos[1] < 0 && pos[0] >= -1 && pos[0] < w + 1){
+    behind = 1;
+    b.classList.add("behind");
+    C.camera({rx:-8});
+  }
+  else {
+    b.classList.remove("behind");
     C.camera({rx:30});
   }
 }
@@ -360,6 +410,11 @@ move_front = () => {
   // Next position
   var target_position = [head_position[0], head_position[1] + 1, head_position[2]];
   
+  // No collision with wall
+  if(current_puzzle.wall && target_position[0] >= 0 && target_position[0] < w && target_position[1] == 0){
+    return;
+  }
+  
   // No self collision
   if(!snake_position.slice(-snake_length * 5).find(a => a[0] == target_position[0] && a[1] == target_position[1] && a[2] == target_position[2])){
   
@@ -385,6 +440,11 @@ move_back = () => {
   
   // Next position
   target_position = [head_position[0], head_position[1] - 1, head_position[2]];
+  
+  // No collision with wall
+  if(current_puzzle.wall && target_position[0] >= 0 && target_position[0] < w && target_position[1] == -1){
+    return;
+  }
   
   // No self collision
   if(!snake_position.slice(-snake_length * 5).find(a => a[0] == target_position[0] && a[1] == target_position[1] && a[2] == target_position[2])){
