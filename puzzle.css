@@ -6,5 +6,9 @@
 .tile.black { background: #000 }
 .tile.red { background: #F00 }
 .tile.blue { background: #00F }
-.tree { font-size: 75px; filter: brightness(0.7); }
+.wall * { pointer-events: all; background: linear-gradient(45deg, #000, #333); }
+.tree { font-size: 75px; filter: brightness(0.7); transition: transform .5s; }
+.instant .tree { transition: none; }
 .shadow { filter: contrast(0)brightness(0); opacity: .6 }
+#mirror .cubefront, #mirror .cubeback { background: linear-gradient(#0000 30%,#02db 90%); }
+#mirror .cubeleft, #mirror .cuberight { background: linear-gradient(#0000 30%,#f81b 90%); }

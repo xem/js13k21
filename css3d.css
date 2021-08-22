@@ -1,7 +1,7 @@
 #viewport { width: 100%; height: 100%; overflow: hidden; border: 1px solid; position: relative; perspective: 600px; background: linear-gradient(#039, #fff 25%); }
-.fx #viewport { perspective: 1200px }
 #viewport * { transform-style: preserve-3d; box-sizing: border-box }
-#scene { transition: transform .3s }
+#scene { transition: transform .5s }
+.instant #scene { transition: none }
 #camera { width: 0; height: 0; position: absolute; top: 60%; left: 50% }
 #scene * { pointer-events: none; }
 .circle{ border-radius: 50% }

@@ -10,3 +10,4 @@
 .on_wall.high #scene .trigger { display: none; }
 .body:last-of-type { display: none }
 .body:nth-last-of-type(2) { display: none }
+.instant_head #head { transition: none }

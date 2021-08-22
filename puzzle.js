@@ -4,21 +4,24 @@ h = 250;
 
 // Puzzle
 current_puzzle = {
-  floor: [
-    [0,1,1,0,0],
-    [0,1,0,0,0],
-    [0,1,0,0,0],
+  
+  /*wall: [
     [0,0,0,0,0],
+    [0,1,0,1,0],
+    [0,1,1,1,0],
+    [0,1,0,1,0],
+    [0,0,0,0,0],
+  ],*/
+  
+  floor: [
+    [0,0,1,0,0],
+    [0,0,0,0,0],
+    [0,0,1,0,0],
+    [0,0,1,0,0],
     [0,0,0,0,0]
   ],
   
-  wall: [
-    [0,0,0,0,0],
-    [0,0,0,0,0],
-    [0,0,1,0,0],
-    [0,1,1,0,0],
-    [0,1,0,0,0],
-  ]
+  mirror: 1
 };
 
 var w = 5;
@@ -39,6 +42,7 @@ draw_puzzle = () => {
   head_angle_modulo = 270;
   snake_length = 5; // total length with head = this number + 1
   body_moves = 0;
+  mirroring = 0;
   
   var i, j, head_position;
   
@@ -52,7 +56,7 @@ draw_puzzle = () => {
   // Scene
   camrx = 30;
   camrz = 0;
-  C.camera({z:0,rx:camrx,rz:camrz});
+  C.camera({z:100,rx:camrx,rz:camrz});
   C.plane({n:"floor",w:1500,h:1500,css:"floor circle"});
   
   // Tree
@@ -63,6 +67,10 @@ draw_puzzle = () => {
   C.group({n:"puzzlefloor",w:250,h:250,z:2});
   C.group({n:"puzzlewall",w:250,h:250,y:-125,z:2,rx:-90,o:"bottom"});
   
+  if(current_puzzle.mirror){
+    C.cube({g:"puzzlefloor",n:"mirror",w:250,h:250,d:250,x:125,y:125});
+  }
+  
   if(current_puzzle.floor){
     for(j = 0; j < h; j++){
       for(i = 0; i < w; i++){
@@ -72,6 +80,7 @@ draw_puzzle = () => {
   }
   
   if(current_puzzle.wall){
+    C.cube({g:"puzzlefloor",w:250+4,h:250+2,d:4,x:125,y:-2.1,z:2,css:"wall"});
     for(j = 0; j < h; j++){
       for(i = 0; i < w; i++){
         C.plane({g:"puzzlewall",n:"wall_tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:55,h:55,css:"tile wall_tile "+(current_puzzle.wall[j][i] ? "black" : "")});
@@ -87,15 +96,15 @@ draw_puzzle = () => {
   C.plane({g:"head_decoration_inner",x:25,y:15,z:27,w:30,h:15,rx:-20,css:"eyes emoji",html:"👀"});
   C.plane({g:"head_decoration_inner",x:25,y:53,z:3,w:13,h:20,rx:180,css:"tongue",html:"Y"});
   
-  C.plane({n:"left",g:"head",x:-10,y:0,z:2,w:200,h:200,rz:135,css:"trigger",o:"top left"});
-  C.plane({n:"up",g:"head",x:0,y:-10,z:2,w:200,h:200,rz:-135,css:"trigger",o:"top left"});
-  C.plane({n:"right",g:"head",x:10,y:0,z:2,w:200,h:200,rz:-45,css:"trigger",o:"top left"});
-  C.plane({n:"down",g:"head",x:0,y:10,z:2,w:200,h:200,rz:45,css:"trigger",o:"top left"});
+  C.plane({n:"left",g:"head",x:-20,y:0,z:2,w:200,h:200,rz:135,css:"trigger",o:"top left"});
+  C.plane({n:"up",g:"head",x:0,y:-20,z:2,w:200,h:200,rz:-135,css:"trigger",o:"top left"});
+  C.plane({n:"right",g:"head",x:20,y:0,z:2,w:200,h:200,rz:-45,css:"trigger",o:"top left"});
+  C.plane({n:"down",g:"head",x:0,y:20,z:2,w:200,h:200,rz:45,css:"trigger",o:"top left"});
   
   // Snake's body
   head_position = snake_position[0];
   for(i = 1; i < snake_length * 5 + 1; i++){
-    C.plane({g:"puzzlefloor",n:"body" + (snake_length * 5 - i),x:(head_position[0] - +i/5)*50+25,y:head_position[1]*50+25,w:30,h:30,z:25,rx:-45,ry:5,css:"body circle " + (i%2 ? "odd" : ""),i:"afterBegin"});
+    C.plane({g:"puzzlefloor",n:"body" + (snake_length * 5 - i),x:(head_position[0] - i/5)*50+25,y:head_position[1]*50+25,w:30,h:30,z:25,rx:-45,ry:5,css:"body circle " + (i%2 ? "odd" : ""),i:"afterBegin"});
     snake_position.unshift([head_position[0]-i/5, head_position[1], 0]);
   }
 };
@@ -138,7 +147,7 @@ check_puzzle = () => {
     for(j in current_puzzle.wall){
       for(i in current_puzzle.wall[j]){
         val = current_puzzle.wall[j][i];
-        snake_on_current_cell = current_positions.find(a => a[0] == i &&  a[1] < h && a[2] == h - j - 1);
+        snake_on_current_cell = current_positions.find(a => a[0] == i && a[1] >= 0 && a[1] < h && a[2] == h - j - 1);
         
         // Not ok if there's a snake body part on a white cell
         if(val == 0){

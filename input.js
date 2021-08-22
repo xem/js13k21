@@ -17,6 +17,7 @@ body_moves = 0;
 on_wall = 0;
 high = 0;
 behind = 0;
+mirroring = 0;
 
 // Pointer down (mouse or finger)
 onmousedown = ontouchstart = e => {
@@ -44,6 +45,7 @@ onmousedown = ontouchstart = e => {
   // Else: prepare to rotate the camera
   else {
     pointer_mode = "cam";
+    b.classList.add("instant");
   }
 }
 
@@ -57,6 +59,8 @@ ontouchend = onmouseup = e => {
   
   // Stop moving snake/rotating camera
   pointer_mode = null;
+  
+  b.classList.remove("instant");
 }
 
 // Pointer move
@@ -85,8 +89,8 @@ onmousemove = ontouchmove = e => {
     camrx += dy / 10;
     
     // Clamp X angle between 10 and 40
-    //if(camrx < 10) camrx = 10;
-    //f(camrx > 40) camrx = 40;
+    if(camrx < (behind ? -10 : 20)) camrx = (behind ? -10 : 20);
+    if(camrx > (high ? 70 : 45)) camrx = (high ? 70 : 45);
     
     // Rotate around Z axis according to delta X
     camrz += dx / 10;
@@ -100,7 +104,7 @@ onmousemove = ontouchmove = e => {
     pointer_start_y = e.pageY;
     
     // Rotate camera
-    C.camera({/*rx:camrx, */rz:camrz}) 
+    C.camera({rx:camrx,rz:camrz}) 
   }
   
   // Mode "move snake"
@@ -114,3 +118,15 @@ onmousemove = ontouchmove = e => {
     move_snake(real_target);
   }
 }
+
+// Keyboard (arrows / WASD / ZQSD) to move the snake
+// From https://xem.github.io/articles/jsgamesinputs.html
+u = r = d = l = 0;
+onkeydown = onkeyup = e => {
+  this['lurd************************l**r************l*d***u**u'[e.which - 37]] = e.type[5];
+}
+
+setInterval(() => {
+  if(!halt) move_snake(b); // use the top element "b" as dummy target
+},33);
+
