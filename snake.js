@@ -144,6 +144,8 @@ move_snake = target => {
   // Do the move
   if(target_position){
     
+    play_note();
+    
     head_position = target_position;
 
     // Clamp modulo angle between 0 and 360
@@ -171,7 +173,7 @@ move_snake = target => {
     halt = 1;
     setTimeout(()=>{
       halt = 0
-    }, 140);
+    }, 200);
     
     // Call camera() to update the sprites in the scene
     C.camera();
@@ -253,7 +255,7 @@ go_back = () => {
     setTimeout(()=>{
       halt = 0
       check_wall();
-    }, 140);
+    }, 200);
     
   }
 }
@@ -277,11 +279,11 @@ check_wall = () => {
       console.log("high", pos)
       high = 1;
       b.classList.add("high");
-      C.camera({rx:camrx=70});
+      C.camera({rx:camrx=70,y:0});
     }
     else {
       b.classList.remove("high");
-      C.camera({rx:camrx=30});
+      C.camera({rx:camrx=30,y:h*10});
     }
   }
   
@@ -289,14 +291,14 @@ check_wall = () => {
   else if(current_puzzle.wall && pos[1] < 0 && pos[0] >= -1 && pos[0] < w + 1){
     behind = 1;
     b.classList.add("behind");
-    C.camera({rx:camrx=-8});
+    C.camera({rx:camrx=-8,y:-h*5+20});
   }
   
   else {
     b.classList.remove("on_wall");
     b.classList.remove("behind");
     C.move({n:"head_decoration",rx:0});
-    C.camera({rx:camrx=30});
+    C.camera({rx:camrx=30,y:h*10});
   }
 }
 
@@ -330,6 +332,9 @@ move_left = () => {
     }
   }
   
+  // Bounds
+  if(target_position[0] < -9) return;
+  
   // No self collision
   if(!snake_position.slice(-snake_length * 5).find(a => a[0] == target_position[0] && a[1] == target_position[1] && a[2] == target_position[2])){
   
@@ -344,7 +349,7 @@ move_left = () => {
     head_angles.push(head_angle);
     
     for(i = 2; i <= 5; i++){
-      snake_position.push([target_position[0] + 1 - i/5, target_position[1], target_position[2] + ((i < 5 && mirroring) ? -99 : 0)]);
+      snake_position.push([target_position[0] + 1 - i/5, target_position[1], target_position[2] + ((i < 4 && mirroring) ? -99 : 0)]);
       head_angles.push(head_angle);
     }
     return target_position;
@@ -371,6 +376,9 @@ move_right = () => {
     }
   }
   
+  // Bounds
+  if(target_position[0] >  w + 9) return;
+  
   // No self collision
   if(!snake_position.slice(-snake_length * 5).find(a => a[0] == target_position[0] && a[1] == target_position[1] && a[2] == target_position[2])){
   
@@ -385,7 +393,7 @@ move_right = () => {
     head_angles.push(head_angle);
     
     for(i = 2; i <= 5; i++){
-      snake_position.push([target_position[0] - 1 + i/5, target_position[1], target_position[2] + ((i < 5 && mirroring) ? -99 : 0)]);
+      snake_position.push([target_position[0] - 1 + i/5, target_position[1], target_position[2] + ((i < 4 && mirroring) ? -99 : 0)]);
       head_angles.push(head_angle);
     }
     return target_position;
@@ -494,6 +502,9 @@ move_front = () => {
     }
   }
   
+  // Bounds
+  if(target_position[1] > h + 9) return;
+  
   // No collision with wall
   if(current_puzzle.wall && target_position[0] >= 0 && target_position[0] < w && target_position[1] == 0){
     return;
@@ -513,7 +524,7 @@ move_front = () => {
     head_angles.push(head_angle);
     
     for(i = 2; i <= 5; i++){
-      snake_position.push([target_position[0], target_position[1] - 1 + i/5, target_position[2] + ((i < 5 && mirroring) ? -99 : 0)]);
+      snake_position.push([target_position[0], target_position[1] - 1 + i/5, target_position[2] + ((i < 4 && mirroring) ? -99 : 0)]);
       head_angles.push(head_angle);
     }
     return target_position;
@@ -524,7 +535,7 @@ move_back = () => {
   
   console.log("back");
   
-  var target_position = current_puzzle.mirror && inbounds()
+  var target_position = (current_puzzle.mirror && inbounds())
     ? [head_position[0], (head_position[1] - 1 + h) % h, head_position[2]]
     : [head_position[0], head_position[1] - 1, head_position[2]];
   
@@ -540,8 +551,11 @@ move_back = () => {
     }
   }
   
+  // Bounds
+  if(target_position[1] < -9) return;
+  
   // No collision with wall
-  if(current_puzzle.wall && target_position[0] < 0 && target_position[0] < w && target_position[1] == 0){
+  if(current_puzzle.wall && target_position[0] >= 0 && target_position[0] < w && target_position[1] == -1){
     return;
   }
   
@@ -559,7 +573,7 @@ move_back = () => {
     head_angles.push(head_angle);
     
     for(i = 2; i <= 5; i++){
-      snake_position.push([target_position[0], target_position[1] + 1 - i/5, target_position[2] + ((i < 5 && mirroring) ? -99 : 0)]);
+      snake_position.push([target_position[0], target_position[1] + 1 - i/5, target_position[2] + ((i < 4 && mirroring) ? -99 : 0)]);
       head_angles.push(head_angle);
     }
     return target_position;

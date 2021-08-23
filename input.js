@@ -5,20 +5,6 @@ pointer_start_y = 0;
 pointer_mode = null;
 halt = 0;
 
-// Snake globals
-snake_position = [];
-head_position = [];
-head_angles = [];
-head_angles_modulo = [];
-head_angle = 0;
-head_angle_modulo = 0;
-snake_length = 0; // total length with head = this number + 1
-body_moves = 0;
-on_wall = 0;
-high = 0;
-behind = 0;
-mirroring = 0;
-
 // Pointer down (mouse or finger)
 onmousedown = ontouchstart = e => {
   

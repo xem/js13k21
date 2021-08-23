@@ -10,5 +10,5 @@
 .tree { font-size: 75px; filter: brightness(0.7); transition: transform .5s; }
 .instant .tree { transition: none; }
 .shadow { filter: contrast(0)brightness(0); opacity: .6 }
-#mirror .cubefront, #mirror .cubeback { background: linear-gradient(#0000 30%,#02db 90%); }
-#mirror .cubeleft, #mirror .cuberight { background: linear-gradient(#0000 30%,#f81b 90%); }
+#mirror .cubefront, #mirror .cubeback { background: linear-gradient(#0000 30%,#02db 80%); }
+#mirror .cubeleft, #mirror .cuberight { background: linear-gradient(#0000 30%,#f81b 80%); }

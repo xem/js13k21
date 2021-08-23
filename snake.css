@@ -1,6 +1,6 @@
 .head { background: radial-gradient(circle at 77%,#fa0,#a50); box-shadow: 0 0 5px #000; }
 #headcircle { pointer-events: all; cursor: pointer; }
-#head, #head_decoration { transition: transform .2s }
+#head, #head_decoration, #head_decoration_inner { transition: transform .2s }
 .body, .toggle .body.odd { background: linear-gradient(-90deg,#fa0,#a50); transition: transform .03s; }
 .body.high { filter: none; }
 .body.odd, .toggle .body { background: linear-gradient(-90deg,#c70,#720); }

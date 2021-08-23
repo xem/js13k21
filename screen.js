@@ -12,7 +12,7 @@ draw_screen = () => {
     html += `<h1>TITLE</h1>`;
     for(i in data){
       if(i > 0)
-        html += `<div class="b w w${i} ${i == 1 ? "" : "lock"}" onclick="draw_screen(world=${i})">${svg[+i]}<h2>${i==5 ? "SPACE" : "World " + i}</h2><p>${i == 1 ? "0 / 100" : ("<span class=emoji>🔒</span> " + i * 20 + " stars to unlock")}</div></div>`
+        html += `<div class="b w w${i} ${i == 1 ? "" : "lock"}" onclick="draw_screen(world=${i})">${svg[+i%5]}<h2>${i==5 ? "SPACE" : "World " + i}</h2><p>${i == 1 ? "0 / 100" : ("<span class=emoji>🔒</span> " + i * 20 + " stars to unlock")}</div></div>`
     }
   }
   

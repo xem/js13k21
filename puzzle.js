@@ -5,23 +5,23 @@ h = 250;
 // Puzzle
 current_puzzle = {
   
-  /*wall: [
+  wall: [
     [0,0,0,0,0],
     [0,1,0,1,0],
     [0,1,1,1,0],
     [0,1,0,1,0],
     [0,0,0,0,0],
-  ],*/
-  
-  floor: [
-    [0,0,1,0,0],
-    [0,0,0,0,0],
-    [0,0,1,0,0],
-    [0,0,1,0,0],
-    [0,0,0,0,0]
   ],
   
-  mirror: 1
+  floor: [
+    [0,1,0,1,0],
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+    [0,0,0,0,0],
+  ],
+  
+  mirror: 0
 };
 
 var w = 5;
@@ -36,12 +36,16 @@ draw_puzzle = () => {
   
   // Snake globals
   snake_position = [[-2,2,0]];
+  head_position = [];
   head_angles = [270];
   head_angles_modulo = [270];
   head_angle = 270;
   head_angle_modulo = 270;
-  snake_length = 5; // total length with head = this number + 1
+  snake_length = 6; // total length (with head) = this number + 1
   body_moves = 0;
+  on_wall = 0;
+  high = 0;
+  behind = 0;
   mirroring = 0;
   
   var i, j, head_position;
@@ -51,39 +55,40 @@ draw_puzzle = () => {
 
   // UI
   C.reset();  
-  b.innerHTML = `<div id=viewport><div id=camera><div id=scene></div></div></div><div id=back class=back onclick="draw_screen(puzzle=0)">&lt;</div>`;
+  b.innerHTML = `<div id=viewport><div id=camera><div id=scene></div></div></div><div id=back class=back onclick="draw_screen(puzzle=0)">&lt;</div>
+  <div class=dpad>${svg[5]}${svg[6]}${svg[7]}${svg[8]}`;
   
   // Scene
   camrx = 30;
   camrz = 0;
-  C.camera({z:100,rx:camrx,rz:camrz});
+  C.camera({z:50,y:h*10,rx:camrx,rz:camrz});
   C.plane({n:"floor",w:1500,h:1500,css:"floor circle"});
   
   // Tree
-  C.sprite({x:-180,y:-250,z:5,w:65,h:75,sx:2,sy:2,sz:2,css:"tree emoji",html:"🌳",o:"bottom center"});
-  C.plane({x:-180,y:-250,z:1,rz:280,w:65,h:75,sx:2,sy:2.8,sz:2,css:"tree shadow emoji",html:"🌳",o:"bottom center"});
+  C.sprite({x:-180,y:-350,z:5,w:65,h:75,sx:2,sy:2,sz:2,css:"tree emoji",html:"🌳",o:"bottom center"});
+  C.plane({x:-180,y:-350,z:1,rz:280,w:65,h:75,sx:2,sy:2.8,sz:2,css:"tree shadow emoji",html:"🌳",o:"bottom center"});
   
   // Puzzle
-  C.group({n:"puzzlefloor",w:250,h:250,z:2});
-  C.group({n:"puzzlewall",w:250,h:250,y:-125,z:2,rx:-90,o:"bottom"});
+  C.group({n:"puzzlefloor",w:w*50,h:h*50,z:2});
+  C.group({n:"puzzlewall",w:w*50,h:h*50,y:-h*50/2,z:2,rx:-90,o:"bottom"});
   
   if(current_puzzle.mirror){
-    C.cube({g:"puzzlefloor",n:"mirror",w:250,h:250,d:250,x:125,y:125});
+    C.cube({g:"puzzlefloor",n:"mirror",w:w*50,h:h*50,d:h*50,x:w*50/2,y:h*50/2});
   }
   
   if(current_puzzle.floor){
     for(j = 0; j < h; j++){
       for(i = 0; i < w; i++){
-        C.plane({g:"puzzlefloor",n:"tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:55,h:55,css:"tile "+(current_puzzle.floor[j][i] ? "black" : "")});
+        C.plane({g:"puzzlefloor",n:"tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:55,h:55,css:"tile "+(current_puzzle.floor[j]?.[i] ? "black" : "")});
       }
     }
   }
   
   if(current_puzzle.wall){
-    C.cube({g:"puzzlefloor",w:250+4,h:250+2,d:4,x:125,y:-2.1,z:2,css:"wall"});
+    C.cube({g:"puzzlefloor",w:w*50+4,h:h*50+2,d:4,x:w*50/2,y:-2.1,z:2,css:"wall"});
     for(j = 0; j < h; j++){
       for(i = 0; i < w; i++){
-        C.plane({g:"puzzlewall",n:"wall_tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:55,h:55,css:"tile wall_tile "+(current_puzzle.wall[j][i] ? "black" : "")});
+        C.plane({g:"puzzlewall",n:"wall_tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:55,h:55,css:"tile wall_tile "+(current_puzzle.wall[j]?.[i] ? "black" : "")});
       }
     }
   }
