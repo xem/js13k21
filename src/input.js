@@ -21,7 +21,7 @@ onmousedown = ontouchstart = e => {
   pointer_start_y = e.pageY;
   
   // If the snake's head is pointed: prepare to move it
-  if(e.target == headcircle){
+  if(e.target == head_circle){
     pointer_mode = "move";
     
     // Save head coordinates

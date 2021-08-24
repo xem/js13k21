@@ -1,0 +1,164 @@
+﻿<body style=line-height:1.5em>
+
+<div id=visual></div>
+
+<br>
+
+teleporter: 1 <input type=checkbox id=t onclick="if(!checked)t2.checked=false">
+2 <input type=checkbox id=t2 onclick="if(checked)t.checked=true"> -
+wrap <input type=checkbox id=w> - 
+grid <input id=g value=5 size=1> -
+snake <input id=s value=5 size=1>
+<br>
+<button onclick=generate()>generate</button>
+<button onclick=save()>save</button>
+
+<br>
+<br>
+
+<pre id=code style=background:#eee;padding:5px></pre>
+
+<br><br>
+
+<script>
+
+
+generate = function(){
+  
+  // Read params
+  gridsize = +(g.value);
+  snakesize = +(s.value);
+  if(snakesize > gridsize ** 2) return;
+
+  // Valid puzzle
+  ok = 0;
+  
+  // Teleporters index
+  teleport = (t.checked||t2.checked) ? (~~(Math.random() * (snakesize - 2))) + 1 : -1;
+  
+  teleport2 = teleport;
+  
+  if(t2.checked){
+    
+    do {
+      teleport2 = (~~(Math.random() * (snakesize - 2))) + 1;
+    }
+    while(teleport2 == teleport || teleport2 == teleport + 1);
+  }
+
+  
+  // Generate randomly as long as not ok
+  while(!ok){
+  
+    // Head (x, y)
+    snake = [[x=Math.random() * gridsize | 0, y=Math.random() * gridsize | 0]];
+    snakeflat = [y*gridsize+x];
+
+    ok=1;
+    for(i=1;i<snakesize;i++){
+      
+      // Teleport
+      if(teleport == i){
+        neighbour = [Math.random() * gridsize | 0, Math.random() * gridsize | 0];
+      }
+      
+      // Teleport 2
+      else if(teleport2 == i){
+        neighbour = [Math.random() * gridsize | 0, Math.random() * gridsize | 0];
+      }
+      
+      // Pick a neighbour
+      else {
+        
+        // List neighbours (with wrap)
+        if(w.checked){
+          neighbours = [[x>0?x-1:gridsize-1,y],[x,y>0?y-1:gridsize-1],[x<gridsize-1?x+1:0,y],[x,y<gridsize-1?y+1:0]];
+        }
+        else {
+          neighbours = [[x-1,y],[x,y-1],[x+1,y],[x,y+1]];
+        }
+      
+        // Pick one
+        neighbour = neighbours[Math.random() * 4 | 0];
+      }
+      
+      // out of bounds
+      if(neighbour[0] < 0 || neighbour[0] >= gridsize || neighbour[1] < 0 || neighbour[1] >= gridsize) { ok = 0; break; }
+      
+      // Save new x, y
+      x=neighbour[0];
+      y=neighbour[1];
+      
+      // add to snake
+      snake.push(neighbour);
+      
+      // break and restart if it collides with itself
+      if(snakeflat.includes(y*gridsize+x)) { ok = 0; break; }
+      
+      // add to flat
+      snakeflat.push(y*gridsize+x)
+    }
+  }
+
+  h="";
+  for(i=0;i<gridsize;i++){
+    for(j=0;j<gridsize;j++){
+      h+="<div style='float:left;width:3ch;height:3ch;color:#fff;text-align:center;line-height:3ch;background:#"
+      +
+      (
+        // Teleporter 1
+        (
+          t.checked 
+          &&
+          (
+          snakeflat.indexOf(j*gridsize+i) == teleport-1
+          ||
+          snakeflat.indexOf(j*gridsize+i) == teleport
+          )
+        )
+        ? "f0f" 
+        
+        :
+        
+        // Teleporter 2
+        (
+          t2.checked 
+          &&
+          (
+          snakeflat.indexOf(j*gridsize+i) == teleport2-1
+          ||
+          snakeflat.indexOf(j*gridsize+i) == teleport2
+          )
+        )
+        ? "0ff" 
+        :
+        
+        // Normal
+        (
+          snakeflat.includes(j*gridsize+i)
+          ?"000"
+          :"fff"
+        )
+      )
+      +";border:1px solid #000'>"+(snakeflat.indexOf(j*gridsize+i) > -1 ? snakeflat.indexOf(j*gridsize+i) + 1 : '')+"</div>"
+    }
+    h+="<br style=clear:both>";
+  }
+  visual.innerHTML=h;
+}
+
+onload = () => { generate(); }
+
+save = function(){
+  h='"';
+  for(i=0;i<gridsize;i++){
+    for(j=0;j<gridsize;j++){
+      h+=(snakeflat.includes(j*gridsize+i)?"1":"0")
+    }
+    h+='"+<br>"';
+  }
+  h = h.substr(0,h.length-7)+'"<br><br>';
+ 
+  code.innerHTML += h;
+}
+</script>

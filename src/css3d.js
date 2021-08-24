@@ -24,6 +24,7 @@ C = {
   init: t => {
     t.css||(t.css=""),
     t.html||(t.html=""),
+    t.htmlside||(t.htmlside=""),
     t.g||(t.g="scene"),
     t.o||(t.o="center"),
     t.o=="top left"&&(t.x+=t.w/2,t.y+=t.h/2),
@@ -72,11 +73,11 @@ C = {
     t.n||(t.n=`c${C.cube_count++}`),
     C.init(t),
     C.group(t),
-    C.plane({g:t.n,y:t.d/2,w:t.d,h:t.h,b:t.b1||t.b,rx:-90,ry:-90,o:"bottom",css:"cubeleft"}),
-    C.plane({g:t.n,x:t.w,y:t.d/2,w:t.d,h:t.h,b:t.b2||t.b,rx:-90,ry:-90,o:"bottom",css:"cuberight"}),
-    C.plane({g:t.n,x:t.w/2,y:t.d,w:t.w,h:t.h,b:t.b1||t.b,rx:-90,o:"bottom",css:"cubefront"}),
-    C.plane({g:t.n,x:t.w/2,y:0,w:t.w,h:t.h,b:t.b2||t.b,rx:-90,o:"bottom",css:"cubeback"}),
-    C.plane({g:t.n,x:t.w/2,y:t.d/2,z:t.h,w:t.w,h:t.d,b:t.b,css:"cubetop"})
+    C.plane({g:t.n,y:t.d/2,w:t.d,h:t.h,b:t.b1||t.b,rx:-90,ry:-90,o:"bottom",css:"cubeleft",html:t.htmlside}),
+    C.plane({g:t.n,x:t.w,y:t.d/2,w:t.d,h:t.h,b:t.b2||t.b,rx:-90,ry:90,o:"bottom",css:"cuberight",html:t.htmlside}),
+    C.plane({g:t.n,x:t.w/2,y:t.d,w:t.w,h:t.h,b:t.b1||t.b,rx:-90,o:"bottom",css:"cubefront",html:t.html}),
+    C.plane({g:t.n,x:t.w/2,y:0,w:t.w,h:t.h,b:t.b2||t.b,rx:-90,o:"bottom",css:"cubeback",html:t.html}),
+    C.plane({g:t.n,x:t.w/2,y:t.d/2,z:t.h,w:t.w,h:t.d,b:t.b,css:"cubetop",html:t.html})
   },
 
   // Pyramid

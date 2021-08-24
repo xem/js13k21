@@ -13,7 +13,12 @@ move_snake = target => {
   if(on_wall && !high && (d || target.id == "puzzlefloor")){
     
     console.log("quit wall");
+    if(head_angle_modulo == 180){
+      go_back();
+      return;
+    }
     target_position = move_front();
+    console.log(1,target_position);
   }
   
   // If the serpent is climbing a wall:
@@ -189,7 +194,7 @@ move_body = () => {
   var pos = snake_position[snake_length * 5 + body_moves];
   
   // Create a new body part close to the head
-  C.plane({g:"puzzlefloor",n:"body"+(snake_length*5+body_moves),x:pos[0]*50+25,y:pos[1]*50+25,w:30,h:30,z:pos[2]*50+25,rx:-45,ry:5,css:"body circle " + (body_moves%2 ? "odd" : "")});
+  C.plane({g:"snakebody",n:"body"+(snake_length*5+body_moves),x:pos[0]*50+25,y:pos[1]*50+25,w:30,h:30,z:pos[2]*50+25,rx:-45,ry:5,css:"body circle " + (body_moves%2 ? "odd" : "")});
   
   // Remove older part after the tail
   C.$("body" + body_moves).remove();
@@ -211,8 +216,8 @@ move_body_back = () => {
   var pos = snake_position[body_moves];
   
   // Create new body part after the tail
-  C.plane({g:"puzzlefloor",n:"body"+body_moves,x:pos[0]*50+25,y:pos[1]*50+25,w:30,h:30,z:pos[2]*50+25,rx:-
-  45,ry:5,css:"body circle " + (body_moves%2 ? "" : "odd"),i:"afterBegin"});
+  C.plane({g:"snakebody",n:"body"+body_moves,x:pos[0]*50+25,y:pos[1]*50+25,w:30,h:30,z:pos[2]*50+25,rx:-
+  45,ry:5,css:"body circle " + (body_moves%2 ? "odd" : ""),i:"afterBegin"});
   
   // Remove old body part close to the head
   C.$("body" + (snake_length * 5 + body_moves)).remove();
@@ -229,32 +234,35 @@ move_body_back = () => {
 // Move whole snake backwards one full move (5 steps)
 go_back = () => {
   
+  play_last_note();
+  
   // If it's still possible to go back (body has moved at least 5 steps)
   if(body_moves >= 5){
     
     // Retrieve previous position, angle and angle modulo (to make them the current ones)
-    var previous_position = snake_position[snake_position.length - 5 - 1];
+    head_position = snake_position[snake_position.length - 5 - 1];
     head_angle = head_angles[head_angles.length - 5 - 1];
     head_angle_modulo = head_angles_modulo[head_angles.length - 5 - 1];
     
     // Move head
-    C.move({n:"head", x:previous_position[0]*50+25, y:previous_position[1]*50+25 + (behind ? -5 : 0), z:previous_position[2]*50+4 + (behind ? 10 : 0)});
+    C.move({n:"head", x:head_position[0]*50+25, y:head_position[1]*50+25 + (behind ? -5 : 0), z:head_position[2]*50+4 + (behind ? 10 : 0)});
     
     // Rotate head decoration (eyes, tongue)
     C.move({n:"head_decoration_inner", rz:head_angle});
     
     // Make the body go back 1/5th of a step, at 40ms intervals (matching the head's transition duration)
     move_body_back();
-    move_body_back();
     setTimeout(move_body_back, 40);
-    setTimeout(move_body_back, 60);
+    setTimeout(move_body_back, 80);
     setTimeout(move_body_back, 120);
+    setTimeout(move_body_back, 160);
     
     // No more moves for 200ms
     halt = 1;
     setTimeout(()=>{
       halt = 0
       check_wall();
+      check_puzzle();
     }, 200);
     
   }
@@ -316,27 +324,26 @@ move_left = () => {
   
   console.log("left");
   
+  // Next position (if all goes well)
   var target_position = current_puzzle.mirror && inbounds()
     ? [(head_position[0] - 1 + w) % w, head_position[1], head_position[2]]
     : [head_position[0] - 1, head_position[1], head_position[2]];
   
-   // Next position (if all goes well)
-  if(current_puzzle.mirror && inbounds()){
-    if(head_position[0] - 1 != ((head_position[0] - 1 + w) % w)){
-      mirroring = 1;
-      b.classList.add("instant_head");
-    }
-    else {
-      mirroring = 0;
-      b.classList.remove("instant_head");
-    }
-  }
-  
   // Bounds
   if(target_position[0] < -9) return;
   
+  // No collision with cubes or trees
+  if(collision(target_position)) return;
+  
   // No self collision
   if(!snake_position.slice(-snake_length * 5).find(a => a[0] == target_position[0] && a[1] == target_position[1] && a[2] == target_position[2])){
+    
+    // Mirroring
+    if(current_puzzle.mirror && inbounds()){
+      if(head_position[0] - 1 != ((head_position[0] - 1 + w) % w)){
+        mirror_animation();
+      }
+    }
   
     // Rotate right if the snake's head is facing right
     if(head_angle_modulo == 0){ head_angle += 90; head_angle_modulo += 90; }
@@ -360,27 +367,26 @@ move_right = () => {
   
   console.log("right");
   
+  // Next position (if all goes well)
   var target_position = current_puzzle.mirror && inbounds()
     ? [(head_position[0] + 1) % w, head_position[1], head_position[2]]
     : [head_position[0] + 1, head_position[1], head_position[2]];
   
-   // Next position (if all goes well)
-  if(current_puzzle.mirror && inbounds()){
-    if(head_position[0] + 1 != ((head_position[0] + 1) % h)){
-      mirroring = 1;
-      b.classList.add("instant_head");
-    }
-    else {
-      mirroring = 0;
-      b.classList.remove("instant_head");
-    }
-  }
-  
   // Bounds
   if(target_position[0] >  w + 9) return;
   
+  // No collision with cubes or trees
+  if(collision(target_position)) return;
+  
   // No self collision
   if(!snake_position.slice(-snake_length * 5).find(a => a[0] == target_position[0] && a[1] == target_position[1] && a[2] == target_position[2])){
+    
+    // Mirroring
+    if(current_puzzle.mirror && inbounds()){
+      if(head_position[0] + 1 != ((head_position[0] + 1) % h)){
+        mirror_animation();
+      }
+    }
   
     // Rotate right if the snake's head is facing right
     if(head_angle_modulo == 180){ head_angle += 90; head_angle_modulo += 90; }
@@ -404,24 +410,23 @@ move_up = () => {
   
   console.log("up");
   
+  // Next position (if all goes well)
   var target_position = current_puzzle.mirror && inbounds()
     ? [head_position[0], head_position[1], (head_position[2] + 1) % h]
     : [head_position[0], head_position[1], head_position[2] + 1];
   
-   // Next position (if all goes well)
-  if(current_puzzle.mirror && inbounds()){
-    if(head_position[2] + 1 != ((head_position[2] + 1) % h)){
-      mirroring = 1;
-      b.classList.add("instant_head");
-    }
-    else {
-      mirroring = 0;
-      b.classList.remove("instant_head");
-    }
-  }
+  // No collision with cubes or trees
+  if(collision(target_position)) return;
   
   // No self collision
   if(!snake_position.slice(-snake_length * 5).find(a => a[0] == target_position[0] && a[1] == target_position[1] && a[2] == target_position[2])){
+    
+    // Mirroring
+    if(current_puzzle.mirror && inbounds()){
+      if(head_position[2] + 1 != ((head_position[2] + 1) % h)){
+        mirror_animation();
+      }
+    }
   
     // Rotate right if the snake's head is facing right
     if(head_angle_modulo == 90){ head_angle += 90; head_angle_modulo += 90; }
@@ -445,24 +450,22 @@ move_down = () => {
   
   console.log("down");
   
+  // Next position (if all goes well)
   var target_position = current_puzzle.mirror && inbounds()
     ? [head_position[0], head_position[1], (head_position[2] - 1 + h) % h]
     : [head_position[0], head_position[1], head_position[2] - 1];
   
-   // Next position (if all goes well)
-  if(current_puzzle.mirror && inbounds()){
-    if(head_position[2] + 1 != ((head_position[2] - 1 + h) % h)){
-      mirroring = 1;
-      b.classList.add("instant_head");
-    }
-    else {
-      mirroring = 0;
-      b.classList.remove("instant_head");
-    }
-  }
+  // No collision with cubes or trees
+  if(collision(target_position)) return;
   
   // No self collision
   if(!snake_position.slice(-snake_length * 5).find(a => a[0] == target_position[0] && a[1] == target_position[1] && a[2] == target_position[2])){
+    
+    if(current_puzzle.mirror && inbounds()){
+      if(head_position[2] + 1 != ((head_position[2] - 1 + h) % h)){
+        mirror_animation();
+      }
+    }
   
     // Rotate right if the snake's head is facing right
     if(head_angle_modulo == 270){ head_angle += 90; head_angle_modulo += 90; }
@@ -486,21 +489,10 @@ move_front = () => {
   
   console.log("front");
   
+  // Next position (if all goes well)
   var target_position = current_puzzle.mirror && inbounds()
     ? [head_position[0], (head_position[1] + 1) % h, head_position[2]]
     : [head_position[0], head_position[1] + 1, head_position[2]];
-  
-   // Next position (if all goes well)
-  if(current_puzzle.mirror && inbounds()){
-    if(head_position[1] + 1 != ((head_position[1] + 1) % h)){
-      mirroring = 1;
-      b.classList.add("instant_head");
-    }
-    else {
-      mirroring = 0;
-      b.classList.remove("instant_head");
-    }
-  }
   
   // Bounds
   if(target_position[1] > h + 9) return;
@@ -510,8 +502,18 @@ move_front = () => {
     return;
   }
   
+  // No collision with cubes or trees
+  if(collision(target_position)) return;
+  
   // No self collision
   if(!snake_position.slice(-snake_length * 5).find(a => a[0] == target_position[0] && a[1] == target_position[1] && a[2] == target_position[2])){
+    
+    // Mirroring
+    if(current_puzzle.mirror && inbounds()){
+      if(head_position[1] + 1 != ((head_position[1] + 1) % h)){
+        mirror_animation();
+      }
+    }
   
     // Rotate right if the snake's head is facing right
     if(head_angle_modulo == 270){ head_angle += 90; head_angle_modulo += 90; }
@@ -535,32 +537,31 @@ move_back = () => {
   
   console.log("back");
   
+  // Next position (if all goes well)
   var target_position = (current_puzzle.mirror && inbounds())
     ? [head_position[0], (head_position[1] - 1 + h) % h, head_position[2]]
     : [head_position[0], head_position[1] - 1, head_position[2]];
   
-   // Next position (if all goes well)
-  if(current_puzzle.mirror && inbounds()){
-    if(head_position[1] - 1 != ((head_position[1] - 1 + h) % h)){
-      mirroring = 1;
-      b.classList.add("instant_head");
-    }
-    else {
-      mirroring = 0;
-      b.classList.remove("instant_head");
-    }
-  }
-  
   // Bounds
-  if(target_position[1] < -9) return;
+  if(target_position[1] < -8) return;
   
   // No collision with wall
   if(current_puzzle.wall && target_position[0] >= 0 && target_position[0] < w && target_position[1] == -1){
     return;
   }
   
+  // No collision with cubes or trees
+  if(collision(target_position)) return;
+  
   // No self collision
   if(!snake_position.slice(-snake_length * 5).find(a => a[0] == target_position[0] && a[1] == target_position[1] && a[2] == target_position[2])){
+    
+    // Mirroring
+    if(current_puzzle.mirror && inbounds()){
+      if(head_position[1] - 1 != ((head_position[1] - 1 + h) % h)){
+        mirror_animation();
+      }
+    }
   
     // Rotate right if the snake's head is facing right
     if(head_angle_modulo == 90){ head_angle += 90; head_angle_modulo += 90; }
@@ -579,3 +580,28 @@ move_back = () => {
     return target_position;
   }
 };
+
+collision = (target) => {
+  if(bricks.find(a=>a[0] == target[0] && a[1] == target[1] && a[2] == target[2])) {
+    return 1;
+  }
+  if(trees.find(a=>a[0] > target[0] - 1 && a[0] < target[0] + 2 && a[1] > target[1] - 1 && a[1] < target[1] +2)) {
+    return 1;
+  }
+  if(animals.find(a=>a[0] == target[0] && (a[1] == target[1] || a[1] == target[1]+1))) {
+    return 1;
+  }
+}
+
+mirror_animation = () => {
+  mirroring = 1;
+  head_scale.style.transition = "none";
+  head_scale.style.transform = "scaleX(.1)scaleY(.1)scaleZ(.1)";
+  b.classList.add("mirroring");
+  setTimeout(()=>{
+    mirroring = 0;
+    head_scale.style.transition = ".2s";
+    head_scale.style.transform = "";
+    b.classList.remove("mirroring");
+  }, 50);
+}

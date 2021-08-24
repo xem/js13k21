@@ -1,5 +1,5 @@
 .head { background: radial-gradient(circle at 77%,#fa0,#a50); box-shadow: 0 0 5px #000; }
-#headcircle { pointer-events: all; cursor: pointer; }
+#head_circle { pointer-events: all; cursor: pointer; }
 #head, #head_decoration, #head_decoration_inner { transition: transform .2s }
 .body, .toggle .body.odd { background: linear-gradient(-90deg,#fa0,#a50); transition: transform .03s; }
 .body.high { filter: none; }
@@ -10,4 +10,5 @@
 .on_wall.high #scene .trigger { display: none; }
 .body:last-of-type { display: none }
 .body:nth-last-of-type(2) { display: none }
-.instant_head #head { transition: none }
+.mirroring #head { transition: none }
+#snakebody, #snakebody * { pointer-events: all }
