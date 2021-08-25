@@ -3,5 +3,4 @@
 #scene { transition: transform .5s }
 .instant #scene { transition: none }
 #camera { width: 0; height: 0; position: absolute; top: 60%; left: 50% }
-#scene * { pointer-events: none; }
 .circle{ border-radius: 50% }

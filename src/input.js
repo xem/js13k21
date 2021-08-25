@@ -58,7 +58,7 @@ onmousemove = ontouchmove = e => {
   
   // When we're in-game (not in menu), prevent native scroll/reload on mobile
   if(world && level && puzzle){
-    e.preventDefault();
+    //e.preventDefault();
   }
   
   // Tactile device: consider the first finger only
@@ -105,6 +105,8 @@ onmousemove = ontouchmove = e => {
   }
 }
 
+oncontextmenu = () => { return false; }
+
 // Keyboard (arrows / WASD / ZQSD) to move the snake
 // From https://xem.github.io/articles/jsgamesinputs.html
 u = r = d = l = 0;
@@ -113,6 +115,6 @@ onkeydown = onkeyup = e => {
 }
 
 setInterval(() => {
-  if(!halt) move_snake(b); // use the top element "b" as dummy target
+  move_snake(b); // use the top element "b" as dummy target
 },33);
 

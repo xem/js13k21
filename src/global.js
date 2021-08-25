@@ -16,10 +16,10 @@ svg = [
   '<svg width=99 height=99><rect x=80 y=10 width=10 height=80 stroke="#000"/><path d="M90 90L80 80L90 80L80 70L90 70L80 60L90 60L80 50L90 50L80 40L90 40L80 30L90 30L80 20L90 20L80 10" stroke="#000"/><rect x=55 y=25 width=25 height=3 stroke="#000"/><rect x=55 y=50 width=25 height=3 stroke="#000"/></svg>',
   
   // 5-8: U, L, D, R
-  '<svg onmousedown="u=1" onmouseup="u=0" width=50 height=50><path d="M12 30L25 15L38 30" stroke="#000"/></svg>',
-  '<svg onmousedown="l=1" onmouseup="l=0" width=50 height=50><path d="M30 12L15 25L30 38" stroke="#000"/></svg>',
-  '<svg onmousedown="d=1" onmouseup="d=0" width=50 height=50><path d="M12 20L25 35L38 20" stroke="#000"/></svg>',
-  '<svg onmousedown="r=1" onmouseup="r=0" width=50 height=50><path d="M20 12L35 25L20 38" stroke="#000"/></svg>',
+  '<svg onmousedown="u=1;move_snake(b)" onmouseup="u=0" ontouchstart="u=1;move_snake(b)" ontouchend="u=0" width=50 height=50><path d="M12 30L25 15L38 30" stroke="#000"/></svg>',
+  '<svg onmousedown="l=1;move_snake(b)" onmouseup="l=0" ontouchstart="l=1;move_snake(b)" ontouchend="l=0" width=50 height=50><path d="M30 12L15 25L30 38" stroke="#000"/></svg>',
+  '<svg onmousedown="d=1;move_snake(b)" onmouseup="d=0" ontouchstart="d=1;move_snake(b)" ontouchend="d=0" width=50 height=50><path d="M12 20L25 35L38 20" stroke="#000"/></svg>',
+  '<svg onmousedown="r=1;move_snake(b)" onmouseup="r=0" ontouchstart="r=1;move_snake(b)" ontouchend="r=0" width=50 height=50><path d="M20 12L35 25L20 38" stroke="#000"/></svg>',
   
   // 9-10: Brick
   '<svg width=50 height=17><rect x=0 y=0 width=25 height=17 stroke="#000"/><rect x=25 y=0 width=25 height=17 stroke="#000"/></svg>',

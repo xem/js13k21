@@ -1,5 +1,5 @@
-* { margin: 0; padding: 0; box-sizing: border-box; transform-style: preserve-3d; }
-body { background: #000; user-select: none; -webkit-tap-highlight-color: transparent; font: 14px calibri,arial; text-shadow: 0 0 5px #000; scrollbar-width: thin; }
+* { margin: 0; padding: 0; box-sizing: border-box; transform-style: preserve-3d; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; pointer-events: none; }
+body { background: #000; -webkit-tap-highlight-color: transparent; overscroll-behavior: contain; font: 14px calibri,arial; text-shadow: 0 0 5px #000; scrollbar-width: thin; }
 ::-webkit-scrollbar { width: 8px; height: 8px; background: #000; }
 ::-webkit-scrollbar-thumb { background: #666; }
 h1 { margin: 30px }

@@ -19,3 +19,4 @@
 .bricks .cubeleft { filter: brightness(.5) }
 .bricks .cubefront.bricks .cubeback { filter: brightness(.7) }
 .bricks .cuberight { filter: brightness(.9) }
+svg { pointer-events: all }

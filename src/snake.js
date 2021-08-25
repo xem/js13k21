@@ -1,189 +1,192 @@
 move_snake = target => {
   
-  //console.clear();
+  if(!halt){
   
-  var i, target_position, x, y, z, match;
-  
-  // Target is the div touched while moving the snake
-  document.title = target.id;
-  
-  head_position = snake_position[snake_position.length - 1];
-  
-  // If the serpent is trying to quit the wall, try to move to the front:
-  if(on_wall && !high && (d || target.id == "puzzlefloor")){
+    //console.clear();
     
-    console.log("quit wall");
-    if(head_angle_modulo == 180){
-      go_back();
-      return;
-    }
-    target_position = move_front();
-    console.log(1,target_position);
-  }
-  
-  // If the serpent is climbing a wall:
-  else if(on_wall && (l || u || r || d || target.classList.contains("wall_tile"))){
+    var i, target_position, x, y, z, match;
     
-    // console.log("move on wall");
-
-    // Get touched tile coordinates
-    if(target.id != "b"){
-      [match,x,z] = target.id.match(/wall_tile_(\d*)_(\d*)/);
-      x = +x;
-      z = h - +z - 1;
-    }
+    // Target is the div touched while moving the snake
+    document.title = target.id;
     
-    // Try to move on the touched tile if it's a neighbour of the current head position
+    head_position = snake_position[snake_position.length - 1];
     
-    // Left
-    if((l && (!high || head_position[0] > 0)) || (x == head_position[0] - 1 && z == head_position[2])){
+    // If the serpent is trying to quit the wall, try to move to the front:
+    if(on_wall && !high && (d || target.id == "puzzlefloor")){
       
-      // Backtrack if head is turned to the right
-      if(head_angle_modulo == 270){
-        go_back();
-        return;
-      }
-      
-      target_position = move_left();
-    }
-    
-    // Right
-    else if((r && (!high || head_position[0] < w - 1)) || (x == head_position[0] + 1 && z == head_position[2])){
-      
-      // Backtrack if head is turned to the left
-      if(head_angle_modulo == 90){
-        go_back();
-        return;
-      }
-      
-      target_position = move_right();
-    }
-    
-    // Up
-    else if((u && head_position[2] < h - 1) || (x == head_position[0] && z == head_position[2] + 1)){
-      
-      // Backtrack if head is turned to the bottom
-      if(head_angle_modulo == 0){
-        go_back();
-        return;
-      }
-      
-      target_position = move_up();
-    }
-    
-    // Down
-    else if((d && high) || (x == head_position[0] && z == head_position[2] - 1)){
-      
-      // Backtrack if head is turned to the top
+      console.log("quit wall");
       if(head_angle_modulo == 180){
         go_back();
         return;
       }
-      
-      target_position = move_down();
-    }
-  }
-  
-  else {
-    
-    // console.log("move on floor");
-  
-    // On the ground, the snake's head is surrounded by 4 invisible "trigger" divs
-    // The head's angle can be any multiple of 90deg
-    // For computations, we also keep a "modulo" value clamped between 0 and 360
-    
-    // As soon as the right trigger is touched
-    if(r || target.id == "right"){
-      
-      // Backtrack if head is turned to the left
-      if(head_angle_modulo == 90){
-        go_back();
-        return;
-      }
-      
-      // Or try to move on the right
-      target_position = move_right();
-    }
-    
-    // As soon as the down trigger is touched
-    else if(d || target.id == "down"){
-      
-      
-      // Backtrack if head is turned to the back
-      if(head_angle_modulo == 180){
-        go_back();
-        return;
-      }
-      
-      // Or try to move to the front
       target_position = move_front();
+      console.log(1,target_position);
     }
     
-    // As soon as the left trigger is touched
-    else if(l || target.id == "left"){
+    // If the serpent is climbing a wall:
+    else if(on_wall && (l || u || r || d || target.classList.contains("wall_tile"))){
       
-      // Backtrack if head is turned to the right
-      if(head_angle_modulo == 270){
-        go_back();
-        return;
+      // console.log("move on wall");
+
+      // Get touched tile coordinates
+      if(target.id != "b"){
+        [match,x,z] = target.id.match(/wall_tile_(\d*)_(\d*)/);
+        x = +x;
+        z = h - +z - 1;
       }
       
-      // Or try to move to the left
-      target_position = move_left();
-    }
-    
-    // As soon as the up trigger is touched
-    else if(u || target.id == "up"){
+      // Try to move on the touched tile if it's a neighbour of the current head position
       
-      // Backtrack if head is turned to the front
-      if(head_angle_modulo == 0){
-        go_back();
-        return;
+      // Left
+      if((l && (!high || head_position[0] > 0)) || (x == head_position[0] - 1 && z == head_position[2])){
+        
+        // Backtrack if head is turned to the right
+        if(head_angle_modulo == 270){
+          go_back();
+          return;
+        }
+        
+        target_position = move_left();
       }
-
-      // Or try to move to the back
-      target_position = move_back();
+      
+      // Right
+      else if((r && (!high || head_position[0] < w - 1)) || (x == head_position[0] + 1 && z == head_position[2])){
+        
+        // Backtrack if head is turned to the left
+        if(head_angle_modulo == 90){
+          go_back();
+          return;
+        }
+        
+        target_position = move_right();
+      }
+      
+      // Up
+      else if((u && head_position[2] < h - 1) || (x == head_position[0] && z == head_position[2] + 1)){
+        
+        // Backtrack if head is turned to the bottom
+        if(head_angle_modulo == 0){
+          go_back();
+          return;
+        }
+        
+        target_position = move_up();
+      }
+      
+      // Down
+      else if((d && high) || (x == head_position[0] && z == head_position[2] - 1)){
+        
+        // Backtrack if head is turned to the top
+        if(head_angle_modulo == 180){
+          go_back();
+          return;
+        }
+        
+        target_position = move_down();
+      }
     }
-  }
-  
-  // Do the move
-  if(target_position){
     
-    play_note();
+    else {
+      
+      // console.log("move on floor");
     
-    head_position = target_position;
+      // On the ground, the snake's head is surrounded by 4 invisible "trigger" divs
+      // The head's angle can be any multiple of 90deg
+      // For computations, we also keep a "modulo" value clamped between 0 and 360
+      
+      // As soon as the right trigger is touched
+      if(r || target.id == "right"){
+        
+        // Backtrack if head is turned to the left
+        if(head_angle_modulo == 90){
+          go_back();
+          return;
+        }
+        
+        // Or try to move on the right
+        target_position = move_right();
+      }
+      
+      // As soon as the down trigger is touched
+      else if(d || target.id == "down"){
+        
+        
+        // Backtrack if head is turned to the back
+        if(head_angle_modulo == 180){
+          go_back();
+          return;
+        }
+        
+        // Or try to move to the front
+        target_position = move_front();
+      }
+      
+      // As soon as the left trigger is touched
+      else if(l || target.id == "left"){
+        
+        // Backtrack if head is turned to the right
+        if(head_angle_modulo == 270){
+          go_back();
+          return;
+        }
+        
+        // Or try to move to the left
+        target_position = move_left();
+      }
+      
+      // As soon as the up trigger is touched
+      else if(u || target.id == "up"){
+        
+        // Backtrack if head is turned to the front
+        if(head_angle_modulo == 0){
+          go_back();
+          return;
+        }
 
-    // Clamp modulo angle between 0 and 360
-    head_angle_modulo = (head_angle_modulo + 360) % 360;
-    
-    // Save current modulo angle for the 5 new steps
-    for(i = 1; i <= 5; i++){
-      head_angles_modulo.push(head_angle_modulo);
+        // Or try to move to the back
+        target_position = move_back();
+      }
     }
     
-    // Move whole head
-    C.move({n:"head", x:head_position[0]*50+25, y:head_position[1]*50+25 + (behind ? -5 : 0), z:head_position[2]*50+4 + (behind ? 10 : 0)});
-    
-    // Make the body move 5 steps forward (with a bit of delay for the steps 3-5 to animate the movement)
-    move_body();
-    move_body();
-    setTimeout(move_body, 40);
-    setTimeout(move_body, 60);
-    setTimeout(move_body, 120);
-    
-    // Rotate head's inner decoration (eyes, tongue), but not the whole head because it contains the head circle that must always face the camera
-    C.move({n:"head_decoration_inner", rz:head_angle});
-    
-    // Block snake moves for 100ms
-    halt = 1;
-    setTimeout(()=>{
-      halt = 0
-    }, 200);
-    
-    // Call camera() to update the sprites in the scene
-    C.camera();
-    check_wall();
-    check_puzzle();
+    // Do the move
+    if(target_position){
+      
+      play_note();
+      
+      head_position = target_position;
+
+      // Clamp modulo angle between 0 and 360
+      head_angle_modulo = (head_angle_modulo + 360) % 360;
+      
+      // Save current modulo angle for the 5 new steps
+      for(i = 1; i <= 5; i++){
+        head_angles_modulo.push(head_angle_modulo);
+      }
+      
+      // Move whole head
+      C.move({n:"head", x:head_position[0]*50+25, y:head_position[1]*50+25 + (behind ? -5 : 0), z:head_position[2]*50+4 + (behind ? 10 : 0)});
+      
+      // Make the body move 5 steps forward (with a bit of delay for the steps 3-5 to animate the movement)
+      move_body();
+      move_body();
+      setTimeout(move_body, 40);
+      setTimeout(move_body, 60);
+      setTimeout(move_body, 120);
+      
+      // Rotate head's inner decoration (eyes, tongue), but not the whole head because it contains the head circle that must always face the camera
+      C.move({n:"head_decoration_inner", rz:head_angle});
+      
+      // Block snake moves for 100ms
+      halt = 1;
+      setTimeout(()=>{
+        halt = 0
+      }, 200);
+      
+      // Call camera() to update the sprites in the scene
+      C.camera();
+      check_wall();
+      check_puzzle();
+    }
   }
 }
 
