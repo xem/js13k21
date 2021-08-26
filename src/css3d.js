@@ -14,10 +14,11 @@ C = {
   $: t => self[t],
 
   reset: t => {
-    C.sprite_count = C.plane_count = C.cube_count = 0;
+    C.sprite_count = C.plane_count = C.cube_count = C.camX = C.camY = C.camZ = C.camRX = C.camRY = C.camRZ = 0;
     C.sprites = [];
     C.planes = [];
     C.cubes = [];
+    C.camera();
   },
 
   // Initialize an object's properties
@@ -123,6 +124,9 @@ C = {
       (t.rx||0===t.rx)&&(n.rx=t.rx),
       (t.ry||0===t.ry)&&(n.ry=t.ry),
       (t.rz||0===t.rz)&&(n.rz=t.rz),
+      (n.sx=t.sx||1),
+      (n.sy=t.sy||1),
+      (n.sz=t.sz||1),
       C.options[t.n]=n,
       r.style.transform=C.tr(n)
    }

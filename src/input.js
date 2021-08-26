@@ -8,7 +8,7 @@ halt = 0;
 // Pointer down (mouse or finger)
 onmousedown = ontouchstart = e => {
   
-  if(world == 0 || level == 0 || puzzle == 0) return;
+  if(puzzle == 0) return;
   
   // Tactile devices: consider the first finger only
   if(e.touches) e = e.touches[0];
@@ -19,9 +19,13 @@ onmousedown = ontouchstart = e => {
   // Save snake position
   pointer_start_x = e.pageX;
   pointer_start_y = e.pageY;
+
+  // Ignore the D-pad
+  if(e.target.tagName == "svg") return;
+  if(e.target.id == "back") return;
   
   // If the snake's head is pointed: prepare to move it
-  if(e.target == head_circle){
+  if(e.target.id == "head_circle"){
     pointer_mode = "move";
     
     // Save head coordinates
@@ -38,7 +42,7 @@ onmousedown = ontouchstart = e => {
 // Pointer up
 ontouchend = onmouseup = e => {
   
-  if(world == 0 || level == 0 || puzzle == 0) return;
+  if(puzzle == 0) return;
   
   // Clear down flag
   pointer_down = 0;
@@ -52,18 +56,13 @@ ontouchend = onmouseup = e => {
 // Pointer move
 onmousemove = ontouchmove = e => {
   
-  if(world == 0 || level == 0 || puzzle == 0) return;
+  if(puzzle == 0) return;
   
   var real_target, dx, dy;
   
-  // When we're in-game (not in menu), prevent native scroll/reload on mobile
-  if(world && level && puzzle){
-    //e.preventDefault();
-  }
-  
   // Tactile device: consider the first finger only
   if(e.touches) e = e.touches[0];
-  
+
   // Mode "camera rotation"
   if(pointer_mode == "cam"){
     
@@ -94,7 +93,7 @@ onmousemove = ontouchmove = e => {
   }
   
   // Mode "move snake"
-  else if(pointer_mode == "move" && !halt){
+  else if(pointer_mode == "move" && !halt && !win){
 
     // Find which HTML element is actually under the pointer at any moment
     // (warning: e.target only contains the element touched before moving the cursor, so it's not useful here)

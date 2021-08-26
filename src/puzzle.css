@@ -1,3 +1,4 @@
+.puzzle #viewport { background: linear-gradient(#039, #fff 25%); }
 #scene .floor { xbackground: radial-gradient(#080,#020 80%); pointer-events: all; background: radial-gradient(#0000,#000e 80%),url(grass.svg); }
 #puzzlefloor { background: #0003; }
 .on_wall #puzzlefloor, .on_wall #puzzlewall * { pointer-events: all; }
@@ -20,3 +21,4 @@
 .bricks .cubefront.bricks .cubeback { filter: brightness(.7) }
 .bricks .cuberight { filter: brightness(.9) }
 svg { pointer-events: all }
+.star { font-size: 50px; text-shadow: 0 0 15px #fff; transition: transform 1.7s}

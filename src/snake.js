@@ -1,6 +1,6 @@
 move_snake = target => {
   
-  if(!halt){
+  if(!halt && !win && (puzzle || world==-3) && b.classList.contains("fadein")){
   
     //console.clear();
     
@@ -151,7 +151,7 @@ move_snake = target => {
     // Do the move
     if(target_position){
       
-      play_note();
+      play_next_note();
       
       head_position = target_position;
 
@@ -279,7 +279,7 @@ check_wall = () => {
   var pos = snake_position[snake_position.length - 1];
   
   // Snake is "on wall" if there's a wall and head is inbounds and Y == 0
-  if(current_puzzle.wall && pos[1] == 0 && pos[0] >= 0 && pos[0] < w){
+  if(world > 0 && current_puzzle.wall && pos[1] == 0 && pos[0] >= 0 && pos[0] < w){
     on_wall = 1;
     C.move({n:"head",y:35});
     b.classList.add("on_wall");
@@ -299,7 +299,7 @@ check_wall = () => {
   }
   
   // Snake is "behind" if there's a wall and Y < 0
-  else if(current_puzzle.wall && pos[1] < 0 && pos[0] >= -1 && pos[0] < w + 1){
+  else if(world > 0 && current_puzzle.wall && pos[1] < 0 && pos[0] >= -1 && pos[0] < w + 1){
     behind = 1;
     b.classList.add("behind");
     C.camera({rx:camrx=-8,y:-h*5+20});
@@ -371,7 +371,11 @@ move_right = () => {
   console.log("right");
   
   // Next position (if all goes well)
-  var target_position = current_puzzle.mirror && inbounds()
+  var target_position = 
+  world == -3 ?
+    [head_position[0] + 1, head_position[1], head_position[2]]
+  :
+    (current_puzzle.mirror && inbounds())
     ? [(head_position[0] + 1) % w, head_position[1], head_position[2]]
     : [head_position[0] + 1, head_position[1], head_position[2]];
   
@@ -385,7 +389,7 @@ move_right = () => {
   if(!snake_position.slice(-snake_length * 5).find(a => a[0] == target_position[0] && a[1] == target_position[1] && a[2] == target_position[2])){
     
     // Mirroring
-    if(current_puzzle.mirror && inbounds()){
+    if(world > 0 && current_puzzle.mirror && inbounds()){
       if(head_position[0] + 1 != ((head_position[0] + 1) % h)){
         mirror_animation();
       }
@@ -405,6 +409,7 @@ move_right = () => {
       snake_position.push([target_position[0] - 1 + i/5, target_position[1], target_position[2] + ((i < 4 && mirroring) ? -99 : 0)]);
       head_angles.push(head_angle);
     }
+    C.camera({x:0});
     return target_position;
   }
 };
@@ -585,13 +590,13 @@ move_back = () => {
 };
 
 collision = (target) => {
-  if(bricks.find(a=>a[0] == target[0] && a[1] == target[1] && a[2] == target[2])) {
+  if(world > 0 && bricks.find(a=>a[0] == target[0] && a[1] == target[1] && a[2] == target[2])) {
     return 1;
   }
-  if(trees.find(a=>a[0] > target[0] - 1 && a[0] < target[0] + 2 && a[1] > target[1] - 1 && a[1] < target[1] +2)) {
+  if(world > 0 && trees.find(a=>a[0] > target[0] - 1 && a[0] < target[0] + 2 && a[1] > target[1] - 1 && a[1] < target[1] +2)) {
     return 1;
   }
-  if(animals.find(a=>a[0] == target[0] && (a[1] == target[1] || a[1] == target[1]+1))) {
+  if(world > 0 && animals.find(a=>a[0] == target[0] && (a[1] == target[1] || a[1] == target[1]+1))) {
     return 1;
   }
 }

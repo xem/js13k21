@@ -1,22 +1,15 @@
-.back { cursor: pointer; position: absolute; top: 30px; left: 20px; font-size: 30px; width: 50px; height: 50px; z-index: 2; }
-.dpad { position: absolute; bottom: 10px; left: 10px; z-index: 2; }
-.dpad svg { cursor: pointer; margin: 10px; width: 50px; height: 50px; border-radius: 5px; background: linear-gradient(45deg, #ddd, #888); box-shadow: 2px 2px 5px #000; }
-.dpad svg:first-child { position: absolute; bottom: 65px; left: 70px }
-.b { cursor: pointer; border: 1px solid #fff; margin: 20px; padding: 45px 150px 45px 45px; min-height: 150px; position: relative; box-shadow: 5px 5px 5px #444; transition: transform .5s; transform: translateZ(20px) }
-.l { padding: 45px }
-.p { padding: 20px; width: 25%; margin: 3%; min-height: 120px; display: inline-block; }
-.lock { opacity: .5 }
-.b svg { position: absolute; right: 50px; top: 50%; transform: translateY(-50%); opacity: .5; fill: #000; }
-.b.w1 { background: linear-gradient(45deg, #8d8, #161) }
-.b.w2 { background: linear-gradient(45deg, #fe5, #760) }
-.b.w3 { background: linear-gradient(45deg, #cee, #477) }
-.b.w4 { background: linear-gradient(45deg, #c20, #520) }
-.b.w5 { background: #000 }
-.b.w5 { padding: 45px; }
-.b.w5 svg { position: absolute; top: 0; left: 0; transform: none; width: 100%; height: 100%; fill: #aaa; }
-@media (hover: hover) and (pointer: fine) {
-  .b:hover { transform: translateZ(20px)rotateX(10deg); }
-  .l:hover { transform: translateZ(20px)rotateX(-10deg); }
-  .p:hover { transform: translateZ(20px)rotateY(10deg); }
-  .lock:hover { transform: translateZ(20px); }
-}
+.menu #b { max-width: 500px; border: none; box-shadow: none; height: auto; }
+.menu, .menu * { pointer-events: all }
+.menu .dpad { display: none }
+.world0 .back { display: none }
+.menu { color: #fff; }
+.main { width: 70vh; text-align: center; transform: translateX(-50%)translateY(-50%)rotateX(-30deg); font-size: 8vh; text-shadow: 0px -.5vh #888; line-height: 1.6; }
+.main a { cursor: pointer; }
+.levels { font-size: 5vh; max-height: 150vh; margin: 10vh 0 0; overflow: auto; padding: 0 0 50vh; transform: translateX(-50%)translateY(-50%)translateZ(-30vh)rotateX(-30deg); }
+.levels span { display: inline-block; border: 5px solid #fff; width: 9vh; height: 9vh; margin: 2vh; box-shadow: 0px -4px #888; }
+.bonus span { font-size: 4vh; line-height: .6; display: block; text-shadow: none; margin: -2vh 0 2vh; cursor: pointer; }
+
+/* Intro */
+.intro #scene,.intro .sprite { transition: 5s }
+.moon { font-size: 50px }
+.stars svg { width: 100%; height: 100%; }
