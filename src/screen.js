@@ -25,7 +25,7 @@ draw_screen = () => {
   // World 0: main menu
   if(world == 0){
     puzzle = 0;
-    html = "<div class=main><h1>LOSSST</h1><p><a onclick='world=-3;fadeout()'><h2>PLAY</h2></a><p><a onclick=world=-1;fadeout()>Select puzzle</a><p><a onclick=world=-2;fadeout()>Bonus</a><p class='emoji hide'>🌼";
+    html = "<div class=main><h1>LOSSST</h1><p><a onclick='world=-3;fadeout()'><h2>PLAY</h2></a><p><a onclick=world=-1;fadeout()>Select puzzle</a><p><a onclick=world=-2;fadeout()>Bonus</a><p class='emoji hide'>🌼<img src=grass.svg>";
     scene.innerHTML = html;
   }
   
@@ -210,7 +210,7 @@ intro = () => {
   
   // Show sign
   setTimeout(()=>{
-    C.camera({x:350,y:0,z:-400,rx:60,rz:-40});
+    C.camera({x:370,y:0,z:-400,rx:60,rz:-40});
   }, 14500);
   
   // Show sign

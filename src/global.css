@@ -14,7 +14,7 @@ body { background: #000; -webkit-tap-highlight-color: transparent; overscroll-be
 .emoji { font-family: emoji; }
 .dpad { position: absolute; bottom: 10px; left: 10px; z-index: 2; }
 .dpad svg { cursor: pointer; margin: 10px; width: 50px; height: 50px; border-radius: 5px; background: linear-gradient(45deg, #ddd, #888); box-shadow: 2px 2px 5px #000; }
-.dpad svg:first-child { position: absolute; bottom: 65px; left: 73px }
+.dpad svg:first-child { position: absolute; top: calc(100% - 140px); left: 73px }
 #fade { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 3; background: #000; transition: opacity .5s }
 .fadein #fade { opacity: 0 }
 #puzzlename, #coincount, .back { color: #fff; text-shadow: none; cursor: pointer;pointer-events: all; position: absolute; font-size: 30px; width: 50px; height: 50px; z-index: 2; top: 10px; }
