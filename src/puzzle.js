@@ -16,7 +16,7 @@
 draw_puzzle = () => {
   
   if(puzzle) puzzlename.innerHTML = world + " - " + puzzle;
-  if(stars) starcount.innerHTML = "<span class=emoji>⭐</span> x " + stars;
+  if(coins) coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
   
   // Puzzle
   current_puzzle = data[world][puzzle];
@@ -29,7 +29,7 @@ draw_puzzle = () => {
 
   // Snake globals
   snake_length = current_puzzle[4]-1; // without head  
-  snake_position = [[-2,2,0]];
+  snake_position = [[-3,2,0]];
   head_position = [];
   head_angles = [270];
   head_angles_modulo = [270];
@@ -55,9 +55,9 @@ draw_puzzle = () => {
   C.reset();
   
   // Scene
-  camrx = 30;
+  camrx = 20;
   camrz = 0;
-  C.camera({z:100,x:-100,y:h*10,rx:camrx,rz:camrz});
+  C.camera({z:-300+w*50,x:-150,y:h*10,rx:camrx,rz:camrz});
   C.plane({n:"floor",w:1500,h:1500,css:"floor circle"});
   
   // Puzzle
@@ -222,16 +222,19 @@ check_puzzle = () => {
   }
   if(ok){
     win = 1;
-    stars++;
-    starcount.innerHTML = "<span class=emoji>⭐</span> x " + stars;
+    coins++;
+    coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
     puzzle++;
     setTimeout(()=>{
-      C.plane({g:"puzzlefloor",n:"star",x:head_position[0]*50+25,y:head_position[1]*50+15,z:head_position[2]*50+25,w:50,h:50,rx:-45,html:"⭐",css:"emoji star",sx:.5,sy:.5,sz:.5});
+      C.plane({g:"puzzlefloor",n:"star",x:head_position[0]*50+25,y:head_position[1]*50+15,z:head_position[2]*50+25,w:50,h:50,rx:-45,html:"🪙",css:"emoji star",sx:.5,sy:.5,sz:.5});
     },200);
     setTimeout(()=>{
-      C.move({n:"star",z:head_position[2]*50+200,sx:2,sy:2,sz:2,ry:1080});
+      C.move({n:"star",z:head_position[2]*50+200,sx:1.5,sy:1.5,sz:1.5,ry:1080});
     },300);
+    setTimeout(()=>{
+      play_coin_sound();
+    },600);
     setTimeout(fadeout,2000);
-    console.log("OK");
+    //console.log("OK");
   }
 }

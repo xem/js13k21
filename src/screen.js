@@ -7,7 +7,7 @@ draw_screen = () => {
   // UI
   C.reset();
   puzzlename.innerHTML = "";
-  starcount.innerHTML = "";
+  coincount.innerHTML = "";
   
   // Add "menu" and current world to body's class
   b.className = "";
@@ -25,7 +25,7 @@ draw_screen = () => {
   // World 0: main menu
   if(world == 0){
     puzzle = 0;
-    html = "<div class=main><h1>LOSSST</h1><p><a onclick='world=1;puzzle=1;fadeout()'><h2>PLAY</h2></a><p><a onclick=world=-1;fadeout()>Select puzzle</a><p><a onclick=world=-2;fadeout()>Bonus</a>";
+    html = "<div class=main><h1>LOSSST</h1><p><a onclick='world=-3;fadeout()'><h2>PLAY</h2></a><p><a onclick=world=-1;fadeout()>Select puzzle</a><p><a onclick=world=-2;fadeout()>Bonus</a><p class='emoji hide'>🌼";
     scene.innerHTML = html;
   }
   
@@ -41,7 +41,7 @@ draw_screen = () => {
         for(j in data[i]){
           console.log(j);
           if(j != 0){
-            html += "<span>" + j + "</span>";
+            html += "<span onclick='world="+i+";puzzle="+j+";fadeout()'>" + j + "</span>";
           }
         }
       }
@@ -51,7 +51,7 @@ draw_screen = () => {
   
   // World -2: Bonus
   else if(world == -2){
-    html = "<div class='main bonus'><h1>BONUS</h1><p><a>Puzzle editor</a><span>(WebMonetization bonus)</span><p><a>Snake editor</a><span>(NEAR Protocol bonus)</span><p><a>Leaderboards</a><span>(Protocol Labs bonus)</span><p><a>Get more credits</a><span>(FLUX bonus)</span>";
+    html = "<div class='main bonus'><h1>BONUS</h1><p><a>Puzzle editor</a><span>(WebMonetization bonus)</span><p><a>Snake editor</a><span>(NEAR Protocol bonus)</span><p><a>Leaderboards</a><span>(Protocol Labs bonus)</span><p><a>Get more hints</a><span>(FLUX bonus)</span><p><a>Delete save</a>";
     scene.innerHTML = html;
   }
   
@@ -91,13 +91,18 @@ fadeout = () => {
 }
 
 intro = () => {
-  
-  C.camera({z:20,rx:60,rz:10});
-  setTimeout(()=>{b.classList.add("intro")}, 3000);
-  console.log(scene.style.transform);
 
   // UI
   C.reset();
+  
+  play_note(1);
+  play_note(1);
+  play_note(1);
+  setInterval(play_next_note,500);
+  
+  C.camera({x:-200,y:50,z:-200,rx:50,rz:30});
+  setTimeout(()=>{b.classList.add("intro")}, 3000);
+  console.log(scene.style.transform);
   
   // Scene
   camrx = 30;
@@ -105,7 +110,7 @@ intro = () => {
   C.plane({n:"floor",w:1500,h:1500,css:"floor circle"});
   
   snake_length = 2; // without head  
-  snake_position = [[-10,2,0]];
+  snake_position = [[-12,2,0]];
   head_position = [];
   head_angles = [270];
   head_angles_modulo = [270];
@@ -148,7 +153,7 @@ intro = () => {
   for(i = 0; i < 15; i++){
     x = ~~(Math.random() * 15) - 6;
     y = ~~(Math.random() * 15) - 6;
-    if(!flowers.find(a => a[0] > x-2 && a[0] < x+2 && a[1] > y-2 && a[1] < y+2) && y != 2 && y != 3){
+    if(!flowers.find(a => a[0] > x-2 && a[0] < x+2 && a[1] > y-2 && a[1] < y+2) && (y < -3 || y > 3)){
       flowers.push([x,y]);
       //console.log(x, y);
       C.plane({g:"puzzlefloor",w:40,h:34,z:5,x:x*50,y:y*50,z:1,rx:0,o:"bottom",css:"emoji flower",html:"🌼"});
@@ -156,12 +161,64 @@ intro = () => {
   }
   
   // Stars
-  C.plane({w:2000,h:2000,z:1000,rx:45,css:"stars",html:svg[0]});
-  C.plane({x:100,z:900,rx:45,rz:-70,sx:2,sy:2,sz:2,css:"emoji moon",html:"🌙"});
-  for(i=400;i--;)star.innerHTML+=`<text x=${Math.random()*2000} y=${Math.random()*2000}>.`;
+  C.plane({w:5000,h:2000,x:-1000,z:1000,rx:45,css:"stars",html:svg[0]});
+  C.plane({x:0,z:900,rx:45,rz:-70,sx:2,sy:2,sz:2,css:"emoji moon",html:"🌙"});
+  for(i=400;i--;)star.innerHTML+=`<text x=${Math.random()*5000} y=${Math.random()*2000}>.`;
+  // Animation
   
+  // Move right
   setTimeout(()=>r=1, 100);
-  setTimeout(()=>r=0, 2500);
-  setTimeout(()=>C.move({n:"head_decoration",ry:-45}), 3000);
+  setTimeout(()=>r=0, 2000);
+  
+  // Sign
+  C.plane({x:300,y:220,w:5,h:105,z:55,rx:-90,ry:-35,css:"sign"});
+  C.plane({x:300,y:221,w:100,h:60,z:72,rx:-90,ry:-35,css:"sign",html:"SALE<p><span class=emoji>🪙</span> x 200"});
+  
+  // Look up
+  setTimeout(()=>C.move({n:"head_decoration",z:28,ry:-45}), 3000);
   setTimeout(()=>C.camera({rx:120, z:-100,y:-300}),3500);
+  
+  // Look down
+  setTimeout(()=>{
+    b.classList.remove("intro");
+    b.classList.add("intro2");
+  },9000);
+  setTimeout(()=>{
+    C.camera({x:-200,y:50,z:-200,rx:50,rz:30});
+    C.plane({w:50,h:70,x:480,y:200,z:30,html:svg[1],sx:7,sy:7,sz:7,rx:-90,ry:-20,rz:-45,css:"emoji rocket"});
+  }, 10000);
+  setTimeout(()=>{
+    C.move({n:"head_decoration",ry:0})
+  }, 10500);
+  
+  // Blink
+  setTimeout(()=>{
+    C.move({n:"p0",sx:.2,sy:.2,sz:.2});
+  }, 11500);
+  
+  // Eye stars
+  setTimeout(()=>{
+    p0.classList.add("eyestars");
+    C.move({n:"p0",sx:1,sy:1,sz:1});
+    p0.innerHTML = "⭐⭐";
+  }, 11600);
+  
+  // Show rocket
+  setTimeout(()=>{
+    C.camera({x:450,y:-70,z:-100,rx:60,rz:-20});
+  }, 12500);
+  
+  // Show sign
+  setTimeout(()=>{
+    C.camera({x:350,y:0,z:-400,rx:60,rz:-40});
+  }, 14500);
+  
+  // Show sign
+  setTimeout(()=>{
+    world = 1;
+    puzzle = 1;
+    fadeout();
+  }, 17000);
+  
+  
 }

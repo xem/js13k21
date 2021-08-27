@@ -1,6 +1,6 @@
 move_snake = target => {
   
-  if(!halt && !win && (puzzle || world==-3) && b.classList.contains("fadein")){
+  if(!halt && (puzzle || world==-3) && !win && b.classList.contains("fadein")){
   
     //console.clear();
     
@@ -151,7 +151,7 @@ move_snake = target => {
     // Do the move
     if(target_position){
       
-      play_next_note();
+      if(world > 0) play_next_note();
       
       head_position = target_position;
 
@@ -309,7 +309,7 @@ check_wall = () => {
     b.classList.remove("on_wall");
     b.classList.remove("behind");
     C.move({n:"head_decoration",rx:0});
-    C.camera({rx:camrx=30,y:h*10});
+    if(world > 0) C.camera({rx:camrx=30,y:h*10});
   }
 }
 
@@ -409,7 +409,7 @@ move_right = () => {
       snake_position.push([target_position[0] - 1 + i/5, target_position[1], target_position[2] + ((i < 4 && mirroring) ? -99 : 0)]);
       head_angles.push(head_angle);
     }
-    C.camera({x:0});
+    if(world > 0) C.camera({x:0});
     return target_position;
   }
 };
@@ -590,7 +590,7 @@ move_back = () => {
 };
 
 collision = (target) => {
-  if(world > 0 && bricks.find(a=>a[0] == target[0] && a[1] == target[1] && a[2] == target[2])) {
+  if(world > 0 && bricks.find(a=>a[0] == target[0] && a[1] == target[1])) {
     return 1;
   }
   if(world > 0 && trees.find(a=>a[0] > target[0] - 1 && a[0] < target[0] + 2 && a[1] > target[1] - 1 && a[1] < target[1] +2)) {

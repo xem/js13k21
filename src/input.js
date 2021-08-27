@@ -114,6 +114,6 @@ onkeydown = onkeyup = e => {
 }
 
 setInterval(() => {
-  move_snake(b); // use the top element "b" as dummy target
+  if(snake_position) move_snake(b); // use the top element "b" as dummy target
 },33);
 
