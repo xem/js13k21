@@ -15,6 +15,8 @@
 // Draw current puzzle
 draw_puzzle = () => {
   
+  song = 1;
+  
   if(puzzle) puzzlename.innerHTML = world + " - " + puzzle;
   if(coins) coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
   
@@ -47,9 +49,6 @@ draw_puzzle = () => {
   win = 0;
   
   var i, j, x, y, head_position;
-  
-  // Remove menu class from body
-  b.classList.remove("menu");
 
   // UI
   C.reset();
@@ -57,10 +56,16 @@ draw_puzzle = () => {
   // Scene
   camrx = 20;
   camrz = 0;
+  b.classList.remove("menu");
+  
   C.camera({z:-300+w*50,x:-150,y:h*10,rx:camrx,rz:camrz});
-  C.plane({n:"floor",w:1500,h:1500,css:"floor circle"});
+  
+  // Remove menu class from body
+  setTimeout(()=>{b.classList.add("fadein")},1000);
+  setTimeout(()=>{fade.style.display = "none"},1500);
   
   // Puzzle
+  C.plane({n:"floor",w:1500,h:1500,css:"floor circle"});
   C.group({n:"puzzlefloor",w:w*50,h:h*50,z:2});
   C.group({n:"puzzlewall",w:w*50,h:h*50,y:-h*50/2,z:2,rx:-90,o:"bottom"});
   
@@ -113,7 +118,7 @@ draw_puzzle = () => {
   for(i = 0; i < 4; i++){
     x = ~~(Math.random() * 15) - 6;
     y = ~~(Math.random() * 15) - 6;
-    if(!(x > -3 && x < w+3 && y > -3 && y < h+3) && y != 1 && y != 2 && y != 3){
+    if(!(x > -3 && x < w+3 && y > -3 && y < h+3) && (y < 1 || y > 4)){
       if(!trees.find(a => (a[0] > x-3 && a[0] < x+3) || (a[1] > y-3 && a[1] < y+3))){
         trees.push([x,y]);
         //console.log(x, y);

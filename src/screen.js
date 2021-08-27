@@ -16,8 +16,10 @@ draw_screen = () => {
   
   // Fade in
   fade.style.display = "block";
-  b.classList.add("fadein");
-  setTimeout(()=>{fade.style.display = "none"},500);
+  if(puzzle == 0) { 
+    b.classList.add("fadein");
+    setTimeout(()=>{fade.style.display = "none"},500);
+  }
   
   html = "";
   scene.innerHTML = "";
@@ -94,11 +96,12 @@ intro = () => {
 
   // UI
   C.reset();
+  song = 0;
   
   play_note(1);
   play_note(1);
   play_note(1);
-  setInterval(play_next_note,500);
+  var song_interval = setInterval(play_next_note,220);
   
   C.camera({x:-200,y:50,z:-200,rx:50,rz:30});
   setTimeout(()=>{b.classList.add("intro")}, 3000);
@@ -161,10 +164,11 @@ intro = () => {
   }
   
   // Stars
-  C.plane({w:5000,h:2000,x:-1000,z:1000,rx:45,css:"stars",html:svg[0]});
-  C.plane({x:0,z:900,rx:45,rz:-70,sx:2,sy:2,sz:2,css:"emoji moon",html:"🌙"});
-  for(i=400;i--;)star.innerHTML+=`<text x=${Math.random()*5000} y=${Math.random()*2000}>.`;
-  // Animation
+  C.plane({w:5000,h:3000,x:-1000,z:1000,rx:45,css:"stars",html:svg[0]});
+  C.plane({x:-100,z:900,rx:45,rz:-70,sx:2,sy:2,sz:2,css:"emoji moon",html:"🌙"});
+  for(i=500;i--;)star.innerHTML+=`<text x=${Math.random()*5000} y=${Math.random()*3000}>.`;
+  
+  // Animation:
   
   // Move right
   setTimeout(()=>r=1, 100);
@@ -178,47 +182,60 @@ intro = () => {
   setTimeout(()=>C.move({n:"head_decoration",z:28,ry:-45}), 3000);
   setTimeout(()=>C.camera({rx:120, z:-100,y:-300}),3500);
   
+  //setTimeout(()=>{
+    //b.classList.remove("intro");
+    //b.classList.add("intro2");
+  //},9200);
+
   // Look down
-  setTimeout(()=>{
-    b.classList.remove("intro");
-    b.classList.add("intro2");
-  },9000);
   setTimeout(()=>{
     C.camera({x:-200,y:50,z:-200,rx:50,rz:30});
     C.plane({w:50,h:70,x:480,y:200,z:30,html:svg[1],sx:7,sy:7,sz:7,rx:-90,ry:-20,rz:-45,css:"emoji rocket"});
-  }, 10000);
+  }, 10200);
+  
   setTimeout(()=>{
     C.move({n:"head_decoration",ry:0})
-  }, 10500);
+    b.classList.remove("intro");
+    b.classList.add("intro2");
+  }, 14000);
+  
+  // Move right
+  setTimeout(()=>{r=1;move_snake(b);r=0;C.camera({x:-80,y:70});}, 15500);
+  setTimeout(()=>{r=1;move_snake(b);r=0;}, 15800);
   
   // Blink
   setTimeout(()=>{
     C.move({n:"p0",sx:.2,sy:.2,sz:.2});
-  }, 11500);
+  }, 17500);
   
   // Eye stars
   setTimeout(()=>{
     p0.classList.add("eyestars");
     C.move({n:"p0",sx:1,sy:1,sz:1});
     p0.innerHTML = "⭐⭐";
-  }, 11600);
+    b.classList.remove("intro2");
+    b.classList.add("intro");
+  }, 17600);
   
   // Show rocket
   setTimeout(()=>{
     C.camera({x:450,y:-70,z:-100,rx:60,rz:-20});
-  }, 12500);
+  }, 18500);
   
   // Show sign
   setTimeout(()=>{
     C.camera({x:370,y:0,z:-400,rx:60,rz:-40});
-  }, 14500);
+  }, 23500);
   
-  // Show sign
+  // Fade out
   setTimeout(()=>{
     world = 1;
     puzzle = 1;
     fadeout();
-  }, 17000);
+    clearTimeout(song_interval);
+    song = 1;
+    note = 75;
+  }, 32000);
   
   
 }
