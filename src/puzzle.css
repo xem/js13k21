@@ -20,5 +20,5 @@
 .bricks .cubeleft { filter: brightness(.5) }
 .bricks .cubefront.bricks .cubeback { filter: brightness(.7) }
 .bricks .cuberight { filter: brightness(.9) }
-svg { pointer-events: all }
+svg { pointer-events: all; position: relative; top: -1px; }
 .star { font-size: 50px; text-shadow: 0 0 15px #fff; transition: transform 1.7s}
