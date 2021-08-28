@@ -89,7 +89,7 @@ nav_back = () => {
 fadeout = () => {
   fade.style.display = "block";
   setTimeout(()=>{b.classList.remove("fadein")},100);
-  setTimeout(draw_screen, 500);
+  setTimeout(draw_screen, 200);
 }
 
 intro = () => {

@@ -1,8 +1,8 @@
 .puzzle #viewport { background: linear-gradient(#039, #fff 25%); }
 #scene .floor { xbackground: radial-gradient(#080,#020 80%); pointer-events: all; background: radial-gradient(#0000,#000e 80%),url(grass.svg); }
-#puzzlefloor { background: #0003; }
+#puzzlefloor { background: #0005; }
 .on_wall #puzzlefloor, .on_wall #puzzlewall * { pointer-events: all; }
-.tile { background: #fff; border: 5px solid #000; }
+.tile { background: #fff; border: 3px solid #777; }
 .wall_tile { background: #bbb }
 .tile.black { background: #000 }
 .tile.red { background: #F00 }
@@ -21,4 +21,4 @@
 .bricks .cubefront.bricks .cubeback { filter: brightness(.7) }
 .bricks .cuberight { filter: brightness(.9) }
 svg { pointer-events: all; position: relative; top: -1px; }
-.star { font-size: 50px; text-shadow: 0 0 15px #fff; transition: transform 1.7s}
+.coin { font-size: 50px; text-shadow: 0 0 15px #fff; transition: transform 1.7s}

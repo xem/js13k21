@@ -54,19 +54,19 @@ draw_puzzle = () => {
   C.reset();
   
   // Scene
-  camrx = 20;
+  camrx = 30;
   camrz = 0;
   b.classList.remove("menu");
   
   C.camera({z:-300+w*50,x:-150,y:h*10,rx:camrx,rz:camrz});
   
   // Remove menu class from body
-  setTimeout(()=>{b.classList.add("fadein")},1000);
-  setTimeout(()=>{fade.style.display = "none"},1500);
+  setTimeout(()=>{b.classList.add("fadein")},100);
+  setTimeout(()=>{fade.style.display = "none"},500);
   
   // Puzzle
   C.plane({n:"floordiv",w:1500,h:1500,css:"floor circle"});
-  setTimeout(()=>{floordiv.style.height = '1450px'},500); // Fx fix
+  //setTimeout(()=>{floordiv.style.height = '1450px'},500); // Fx fix
   
   C.group({n:"puzzlefloor",w:w*50,h:h*50,z:2});
   C.group({n:"puzzlewall",w:w*50,h:h*50,y:-h*50/2,z:2,rx:-90,o:"bottom"});
@@ -78,18 +78,18 @@ draw_puzzle = () => {
   if(floor){
     for(j = h; j--;){
       for(i = w; i--;){
-        console.log(((floor[j])))
+        //console.log(((floor[j])))
         //console.log(floor[j*w+i]);
-        C.plane({g:"puzzlefloor",n:"tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:55,h:55,css:"tile "+(((floor[j]>>i)&1) ? "black" : "")});
+        C.plane({g:"puzzlefloor",n:"tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:52,h:52,css:"tile "+(((floor[j]>>i)&1) ? "black" : "")});
       }
     }
   }
   
   if(wall){
     C.cube({g:"puzzlefloor",w:w*50+4,h:h*50+2,d:4,x:w*50/2,y:-2.1,z:2,css:"wall"});
-    for(j = 0; j < h; j++){
-      for(i = 0; i < w; i++){
-        C.plane({g:"puzzlewall",n:"wall_tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:55,h:55,css:"tile wall_tile "+(wall[j*w+i] ? "black" : "")});
+    for(j = h; j--;){
+      for(i = w; i--;){
+        C.plane({g:"puzzlewall",n:"wall_tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:52,h:52,css:"tile wall_tile "+(((wall[j]>>i)&1) ? "black" : "")});
       }
     }
   }
@@ -118,14 +118,14 @@ draw_puzzle = () => {
   
   // Trees
   for(i = 0; i < 4; i++){
-    x = ~~(Math.random() * 15) - 6;
-    y = ~~(Math.random() * 15) - 6;
+    x = ~~(Math.random() * 14) - 6;
+    y = ~~(Math.random() * 14) - 6;
     if(!(x > -3 && x < w+3 && y > -3 && y < h+3) && (y < 1 || y > 4)){
       if(!trees.find(a => (a[0] > x-3 && a[0] < x+3) || (a[1] > y-3 && a[1] < y+3))){
         trees.push([x,y]);
         //console.log(x, y);
-        C.sprite({g:"puzzlefloor",x:x*50,y:y*50,z:5,w:65,h:75,sx:2,sy:2,sz:2,css:"tree emoji",html:"🌳",o:"bottom center"});
-        C.plane({g:"puzzlefloor",x:x*50,y:y*50,z:1,rz:280,w:65,h:75,sx:2,sy:2.8,sz:2,css:"tree shadow emoji",html:"🌳",o:"bottom center"});
+        C.sprite({g:"puzzlefloor",x:x*50-20,y:y*50,z:5,w:65,h:75,sx:1.8,sy:1.8,sz:1.8,css:"tree emoji",html:"🌳",o:"bottom center"});
+        C.plane({g:"puzzlefloor",x:x*50-20,y:y*50,z:1,rz:280,w:65,h:75,sx:1.8,sy:2.5,sz:1.8,css:"tree shadow emoji",html:"🌳",o:"bottom center"});
       }
     }
   }
@@ -149,13 +149,14 @@ draw_puzzle = () => {
   if(!(x > -2 && x < w+2 && y > -2 && y < h+2)){
     if(!flowers.find(a => a[0] > x-2 && a[0] < x+2 && a[1] > y-2 && a[1] < y+2) && y != 2 && y != 3 && !trees.find(a => a[0] > x-2 && a[0] < x+2 && a[1] > y-2 && a[1] < y+2)){
       animals=[[x,y,[..."🐒🐦🐤🐣🐥🦆🦉🐝🦋🐌🐞🐢🐖🐏🐑🐕🐈🐓🦢🐿"][~~(Math.random() * 20)]]];
-      C.sprite({g:"puzzlefloor",w:50,h:55,z:5,x:x*50+20,y:y*50+15,z:0,rx:0,o:"bottom",css:"emoji animal",html:animals[0][2]});
+      C.sprite({g:"puzzlefloor",w:50,h:55,z:8,x:x*50+20,y:y*50+15,z:3,rx:0,o:"bottom",css:"emoji animal",html:animals[0][2]});
       C.plane({g:"puzzlefloor",x:x*50+20,y:y*50-10,z:1,rz:350,w:50,h:55,css:"emoji animal shadow",html:animals[0][2],o:"bottom center"});
     }
   }
   
+  // Bricks
   for(i of bricks){
-    C.cube({g:"puzzlefloor",x:i[0]*50+25,y:i[1]*50+25,z:i[2]*50+5,w:50,h:50,d:"50",css:"cube bricks",html:((i[1]+i[2])%2)?(svg[9]+svg[10]+svg[9]):(svg[10]+svg[9]+svg[10]),htmlside:((i[1]+i[2])%2)?(svg[10]+svg[9]+svg[10]):(svg[9]+svg[10]+svg[9])});
+    C.cube({g:"puzzlefloor",x:i[0]*50+25,y:i[1]*50+25,z:(i[2]||0)*50-17,w:50,h:50,d:50,css:"cube bricks",html:(i[1]%2)?(svg[9]+svg[10]+svg[9]):(svg[10]+svg[9]+svg[10]),htmlside:((i[1]+i[2])%2)?(svg[10]+svg[9]+svg[10]):(svg[9]+svg[10]+svg[9])});
   }
   
 };
@@ -174,7 +175,7 @@ check_puzzle = () => {
         if(val == 0){
           if(snake_on_current_cell){
             ok = 0;
-            console.log(1);
+            //console.log(1);
             C.$("tile_"+x+"_"+y).classList.add("red");
           }
           else {
@@ -186,7 +187,7 @@ check_puzzle = () => {
         if(val == 1){
           if(!snake_on_current_cell){
             ok = 0;
-            console.log(2);
+            //console.log(2);
             C.$("tile_"+x+"_"+y).classList.remove("blue");
           }
           else {
@@ -198,31 +199,31 @@ check_puzzle = () => {
   }
   
   if(wall){
-    for(i in wall){
-      x = i % w;
-      y = ~~(i / w);
-      val = wall[y*w+x];
-      snake_on_current_cell = current_positions.find(a => a[0] == x && a[1] >= 0 && a[1] < h && a[2] == h - y - 1);
-      
-      // Not ok if there's a snake body part on a white cell
-      if(val == 0){
-        if(snake_on_current_cell){
-          ok = 0;
-          C.$("wall_tile_"+x+"_"+y).classList.add("red");
+    for(y = 0; y < h; y++){
+      for(x = 0; x < w; x++){
+        val = (wall[y]>>x)&1
+        snake_on_current_cell = current_positions.find(a => a[0] == x && a[1] >= 0 && a[1] < h && a[2] == h - y - 1);
+        
+        // Not ok if there's a snake body part on a white cell
+        if(val == 0){
+          if(snake_on_current_cell){
+            ok = 0;
+            C.$("wall_tile_"+x+"_"+y).classList.add("red");
+          }
+          else {
+            C.$("wall_tile_"+x+"_"+y).classList.remove("red");
+          }
         }
-        else {
-          C.$("wall_tile_"+x+"_"+y).classList.remove("red");
-        }
-      }
-      
-      // Not ok if there's no snake body part on a black cell
-      if(val == 1){
-        if(!snake_on_current_cell){
-          ok = 0;
-          C.$("wall_tile_"+x+"_"+y).classList.remove("blue");
-        }
-        else {
-          C.$("wall_tile_"+x+"_"+y).classList.add("blue");
+        
+        // Not ok if there's no snake body part on a black cell
+        if(val == 1){
+          if(!snake_on_current_cell){
+            ok = 0;
+            C.$("wall_tile_"+x+"_"+y).classList.remove("blue");
+          }
+          else {
+            C.$("wall_tile_"+x+"_"+y).classList.add("blue");
+          }
         }
       }
     }
@@ -233,10 +234,10 @@ check_puzzle = () => {
     coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
     puzzle++;
     setTimeout(()=>{
-      C.plane({g:"puzzlefloor",n:"star",x:head_position[0]*50+25,y:head_position[1]*50+15,z:head_position[2]*50+25,w:50,h:50,rx:-45,html:"🪙",css:"emoji star",sx:.5,sy:.5,sz:.5});
+      C.plane({g:"puzzlefloor",n:"coin",x:head_position[0]*50+25,y:head_position[1]*50+15,z:head_position[2]*50+25,w:50,h:50,rx:high?-90:-45,html:"🪙",css:"emoji coin",sx:.5,sy:.5,sz:.5});
     },200);
     setTimeout(()=>{
-      C.move({n:"star",z:head_position[2]*50+200,sx:1.5,sy:1.5,sz:1.5,ry:1080});
+      C.move({n:"coin",y:(wall && head_position[1] == 0) ? 100 : 0, z:head_position[2]*50+200,sx:1.5,sy:1.5,sz:1.5,ry:1080});
     },300);
     setTimeout(()=>{
       play_coin_sound();

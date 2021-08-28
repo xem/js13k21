@@ -279,7 +279,7 @@ check_wall = () => {
   var pos = snake_position[snake_position.length - 1];
   
   // Snake is "on wall" if there's a wall and head is inbounds and Y == 0
-  if(world > 0 && current_puzzle.wall && pos[1] == 0 && pos[0] >= 0 && pos[0] < w){
+  if(world > 0 && wall && pos[1] == 0 && pos[0] >= 0 && pos[0] < w){
     on_wall = 1;
     C.move({n:"head",y:35});
     b.classList.add("on_wall");
@@ -299,7 +299,7 @@ check_wall = () => {
   }
   
   // Snake is "behind" if there's a wall and Y < 0
-  else if(world > 0 && current_puzzle.wall && pos[1] < 0 && pos[0] >= -1 && pos[0] < w + 1){
+  else if(world > 0 && wall && pos[1] < 0 && pos[0] >= -1 && pos[0] < w + 1){
     behind = 1;
     b.classList.add("behind");
     C.camera({rx:camrx=-8,y:-h*5+20});
@@ -506,7 +506,7 @@ move_front = () => {
   if(target_position[1] > h + 9) return;
   
   // No collision with wall
-  if(current_puzzle.wall && target_position[0] >= 0 && target_position[0] < w && target_position[1] == 0){
+  if(wall && target_position[0] >= 0 && target_position[0] < w && target_position[1] == 0){
     return;
   }
   
@@ -554,7 +554,7 @@ move_back = () => {
   if(target_position[1] < -8) return;
   
   // No collision with wall
-  if(current_puzzle.wall && target_position[0] >= 0 && target_position[0] < w && target_position[1] == -1){
+  if(wall && target_position[0] >= 0 && target_position[0] < w && target_position[1] == -1){
     return;
   }
   
@@ -590,7 +590,7 @@ move_back = () => {
 };
 
 collision = (target) => {
-  if(world > 0 && bricks.find(a=>a[0] == target[0] && a[1] == target[1])) {
+  if(world > 0 && bricks.find(a=>a[0] == target[0] && a[1] == target[1] && target[2] == 0)) {
     return 1;
   }
   if(world > 0 && trees.find(a=>a[0] > target[0] - 1 && a[0] < target[0] + 2 && a[1] > target[1] - 1 && a[1] < target[1] +2)) {

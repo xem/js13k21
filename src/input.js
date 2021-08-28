@@ -74,7 +74,7 @@ onmousemove = ontouchmove = e => {
     camrx += dy / 10;
     
     // Clamp X angle between 10 and 40
-    if(camrx < (behind ? -10 : 20)) camrx = (behind ? -10 : 20);
+    if(camrx < (behind ? -10 : 30)) camrx = (behind ? -10 : 30);
     if(camrx > (high ? 70 : 45)) camrx = (high ? 70 : 45);
     
     // Rotate around Z axis according to delta X
@@ -108,8 +108,12 @@ oncontextmenu = () => { return false; }
 
 // Keyboard (arrows / WASD / ZQSD) to move the snake
 // From https://xem.github.io/articles/jsgamesinputs.html
+canskip = 1;
 u = r = d = l = 0;
 onkeydown = onkeyup = e => {
+  console.log(e);
+  if(canskip && e.key == "n") { puzzle++; fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }
+  if(canskip && e.key == "p") { puzzle--; fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }
   this['lurd************************l**r************l*d***u**u'[e.which - 37]] = e.type[5];
 }
 
