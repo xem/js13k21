@@ -16,9 +16,9 @@ draw_screen = () => {
   
   // Fade in
   fade.style.display = "block";
-  if(puzzle == 0) { 
-    b.classList.add("fadein");
-    setTimeout(()=>{fade.style.display = "none"},500);
+  if(puzzle == 0) {
+    setTimeout(()=>{b.classList.add("fadein");},(world == -3 ? 1000 : 500) );
+    setTimeout(()=>{fade.style.display = "none";},(world == -3 ? 1500 : 1000) );
   }
   
   html = "";
@@ -104,13 +104,16 @@ intro = () => {
   var song_interval = setInterval(play_next_note,220);
   
   C.camera({x:-200,y:50,z:-200,rx:50,rz:30});
-  setTimeout(()=>{b.classList.add("intro")}, 3000);
-  console.log(scene.style.transform);
   
   // Scene
   camrx = 30;
   camrz = 0;
   C.plane({n:"floor",w:1500,h:1500,css:"floor circle"});
+  
+  setTimeout(()=>{
+    b.classList.add("intro") // Hide back button, enable 5s transitions
+    setTimeout(()=>{floor.style.height = '1450px'},100); // Fx fix
+  }, 100);
   
   snake_length = 2; // without head  
   snake_position = [[-12,2,0]];
@@ -170,9 +173,11 @@ intro = () => {
   
   // Animation:
   
-  // Move right
-  setTimeout(()=>r=1, 100);
-  setTimeout(()=>r=0, 2000);
+  // Move right 9 times
+  for(i = 0; i < 9; i ++){
+  setTimeout(()=>{r=1;halt=0;move_snake(b);r=0;}, 300 + i * 250);
+  }
+  
   
   // Sign
   C.plane({x:300,y:220,w:5,h:105,z:55,rx:-90,ry:-35,css:"sign"});
@@ -181,16 +186,11 @@ intro = () => {
   // Look up
   setTimeout(()=>C.move({n:"head_decoration",z:28,ry:-45}), 3000);
   setTimeout(()=>C.camera({rx:120, z:-100,y:-300}),3500);
-  
-  //setTimeout(()=>{
-    //b.classList.remove("intro");
-    //b.classList.add("intro2");
-  //},9200);
 
   // Look down
   setTimeout(()=>{
     C.camera({x:-200,y:50,z:-200,rx:50,rz:30});
-    C.plane({w:50,h:70,x:480,y:200,z:30,html:svg[1],sx:7,sy:7,sz:7,rx:-90,ry:-20,rz:-45,css:"emoji rocket"});
+    C.plane({w:350,h:350,x:480,y:200,z:85,html:svg[1],rx:-90,ry:-20,rz:-45,css:"rocket"});
   }, 10200);
   
   setTimeout(()=>{
@@ -200,8 +200,8 @@ intro = () => {
   }, 14000);
   
   // Move right
-  setTimeout(()=>{r=1;move_snake(b);r=0;C.camera({x:-80,y:70});}, 15500);
-  setTimeout(()=>{r=1;move_snake(b);r=0;}, 15800);
+  setTimeout(()=>{r=1;halt=0;move_snake(b);r=0;C.camera({x:-80,y:70});}, 15500);
+  setTimeout(()=>{r=1;halt=0;move_snake(b);r=0;}, 15800);
   
   // Blink
   setTimeout(()=>{
@@ -235,7 +235,7 @@ intro = () => {
     clearTimeout(song_interval);
     song = 1;
     note = 75;
-  }, 32000);
+  }, 34000);
   
   
 }

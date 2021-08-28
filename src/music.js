@@ -104,12 +104,10 @@ play_next_note = () => {
   if(songs[song][note])play_note(songs[song][note]);
   note++;
   if(world > 0) note %= (songs[song].length + 1);
-  if(note == 0) note = 1;
   console.log(note);
 }
 
 play_last_note = () => {
-  note--;
   note--;
   note += songs[song].length;
   note %= songs[song].length;
