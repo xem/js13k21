@@ -66,7 +66,7 @@ draw_puzzle = () => {
   
   // Puzzle
   C.plane({n:"floordiv",w:1500,h:1500,css:"floor circle"});
-  //setTimeout(()=>{floordiv.style.height = '1450px'},500); // Fx fix
+  setTimeout(()=>{floordiv.style.height = '1450px'},500); // Fx fix
   
   C.group({n:"puzzlefloor",w:w*50,h:(world==1&&puzzle==54?1:h)*50,z:2});
   C.group({n:"puzzlewall",w:w*50,h:h*50,y:-(world==1&&puzzle==54?1:h)*50/2,z:2,rx:-90,o:"bottom"});
