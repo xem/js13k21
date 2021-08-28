@@ -25,18 +25,18 @@ onmousedown = ontouchstart = e => {
   if(e.target.id == "back") return;
   
   // If the snake's head is pointed: prepare to move it
-  if(e.target.id == "head_circle"){
+  /*if(e.target.id == "head_circle"){
     pointer_mode = "move";
     
     // Save head coordinates
     head_position = snake_position[snake_position.length - 1];
-  }
+  }*/
   
   // Else: prepare to rotate the camera
-  else {
+  //else {
     pointer_mode = "cam";
     b.classList.add("instant");
-  }
+  //}
 }
 
 // Pointer up
@@ -93,7 +93,7 @@ onmousemove = ontouchmove = e => {
   }
   
   // Mode "move snake"
-  else if(pointer_mode == "move" && !halt && !win){
+  /*else if(pointer_mode == "move" && !halt && !win){
 
     // Find which HTML element is actually under the pointer at any moment
     // (warning: e.target only contains the element touched before moving the cursor, so it's not useful here)
@@ -101,7 +101,7 @@ onmousemove = ontouchmove = e => {
   
     // Handle snake movement & collisions
     move_snake(real_target);
-  }
+  }*/
 }
 
 oncontextmenu = () => { return false; }
@@ -115,9 +115,10 @@ onkeydown = onkeyup = e => {
   if(canskip && e.key == "n") { puzzle++; fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }
   if(canskip && e.key == "p") { puzzle--; fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }
   this['lurd************************l**r************l*d***u**u'[e.which - 37]] = e.type[5];
+  if(snake_position) move_snake();
 }
 
 setInterval(() => {
-  if(snake_position) move_snake(b); // use the top element "b" as dummy target
+  if(world > 0 && snake_position) move_snake();
 },33);
 

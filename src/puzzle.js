@@ -61,22 +61,22 @@ draw_puzzle = () => {
   C.camera({z:-300+w*50,x:-150,y:h*10,rx:camrx,rz:camrz});
   
   // Remove menu class from body
-  setTimeout(()=>{b.classList.add("fadein")},100);
-  setTimeout(()=>{fade.style.display = "none"},500);
+  setTimeout(()=>{b.classList.add("fadein")},1000);
+  setTimeout(()=>{fade.style.display = "none"},1500);
   
   // Puzzle
   C.plane({n:"floordiv",w:1500,h:1500,css:"floor circle"});
   //setTimeout(()=>{floordiv.style.height = '1450px'},500); // Fx fix
   
-  C.group({n:"puzzlefloor",w:w*50,h:h*50,z:2});
-  C.group({n:"puzzlewall",w:w*50,h:h*50,y:-h*50/2,z:2,rx:-90,o:"bottom"});
+  C.group({n:"puzzlefloor",w:w*50,h:(world==1&&puzzle==54?1:h)*50,z:2});
+  C.group({n:"puzzlewall",w:w*50,h:h*50,y:-(world==1&&puzzle==54?1:h)*50/2,z:2,rx:-90,o:"bottom"});
   
   if(current_puzzle.mirror){
     C.cube({g:"puzzlefloor",n:"mirror",w:w*50,h:h*50,d:h*50,x:w*50/2,y:h*50/2});
   }
   
   if(floor){
-    for(j = h; j--;){
+    for(j = (world==1&&puzzle==54?1:h); j--;){
       for(i = w; i--;){
         //console.log(((floor[j])))
         //console.log(floor[j*w+i]);
@@ -103,10 +103,10 @@ draw_puzzle = () => {
   C.plane({g:"head_decoration_inner",x:25,y:15,z:27,w:30,h:15,rx:-20,css:"eyes emoji",html:"👀"});
   C.plane({g:"head_decoration_inner",x:25,y:53,z:3,w:13,h:20,rx:180,css:"tongue",html:"Y"});
   
-  C.plane({n:"left",g:"head_scale",x:-20,y:0,z:2,w:200,h:200,rz:135,css:"trigger",o:"top left"});
-  C.plane({n:"up",g:"head_scale",x:0,y:-20,z:2,w:200,h:200,rz:-135,css:"trigger",o:"top left"});
-  C.plane({n:"right",g:"head_scale",x:20,y:0,z:2,w:200,h:200,rz:-45,css:"trigger",o:"top left"});
-  C.plane({n:"down",g:"head_scale",x:0,y:20,z:2,w:200,h:200,rz:45,css:"trigger",o:"top left"});
+  //C.plane({n:"left",g:"head_scale",x:-20,y:0,z:2,w:200,h:200,rz:135,css:"trigger",o:"top left"});
+  //C.plane({n:"up",g:"head_scale",x:0,y:-20,z:2,w:200,h:200,rz:-135,css:"trigger",o:"top left"});
+  //C.plane({n:"right",g:"head_scale",x:20,y:0,z:2,w:200,h:200,rz:-45,css:"trigger",o:"top left"});
+  //C.plane({n:"down",g:"head_scale",x:0,y:20,z:2,w:200,h:200,rz:45,css:"trigger",o:"top left"});
   
   // Snake's body
   head_position = snake_position[0];
@@ -166,7 +166,7 @@ check_puzzle = () => {
   var x, y, val, snake_on_current_cell, ok = 1;
   var current_positions = snake_position.slice(-(snake_length + 1) * 5);
   if(floor){
-    for(y = 0; y < h; y++){
+    for(y = 0; y < (world==1&&puzzle==54?1:h); y++){
       for(x = 0; x < w; x++){
         val = (floor[y]>>x)&1;
         snake_on_current_cell = current_positions.find(a => a[0] == x && a[1] == y);
@@ -202,7 +202,7 @@ check_puzzle = () => {
     for(y = 0; y < h; y++){
       for(x = 0; x < w; x++){
         val = (wall[y]>>x)&1
-        snake_on_current_cell = current_positions.find(a => a[0] == x && a[1] >= 0 && a[1] < h && a[2] == h - y - 1);
+        snake_on_current_cell = current_positions.find(a => a[0] == x && a[1] >= 0 && a[1] < (world==1&&puzzle==54?1:h) && a[2] == h - y - 1);
         
         // Not ok if there's a snake body part on a white cell
         if(val == 0){

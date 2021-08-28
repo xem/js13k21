@@ -1,18 +1,18 @@
 move_snake = target => {
   
-  if(!halt && (puzzle || world==-3) && !win && b.classList.contains("fadein")){
+  if(!halt && (puzzle || world==-3) && !win /*&& b.classList.contains("fadein")*/){
   
     //console.clear();
     
     var i, target_position, x, y, z, match;
     
     // Target is the div touched while moving the snake
-    document.title = target.id;
+    //document.title = target.id;
     
     head_position = snake_position[snake_position.length - 1];
     
     // If the serpent is trying to quit the wall, try to move to the front:
-    if(on_wall && !high && (d || target.id == "puzzlefloor")){
+    if(on_wall && !high && d){
       
       console.log("quit wall");
       if(head_angle_modulo == 180){
@@ -20,25 +20,22 @@ move_snake = target => {
         return;
       }
       target_position = move_front();
-      console.log(1,target_position);
     }
     
     // If the serpent is climbing a wall:
-    else if(on_wall && (l || u || r || d || target.classList.contains("wall_tile"))){
+    else if(on_wall && (l || u || r || d)){
       
-      // console.log("move on wall");
+      console.log("move on wall");
 
-      // Get touched tile coordinates
+      /*// Get touched tile coordinates
       if(target.id != "b"){
         [match,x,z] = target.id.match(/wall_tile_(\d*)_(\d*)/);
         x = +x;
         z = h - +z - 1;
-      }
-      
-      // Try to move on the touched tile if it's a neighbour of the current head position
+      }*/
       
       // Left
-      if((l && (!high || head_position[0] > 0)) || (x == head_position[0] - 1 && z == head_position[2])){
+      if((l && (!high || head_position[0] > 0))/* || (x == head_position[0] - 1 && z == head_position[2])*/){
         
         // Backtrack if head is turned to the right
         if(head_angle_modulo == 270){
@@ -50,7 +47,7 @@ move_snake = target => {
       }
       
       // Right
-      else if((r && (!high || head_position[0] < w - 1)) || (x == head_position[0] + 1 && z == head_position[2])){
+      else if((r && (!high || head_position[0] < w - 1))/* || (x == head_position[0] + 1 && z == head_position[2])*/){
         
         // Backtrack if head is turned to the left
         if(head_angle_modulo == 90){
@@ -62,7 +59,7 @@ move_snake = target => {
       }
       
       // Up
-      else if((u && head_position[2] < h - 1) || (x == head_position[0] && z == head_position[2] + 1)){
+      else if((u && head_position[2] < h - 1)/* || (x == head_position[0] && z == head_position[2] + 1)*/){
         
         // Backtrack if head is turned to the bottom
         if(head_angle_modulo == 0){
@@ -74,7 +71,7 @@ move_snake = target => {
       }
       
       // Down
-      else if((d && high) || (x == head_position[0] && z == head_position[2] - 1)){
+      else if((d && high) /*|| (x == head_position[0] && z == head_position[2] - 1)*/){
         
         // Backtrack if head is turned to the top
         if(head_angle_modulo == 180){
@@ -95,7 +92,7 @@ move_snake = target => {
       // For computations, we also keep a "modulo" value clamped between 0 and 360
       
       // As soon as the right trigger is touched
-      if(r || target.id == "right"){
+      if(r/* || target.id == "right"*/){
         
         // Backtrack if head is turned to the left
         if(head_angle_modulo == 90){
@@ -108,7 +105,7 @@ move_snake = target => {
       }
       
       // As soon as the down trigger is touched
-      else if(d || target.id == "down"){
+      else if(d/* || target.id == "down"*/){
         
         
         // Backtrack if head is turned to the back
@@ -122,7 +119,7 @@ move_snake = target => {
       }
       
       // As soon as the left trigger is touched
-      else if(l || target.id == "left"){
+      else if(l/* || target.id == "left"*/){
         
         // Backtrack if head is turned to the right
         if(head_angle_modulo == 270){
@@ -135,7 +132,7 @@ move_snake = target => {
       }
       
       // As soon as the up trigger is touched
-      else if(u || target.id == "up"){
+      else if(u/* || target.id == "up"*/){
         
         // Backtrack if head is turned to the front
         if(head_angle_modulo == 0){
