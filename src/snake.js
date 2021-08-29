@@ -148,6 +148,8 @@ move_snake = target => {
     // Do the move
     if(target_position){
       
+      steps++;
+      
       if(world > 0) play_next_note();
       
       head_position = target_position;
@@ -183,6 +185,7 @@ move_snake = target => {
       C.camera();
       check_wall();
       check_puzzle();
+      document.title = steps;
     }
   }
 }
