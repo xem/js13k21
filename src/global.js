@@ -6,6 +6,8 @@ win = 0;
 snake_position = 0;
 next_target = 0;
 portaling = 0;
+portals1 = 0;
+portals2 = 0;
 
 // List of SVGs
 svg = [

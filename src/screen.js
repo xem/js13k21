@@ -132,6 +132,7 @@ intro = () => {
   head_angles_modulo = [270];
   head_angle = 270;
   head_angle_modulo = 270;
+  head_portal = [0];
   body_moves = 0;
   on_wall = 0;
   high = 0;
@@ -144,6 +145,7 @@ intro = () => {
   win = 0;
   w = 9;
   h = 9;
+  steps = 0;
   
   // Puzzle
   C.group({n:"puzzlefloor"});
