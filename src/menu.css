@@ -22,3 +22,4 @@
 .sign { background: linear-gradient(45deg, #e84, #b51); text-align: center; padding: 5px; font-size: 20px; }
 text { font-size: 20px }
 .sign .emoji {text-shadow: none }
+#presents { opacity: 0; z-index: 3; font-size: 50px; width: 100%; text-align: center; color: #fff; position: fixed; left: 50%; top: 50%; transform: translateX(-50%)translateY(-50%); transition: opacity .5s; }

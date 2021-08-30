@@ -17,7 +17,7 @@ draw_screen = () => {
   // Fade in
   fade.style.display = "block";
   if(puzzle == 0) {
-    setTimeout(()=>{b.classList.add("fadein");},(world == -3 ? 1000 : 500) );
+    setTimeout(()=>{b.classList.add("fadein");},(world == -3 ? 2000 : 500) );
     setTimeout(()=>{fade.style.display = "none";},(world == -3 ? 1500 : 1000) );
   }
   
@@ -27,7 +27,7 @@ draw_screen = () => {
   // World 0: main menu
   if(world == 0){
     puzzle = 0;
-    html = "<div class=main><h1>LOSSST</h1><p><a onclick='world=-3;fadeout()'><h2>PLAY</h2></a><p><a onclick=world=-1;fadeout()>Select puzzle</a><p><a onclick=world=-2;fadeout()>Bonus</a><p class='emoji hide'>🌼<img src=grass.svg>";
+    html = "<div class=main><h1>LOSSST</h1><p><a onclick='world=-3;fadeout()'><h2>PLAY</h2></a><p><a onclick=world=-1;fadeout()>Select puzzle</a><p><a onclick=world=-2;fadeout()>Bonus</a><p class='emoji hide'>🌼<img src=grass.svg height=1><img src=desert.svg height=1>";
     scene.innerHTML = html;
   }
   
@@ -41,7 +41,7 @@ draw_screen = () => {
           html += "<span style='width:61vh' onclick='world=-3;fadeout()'>intro</span><br>";
         }
         for(j in data[i]){
-          console.log(j);
+          //console.log(j);
           if(j != 0){
             html += "<span onclick='world="+i+";puzzle="+j+";fadeout()'>" + j + "</span>";
           }
@@ -86,10 +86,18 @@ nav_back = () => {
   fadeout();
 }
 
-fadeout = () => {
+fadeout = (text) => {
   fade.style.display = "block";
   setTimeout(()=>{b.classList.remove("fadein")},100);
-  setTimeout(draw_screen, 600);
+  if(text){
+    presents.innerHTML = text;
+    setTimeout(()=>presents.style.opacity=1, 800);
+    setTimeout(()=>presents.style.opacity=0, 3500);
+    setTimeout(draw_screen, 4000);
+  }
+  else {
+    setTimeout(draw_screen, 600);
+  }
 }
 
 intro = () => {
@@ -97,22 +105,24 @@ intro = () => {
   // UI
   C.reset();
   song = 0;
+  presents.innerHTML = "js13kGames<br>presents";
   
   play_note(1);
   play_note(1);
   play_note(1);
-  var song_interval = setInterval(play_next_note,220);
+  var song_interval;
   
   C.camera({x:-200,y:50,z:-200,rx:50,rz:30});
   
   // Scene
   camrx = 30;
   camrz = 0;
-  C.plane({n:"floor",w:1500,h:1500,css:"floor circle"});
+  C.plane({n:"floordiv",w:1500,h:1500,css:"floor circle"});
   
   setTimeout(()=>{
     b.classList.add("intro") // Hide back button, enable 5s transitions
-    setTimeout(()=>{floor.style.height = '1450px'},100); // Fx fix
+    setTimeout(()=>{floordiv.style.height = '1450px'},100); // Fx fix
+    song_interval = setInterval(play_next_note,210);
   }, 100);
   
   snake_length = 2; // without head  
@@ -174,19 +184,24 @@ intro = () => {
   // Animation:
   
   // Move right 9 times
-  for(i = 0; i < 9; i ++){
-  setTimeout(()=>{r=1;halt=0;move_snake(b);r=0;}, 300 + i * 250);
+  for(i = 0; i < 7; i ++){
+    setTimeout(()=>{r=1;halt=0;move_snake(b);r=0;}, 300 + i * 250);
   }
-  
   
   // Sign
   C.plane({x:300,y:220,w:5,h:105,z:55,rx:-90,ry:-35,css:"sign"});
-  C.plane({x:300,y:221,w:100,h:60,z:72,rx:-90,ry:-35,css:"sign",html:"SALE<p><span class=emoji>🪙</span> x 200"});
+  C.plane({x:300,y:221,w:100,h:60,z:72,rx:-90,ry:-35,css:"sign",html:"SALE<p><span class=emoji>🪙</span> x 100"});
   
   // Look up
   setTimeout(()=>C.move({n:"head_decoration",z:28,ry:-45}), 3000);
   setTimeout(()=>C.camera({rx:120, z:-100,y:-300}),3500);
-
+  
+  
+  // js13k presents
+  setTimeout(()=>presents.style.opacity = 1, 6000);
+  setTimeout(()=>presents.style.opacity = 0, 9000);
+  
+  
   // Look down
   setTimeout(()=>{
     C.camera({x:-200,y:50,z:-200,rx:50,rz:30});
@@ -195,13 +210,11 @@ intro = () => {
   
   setTimeout(()=>{
     C.move({n:"head_decoration",ry:0})
-    b.classList.remove("intro");
-    b.classList.add("intro2");
   }, 14000);
   
   // Move right
-  setTimeout(()=>{r=1;halt=0;move_snake(b);r=0;C.camera({x:-80,y:70});}, 15500);
-  setTimeout(()=>{r=1;halt=0;move_snake(b);r=0;}, 15800);
+  setTimeout(()=>{r=1;halt=0;move_snake(b);r=0}, 15500);
+  setTimeout(()=>{r=1;halt=0;move_snake(b);r=0}, 15700);
   
   // Blink
   setTimeout(()=>{
@@ -231,11 +244,14 @@ intro = () => {
   setTimeout(()=>{
     world = 1;
     puzzle = 1;
-    fadeout();
+    fadeout("<h1>LOSSST</h1>");
+  }, 30000);
+  
+  setTimeout(()=>{
     clearTimeout(song_interval);
     song = 1;
     note = 75;
-  }, 34000);
+  }, 33000);
   
   
 }

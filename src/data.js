@@ -1,3 +1,17 @@
+// Structure for each puzzle (* = optional)
+// [
+//  floor*,
+//  wall*,
+//  width,
+//  height*,
+//  snake_length,
+//  moves,
+//  bricks?,
+//  portals_1*,
+//  portals_2*
+//]
+
+
 data = [
 
   // World 0 = menu
@@ -1576,7 +1590,706 @@ data = [
   ],
   
   // World 2
-  [,],
+  [
+    // No puzzle 0
+    ,
+    
+    // Puzzle 1
+    [
+    
+      // Floor
+      [
+        0b1000000,
+        0b1010000,
+        0b1010011,
+        0b1010000
+      //0b1000000
+      ],
+      
+      // Wall
+      ,
+      
+      // Width
+      5,
+      
+      // Height
+      ,
+      
+      // Snake length
+      5,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[1,2,0],[4,1,0]],
+    
+    ],
+    
+    // 2
+    [
+    
+      // Floor
+      [
+        0b1000000,
+        0b1000100,
+        0b1001110,
+        0b1001000
+      //0b1000000
+      ],
+      
+      // Wall
+      ,
+      
+      // Width
+      5,
+      
+      // Height
+      ,
+      
+      // Snake length
+      5,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[2,1,0],[3,3,0]],
+    
+    ],
+    
+    // 3
+    [
+    
+      // Floor
+      [
+        0b1000000,
+        0b1001000,
+        0b1001111,
+        0b1000000
+      //0b1000000
+      ],
+      
+      // Wall
+      ,
+      
+      // Width
+      5,
+      
+      // Height
+      ,
+      
+      // Snake length
+      5,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[0,2,0],[2,2,0]],
+    
+    ],
+    
+    // 4
+    [
+    
+      // Floor
+      [
+        0b1000010,
+        0b1000110,
+        0b1001110,
+        0b1000000,
+      ],
+      
+      // Wall
+      ,
+      
+      // Width
+      4,
+      
+      // Height
+      ,
+      
+      // Snake length
+      6,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[1,0,0],[3,2,0]],
+    
+    ],
+    
+    // 5
+    [
+    
+      // Floor
+      [
+        0b1000000,
+        0b1001110,
+        0b1001110,
+        0b1000000,
+      //0b1000000,
+      ],
+      
+      // Wall
+      ,
+      
+      // Width
+      5,
+      
+      // Height
+      4,
+      
+      // Snake length
+      6,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[2,1,0],[3,2,0]],
+    
+    ],
+    
+    // 6
+    [
+    
+      // Floor
+      [
+        0b1000001,
+        0b1000111,
+        0b1000010,
+        0b1000010,
+      ],
+      
+      // Wall
+      ,
+      
+      // Width
+      4,
+      
+      // Height
+      ,
+      
+      // Snake length
+      6,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[0,0,0],[2,1,0]],
+    
+    ],
+    
+    // 7
+    [
+    
+      // Floor
+      [
+        0b1000000,
+        0b1001010,
+        0b1001110,
+        0b1000110,
+      //0b1000000,
+      ],
+      
+      // Wall
+      ,
+      
+      // Width
+      5,
+      
+      // Height
+      ,
+      
+      // Snake length
+      7,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[3,1,0],[1,3,0]],
+    
+    ],
+    
+    // 8
+    [
+    
+      // Floor
+      [
+        0b1000000,
+        0b1001110,
+        0b1001110,
+        0b1000100,
+      //0b1000000,
+      ],
+      
+      // Wall
+      ,
+      
+      // Width
+      5,
+      
+      // Height
+      ,
+      
+      // Snake length
+      7,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[1,2,0],[3,1,0]],
+    
+    ],
+    
+    // 9
+    [
+    
+      // Floor
+      [
+        0b1000000,
+        0b1010000,
+        0b1000000,
+        0b1011100,
+      //0b1000000,
+      ],
+      
+      // Wall
+      ,
+      
+      // Width
+      5,
+      
+      // Height
+      ,
+      
+      // Snake length
+      7,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[4,1,0],[3,3,0]],
+    
+    ],
+    
+    // 10
+    [
+    
+      // Floor
+      [
+        0b1001110,
+        0b1001010,
+        0b1000000,
+        0b1000000,
+      //0b1000000,
+      ],
+      
+      // Wall
+      ,
+      
+      // Width
+      5,
+      
+      // Height
+      ,
+      
+      // Snake length
+      7,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[2,0,0],[3,0,0]],
+    
+    ],
+    
+    // 11
+    [
+    
+      // Floor
+      ,
+      
+      // Wall
+      [
+        0b1000110,
+        0b1000111,
+        0b1000111,
+      ],
+      
+      // Width
+      3,
+      
+      // Height
+      ,
+      
+      // Snake length
+      8,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[1,0,2],[0,0,1]],
+    
+    ],
+    
+    // 12
+    [
+    
+      // Floor
+      [
+        0b1000000,
+        0b1001000,
+        0b1001100,
+        0b1011100,
+        0b1000110,
+      //0b1000000,
+      ],
+      
+      // Wall
+      ,
+      
+      // Width
+      6,
+      
+      // Height
+      ,
+      
+      // Snake length
+      8,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[2,2,0],[1,4,0]],
+    
+    ],
+    
+    // 13
+    [
+    
+      // Floor
+      [
+        0b1011011,
+        0b1000001,
+        0b1000000,
+      ],
+      
+      // Wall
+      ,
+      
+      // Width
+      5,
+      
+      // Height
+      3,
+      
+      // Snake length
+      8,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[0,0,0],[4,0,0]],
+    
+    ],
+    
+    // 14
+    [
+    
+      // Floor
+      [
+        0b1001110,
+        0b1000110,
+        0b1000100,
+      //0b1000000,
+      //0b1000000,
+      ],
+      
+      // Wall
+      ,
+      
+      // Width
+      5,
+      
+      // Height
+      ,
+      
+      // Snake length
+      8,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[2,2,0],[3,1,0]],
+    
+    ],
+    
+    // 15
+    [
+    
+      // Floor
+      [
+        0b1000011,
+        0b1000001,
+        0b1000100,
+      ],
+      
+      // Wall
+      ,
+      
+      // Width
+      3,
+      
+      // Height
+      ,
+      
+      // Snake length
+      9,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[2,2,0],[0,0,0]],
+    
+    ],
+    
+    // 16
+    [
+    
+      // Floor
+      ,
+      
+      // Wall
+      [
+        0b1001000,
+        0b1001000,
+        0b1001000,
+        0b1011110,
+      ],
+      
+      // Width
+      6,
+      
+      // Height
+      4,
+      
+      // Snake length
+      9,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      [[2,0,3.4],[4,0,3.4],[4,1,0]],
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[2,0,0],[4,0,0]],
+    
+    ],
+    
+    // 17
+    [
+    
+      // Floor
+      [
+        0b1001111,
+        0b1001000,
+        0b1001001,
+        0b1011001,
+      ],
+      
+      // Wall
+      ,
+      
+      // Width
+      4,
+      
+      // Height
+      ,
+      
+      // Snake length
+      9,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[3,0,0],[0,3,0]],
+      
+      // Portals 2
+      [[0,0,0],[3,3,0]],
+    ],
+    
+    // 18
+    [
+    
+      // Floor
+      ,
+      
+      // Wall
+      [
+        0b1001101,
+        0b1001101,
+        0b1000111,
+        0b1000011,
+      ],
+      
+      // Width
+      4,
+      
+      // Height
+      ,
+      
+      // Snake length
+      11,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[0,0,3],[3,0,2]],
+      
+      // Portals 2
+      [[0,0,1],[2,0,2]],
+    ],
+    
+    // 19
+    [
+    
+      // Floor
+      [
+        0b1000110,
+        0b1000111,
+        0b1000111,
+      ],
+      
+      // Wall
+      ,
+      
+      // Width
+      3,
+      
+      // Height
+      ,
+      
+      // Snake length
+      11,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[1,0,0],[1,2,0]],
+      
+      // Portals 2
+      [[0,1,0],[2,1,0]],
+    ],
+    
+    // 20
+    [
+    
+      // Floor
+      ,
+      
+      // Wall
+      [
+        0b1000101,
+        0b1001111,
+        0b1001110,
+        0b1000011,
+      ],
+      
+      // Width
+      4,
+      
+      // Height
+      ,
+      
+      // Snake length
+      11,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[0,0,2],[2,0,3]],
+      
+      // Portals 2
+      [[0,0,3],[0,0,0]],
+    ],
+    
+  ],
   
   // World 3
   [,],
@@ -1588,3 +2301,41 @@ data = [
   [,],
 
 ];
+
+
+/*
+
+[
+    
+      // Floor
+      ,
+      
+      // Wall
+      [
+        0b1000000,
+        0b1000010,
+        0b1000111,
+        0b1000101,
+      ],
+      
+      // Width
+      3,
+      
+      // Height
+      4,
+      
+      // Snake length
+      9,
+      
+      // Moves
+      ,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[1,0,2],[1,0,1]],
+    
+    ]
+    
+    */

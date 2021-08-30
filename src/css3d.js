@@ -54,10 +54,11 @@ C = {
 
   // Plane
   plane: t => {
+    //console.log("plane")
     t.n||(t.n=`p${C.plane_count++}`),
     C.init(t),
-    C.$(t.g).insertAdjacentHTML(t.i,`<div id="${t.n}"class="plane ${t.css}"style="position:absolute;width:${t.w}px;height:${t.h}px;transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`),
-    C.camera()
+    C.$(t.g).insertAdjacentHTML(t.i,`<div id="${t.n}"class="plane ${t.css}"style="position:absolute;width:${t.w}px;height:${t.h}px;transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`)//,
+    //C.camera()
   },
 
   // Sprite
@@ -85,16 +86,12 @@ C = {
   /*pyramid: t => {
     t.n||(t.n=`py${C.pyramid_count++}`),
     C.init(t),
-    C.group({n:t.n,g:t.g,x:t.x,y:t.y,z:t.z,w:100,d:100,rx:t.rx,ry:t.ry,rz:t.rz,sx:t.w/100,sy:t.d/100,sz:t.h/86.6025,css:t.css}),
-    C.plane({g:t.n,x:50,y:50,w:100,h:100,b:t.b,css:"bottom"}),
-    C.plane({g:t.n,y:50,w:100,h:100,b:t.b,ry:-60,rz:90,css:"triangle left",o:"bottom"}),
-    C.plane({g:t.n,x:100,y:50,w:100,h:100,b:t.b2||t.b,ry:-120,rz:90,css:"triangle right",o:"bottom"}),
-    C.plane({g:t.n,x:50,y:0,w:100,h:100,b:t.b,rx:-120,css:"triangle back",o:"bottom"}),
-    C.plane({g:t.n,x:50,y:100,w:100,h:100,b:t.b1||t.b,rx:-60,css:"triangle front",o:"bottom"})
+    C.group({n:t.n,g:t.g,x:t.x,y:t.y,z:t.z,w:100,d:100,rx:t.rx,ry:t.ry,rz:t.rz,css:t.css,html:"<div class=pyleft></div><div class=pyright></div><div class=pyfront>"})
   },*/
 
   // Move the camera
   camera: t => {
+    //console.log("cam");
     t&&(t.x||0===t.x)&&(C.camX=t.x),
     t&&(t.y||0===t.y)&&(C.camY=t.y),
     t&&(t.z||0===t.z)&&(C.camZ=t.z),
@@ -106,7 +103,7 @@ C = {
     for(var r in C.sprites){
       var n=C.$(C.sprites[r]);
       o=n.style.transform.replace(/ *rotate.*\(.*?deg\)/g,"");
-      rz = -C.camRZ;//n.classList.contains("body")?4:(-C.camRZ);
+      rz = -C.camRZ;
       rx = -C.camRX;
       if(rx > -15) rx = -15;
       n.style.transform=o+`rotateZ(${rz}deg)rotateX(${rx}deg)`

@@ -1,14 +1,16 @@
 .puzzle #viewport { background: linear-gradient(#039, #fff 25%); }
-.world1 #scene .floor { /*background: radial-gradient(#080,#020 80%); pointer-events: all;*/ background: radial-gradient(#0000,#000e 80%),url(grass.svg); }
-.world2 #scene .floor { /*background: radial-gradient(#080,#020 80%); pointer-events: all;*/ background: radial-gradient(#0000,#000e 80%),url(desert.svg); }
+.world-3 #scene .floor { background: radial-gradient(#000a,#000e 80%),url(grass.svg); }
+.world1 #scene .floor { background: radial-gradient(#0000,#000e 80%),url(grass.svg); }
+.world2 #scene .floor { background: radial-gradient(#fff8,#fff0 80%),url(desert.svg); border-radius: 150px; }
 #puzzlefloor { background: #0005; }
-/*.on_wall #puzzlefloor, .on_wall #puzzlewall * { pointer-events: all; }*/
 .tile { background: #fff; border: 3px solid #777; }
 .wall_tile { background: #bbb }
 .tile.black { background: #000 }
 .tile.red { background: #F00 }
 .tile.blue { background: #00F }
 .win .tile.blue { background: #4e2 }
+.tile.portal1 { background: radial-gradient(#e0e, #505 70%, #0000 75%) }
+.tile.portal2 { background: radial-gradient(#fc0, #c60 70%, #0000 75%) }
 .wall * { background: linear-gradient(45deg, #000, #333); }
 .tree { font-size: 75px; filter: brightness(0.7); transition: transform .5s; }
 .flower { font-size: 45px; text-shadow: none; overflow: hidden; }

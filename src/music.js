@@ -113,15 +113,15 @@ play_note = n => {
 play_next_note = () => {
   if(songs[song][note])play_note(songs[song][note]);
   note++;
-  if(world > 0) note %= (songs[song].length + 1);
-  console.log(note);
+  if(song > 0) note %= (songs[song].length + 1);
+  //console.log(note);
 }
 
 play_last_note = () => {
   note--;
   note += songs[song].length;
   note %= songs[song].length;
-  console.log(note);
+  //console.log(note);
   if(songs[song][note])play_note(songs[song][note]);
 }
 
@@ -129,7 +129,7 @@ play_last_note = () => {
 // Sound effects
 // from https://xem.github.io/MiniSoundEditor/
 
-coinsound = i => {
+coin_sound = i => {
   var n=1.6e4;
   var c=n/7;
   if (i > n) return null;
@@ -137,13 +137,20 @@ coinsound = i => {
   return ((i<c ? ((i+Math.sin(-i/900)*10)&16) : i&13) ?q:-q)/9;
 }
 
-play_coin_sound = () => {
+bzzt_sound = i => {
+  var n=1e4;
+  if (i > n) return null;
+  var q = t(i,n);
+  return Math.sin(i/55*Math.sin(i/99)+Math.sin(i/100))*q/5;
+}
+
+play_sound = (f) => {
   var A, m, b, i, s; 
   t=(i,n)=>(n-i)/n;
   var A=new AudioContext()
   var m=A.createBuffer(1,96e3,48e3)
   var b=m.getChannelData(0)
-  for(i=96e3;i--;)b[i]=coinsound(i)
+  for(i=96e3;i--;)b[i]=f(i)
   s=A.createBufferSource()
   s.buffer=m
   s.connect(A.destination)
