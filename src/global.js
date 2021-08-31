@@ -3,6 +3,7 @@ world = 0; // 0: main menu, 1-5: current world
 puzzle = 0; // 0: level menu, 1-n: current puzzle
 coins = 0;
 win = 0;
+haltwin = 0;
 snake_position = 0;
 next_target = 0;
 portaling = 0;

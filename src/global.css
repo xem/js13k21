@@ -1,6 +1,6 @@
 @font-face { font-family: emoji; src: url(//xem.github.io/unicode13/Twemoji.ttf) }
 * { margin: 0; padding: 0; box-sizing: border-box; transform-style: preserve-3d; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; pointer-events: none; }
-html, body { height: 100%; overflow: hidden; }
+html, body { height: 100vh; overflow: hidden; position: relative; }
 body { background: #000; -webkit-tap-highlight-color: transparent; overscroll-behavior: contain; font: 14px calibri,arial,sans-serif; text-shadow: 0 0 5px #000; scrollbar-width: thin; }
 ::-webkit-scrollbar { width: 8px; height: 8px; background: #000; }
 ::-webkit-scrollbar-thumb { background: #666; }

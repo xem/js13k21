@@ -283,7 +283,7 @@ check_wall = () => {
     if(pos[2] > 0){
       high = 1;
       b.classList.add("high");
-      C.camera({rx:camrx=70,y:0});
+      C.camera({rx:camrx=(world==1&&puzzle==33?30:70),y:0});
     }
     else {
       b.classList.remove("high");
@@ -683,7 +683,7 @@ move_back = () => {
 };
 
 collision = (target) => {
-  if(world > 0 && bricks.find(a=>a[0] == target[0] && a[1] == target[1] && target[2] == Math.round(a[2]))) {
+  if(world > 0 && bricks.find(a=>a[0] == target[0] && a[1] == target[1] && (target[2] == (a[2]||0) || target[2] == Math.floor(a[2])))) {
     return 1;
   }
   if(world > 0 && trees.find(a=>a[0] > target[0] - 1 && a[0] < target[0] + 2 && a[1] > target[1] - 1 && a[1] < target[1] +2)) {
@@ -767,6 +767,7 @@ check_portals2 = (target_position) => {
 }
 
 go_on_next_target = (target_position) => {
+  console.log(target_position, next_target);
   if(next_target){
     // Start on floor
     if(target_position[2] == 0 && floor){

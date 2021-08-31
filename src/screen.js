@@ -53,7 +53,7 @@ draw_screen = () => {
   
   // World -2: Bonus
   else if(world == -2){
-    html = "<div class='main bonus'><h1>BONUS</h1><p><a>Puzzle editor</a><span>(WebMonetization bonus)</span><p><a>Snake editor</a><span>(NEAR Protocol bonus)</span><p><a>Leaderboards</a><span>(Protocol Labs bonus)</span><p><a>Get more hints</a><span>(FLUX bonus)</span><p><a>Delete save</a>";
+    html = "<div class='main bonus'><h1>BONUS</h1><span>(win 200 trophies to unlock everything)</span><p><a>Puzzle editor</a><span>(WebMonetization bonus)</span><p><a>Snake editor</a><span>(NEAR bonus)</span><p><a>Leaderboards</a><span>(IPFS bonus)</span><p><a>Get more coins</a><span>(FLUX bonus)</span><p><a>Delete save</a><p><a>Share</a>";
     scene.innerHTML = html;
   }
   
@@ -87,6 +87,7 @@ nav_back = () => {
 }
 
 fadeout = (text) => {
+  if(navigator.userAgent.includes("Mobile")) b.requestFullscreen();
   fade.style.display = "block";
   setTimeout(()=>{b.classList.remove("fadein")},100);
   if(text){

@@ -1556,7 +1556,7 @@ editor = () => {
 
   son = 0;
   issolved = 0;
-  share.disabled = 1;
+  //share.disabled = 1;
   
   // Hide ground checkbox & label if they're alone
   /*if(!L[P+"editorfull"] && !((L[P+"son"] && L[P+"snakelength"] > 6))){
@@ -1628,7 +1628,7 @@ editor = () => {
     movesnake();
     
     issolved = 0;
-    share.disabled = 1;
+    //share.disabled = 1;
     for(i = 0; i < size; i++){
       for(j = 0; j < size; j++){
         self[`ge-${i}-${j}`].style.background = dg[i][j] ? "#000" : "#fff";
@@ -1651,7 +1651,7 @@ editor = () => {
   resizegrid = e => {
 
     issolved = 0;
-    share.disabled = 1;
+    //share.disabled = 1;
     
     portal11 = [-1,-1,-1];
     portal12 = [-1,-1,-1];
@@ -1712,21 +1712,21 @@ editor = () => {
   // Params: i, j (coords), this (current cell), ground (1 = ground, 0 = wall), force (1 = mousemove, 0 = click)
   paint = (i,j,t,g,f,e) => {
     
-    console.log(e);
+    //console.log(e);
     
     // Do nothing in playing mode 
     if(playing) return;
 
     if(mousedown){
       issolved = 0;
-      share.disabled = 1;
+      //share.disabled = 1;
     }
     
     // Choose ground or wall
     var d = g ? dg : dw;
     
     // Force
-    if(f && mousedown && (!e || e.button == 1)){
+    if(f && mousedown /*&& (!e || e.button == 1)*/){
       d[i][j] = 1;
     }
     
@@ -1815,7 +1815,7 @@ editor = () => {
     playing = puzzling = 1;
     b.className = "editor playing";
     issolved = 0;
-    share.disabled = 1;
+    //share.disabled = 1;
     for(i = 0; i < size; i++){
       for(j = 0; j < size; j++){
         self[`ge-${i}-${j}`].style.background = dg[i][j] ? "#000" : "#fff";

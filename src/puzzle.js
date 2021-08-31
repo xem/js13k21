@@ -39,7 +39,7 @@ draw_puzzle = () => {
   win = 0;
   steps = 0;
   
-  var i, j, x, y, head_position;
+  var i, j, x, y, head_position, scale;
 
   // UI
   C.reset();
@@ -60,15 +60,15 @@ draw_puzzle = () => {
   C.plane({n:"floordiv",w:1500,h:1500,css:"floor circle"});
   setTimeout(()=>{floordiv.style.height = '1450px'},500); // Fx fix
   
-  C.group({n:"puzzlefloor",w:w*50,h:(world==1&&puzzle==44?1:h)*50,z:2});
-  C.group({n:"puzzlewall",w:w*50,h:h*50,y:-(world==1&&puzzle==44?1:h)*50/2,z:2,rx:-90,o:"bottom"});
+  C.group({n:"puzzlefloor",w:w*50,h:(floor ? h : 1)*50,z:2});
+  C.group({n:"puzzlewall",w:w*50,h:h*50,y:-(floor ? h : 1)*50/2,z:2,rx:-90,o:"bottom"});
   
   if(current_puzzle.mirror){
     C.cube({g:"puzzlefloor",n:"mirror",w:w*50,h:h*50,d:h*50,x:w*50/2,y:h*50/2});
   }
   
   if(floor){
-    for(j = (world==1&&puzzle==44?1:h); j--;){
+    for(j = (floor ? h : 1); j--;){
       for(i = w; i--;){
         C.plane({g:"puzzlefloor",n:"tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:52,h:52,css:"tile "+(((floor[j]>>i)&1) ? "black" : "")});
       }
@@ -142,14 +142,15 @@ draw_puzzle = () => {
         [x,y,[..."🐪🐫🦒🦘"][~~(Math.random() * 4)]],
         
       ][world]];
-      C.sprite({g:"puzzlefloor",w:50,h:55,z:8,x:x*50+20,y:y*50+15,z:3,rx:0,sx:1.8,sy:1.8,sz:1.8,o:"bottom",css:"emoji animal",html:animals[0][2]});
-      C.plane({g:"puzzlefloor",x:x*50+20,y:y*50-10,z:1,rz:350,w:50,h:55,css:"emoji animal shadow",html:animals[0][2],sx:1.8,sy:1.8,sz:1.8,o:"bottom center"});
+      scale = [,1.5,1.8][world];
+      C.sprite({g:"puzzlefloor",w:50,h:55,z:8,x:x*50+20,y:y*50+15,z:3,rx:0,sx:scale,sy:scale,sz:scale,o:"bottom",css:"emoji animal",html:animals[0][2]});
+      C.plane({g:"puzzlefloor",x:x*50+20,y:y*50-10,z:1,rz:350,w:50,h:55,css:"emoji animal shadow",html:animals[0][2],sx:scale,sy:scale,sz:scale,o:"bottom center"});
     }
   }
   
   // Bricks
   for(i of bricks){
-    C.cube({g:"puzzlefloor",x:i[0]*50+25,y:i[1]*50+25,z:(i[2]||0)*50-17,w:50,h:50,d:50,css:"cube bricks",html:(i[1]%2)?(svg[9]+svg[10]+svg[9]):(svg[10]+svg[9]+svg[10]),htmlside:((i[1]+i[2])%2)?(svg[10]+svg[9]+svg[10]):(svg[9]+svg[10]+svg[9])});
+    C.cube({g:"puzzlefloor",x:i[0]*50+25,y:i[1]*50+25,z:(i[2]||0)*50-(i[2] ? 0 : 17),w:50,h:50,d:50,css:"cube bricks",html:(i[1]%2)?(svg[9]+svg[10]+svg[9]):(svg[10]+svg[9]+svg[10]),htmlside:((i[1]+i[2])%2)?(svg[10]+svg[9]+svg[10]):(svg[9]+svg[10]+svg[9])});
   }
   
   // Portals 1
@@ -187,10 +188,10 @@ check_puzzle = () => {
   win = 1;
   var current_positions = snake_position.slice(-(snake_length + 1) * 5);
   if(floor){
-    for(y = 0; y < (world==1&&puzzle==44?1:h); y++){
+    for(y = 0; y < (floor ? h : 1); y++){
       for(x = 0; x < w; x++){
         val = (floor[y]>>x)&1;
-        snake_on_current_cell = current_positions.find(a => a[0] == x && a[1] == y && a[2] == 0);
+        snake_on_current_cell = current_positions.find(a => a[0] == x && a[1] == y && a[2] >= 0);
       
         // Not ok if there's a snake body part on a white cell
         if(val == 0){
@@ -221,7 +222,7 @@ check_puzzle = () => {
     for(y = 0; y < h; y++){
       for(x = 0; x < w; x++){
         val = (wall[y]>>x)&1
-        snake_on_current_cell = current_positions.find(a => a[0] == x && a[1] >= 0 && a[1] < (world==1&&puzzle==44?1:h) && a[2] == h - y - 1);
+        snake_on_current_cell = current_positions.find(a => a[0] == x && a[1] >= 0 && a[1] < (floor ? h : 1) && a[2] == h - y - 1);
         
         // Not ok if there's a snake body part on a white cell
         if(val == 0){
@@ -247,11 +248,12 @@ check_puzzle = () => {
       }
     }
   }
-  if(win){
+  if(win && !haltwin){
+    haltwin = 1;
     coins++;
+    puzzle++;
     coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
     b.classList.add("win");
-    puzzle++;
     setTimeout(()=>{
       C.plane({g:"puzzlefloor",n:"coin",x:head_position[0]*50+25,y:head_position[1]*50+15,z:head_position[2]*50+25,w:50,h:50,rx:high?-90:-45,html:"🪙",css:"emoji coin",sx:.5,sy:.5,sz:.5});
     },200);
@@ -260,6 +262,7 @@ check_puzzle = () => {
     },300);
     setTimeout(()=>{
       play_sound(coin_sound);
+      haltwin = 0;
     },600);
     setTimeout(fadeout,2000);
   }
