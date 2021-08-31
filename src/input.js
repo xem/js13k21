@@ -114,6 +114,7 @@ onkeydown = onkeyup = e => {
   //console.log(e);
   if(canskip && e.key == "n") { puzzle++; fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }
   if(canskip && e.key == "p") { puzzle--; fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }
+  if(canskip && e.key == "r") { fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }
   this['lurd************************l**r************l*d***u**u'[e.which - 37]] = e.type[5];
   if(snake_position) move_snake();
 }

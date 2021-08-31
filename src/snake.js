@@ -772,12 +772,12 @@ go_on_next_target = (target_position) => {
     // Start on floor
     if(target_position[2] == 0 && floor){
       snake_position.push([target_position[0], target_position[1], target_position[2] - 1/5]);
-      snake_position.push([target_position[0], target_position[1], head_position[2] - 2/5]);
+      snake_position.push([target_position[0], target_position[1], target_position[2] - 2/5]);
     }
     // Start on wall
     else {
       snake_position.push([target_position[0], target_position[1] - 1/5, target_position[2]]);
-      snake_position.push([target_position[0], target_position[1] - 2/5, head_position[2]]);
+      snake_position.push([target_position[0], target_position[1] - 2/5, target_position[2]]);
     }
     // End on floor
     if(next_target[2] == 0 && floor){
