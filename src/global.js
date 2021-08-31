@@ -1,6 +1,6 @@
 // Global vars
-world = 0; // 0: main menu, 1-5: current world
-puzzle = 0; // 0: level menu, 1-n: current puzzle
+world = 3; // 0: main menu, 1-5: current world
+puzzle = 1; // 0: level menu, 1-n: current puzzle
 coins = 0;
 win = 0;
 haltwin = 0;
@@ -25,5 +25,5 @@ svg = [
   
   // 9-10: Brick
   '<svg width=50 height=17><rect x=0 y=0 width=25 height=17 stroke="#000"/><rect x=25 y=0 width=25 height=17 stroke="#000"/></svg>',
-  '<svg width=50 height=17><rect x=0 y=0 width=50 height=17 stroke="#000"/><rect x=18 y=0 width=15 height=17 stroke="#000"/></svg>',
+  '<svg width=50 height=17><rect x=0 y=0 width=50 height=17 stroke="#000"/><path d="M17 0L17 17M34 0L34 17" stroke="#000"/></svg>',
 ];

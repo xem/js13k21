@@ -13,5 +13,11 @@
 .world2 .head { background: radial-gradient(circle at 77%,#07f,#048); box-shadow: 0 0 5px #000; }
 .world2 .body.odd, .world2 .toggle .body { background: linear-gradient(-90deg,#29f,#26a); }
 .world2 .body, .world2 .toggle .body.odd { background: linear-gradient(-90deg,#07f,#048); }
+
+.world3 .head { background: radial-gradient(circle at 77%,#c00,#700); box-shadow: 0 0 5px #000; }
+.world3 .body.odd, .world2 .toggle .body { background: linear-gradient(#c00,#700); }
+.world3 .body, .world2 .toggle .body.odd { background: linear-gradient(#900,#400); }
+
 .world2 .tongue { color: #740 }
-.world2 .eyes { width: 40px !important; height: 30px !important; font-size: 50px; text-shadow: none }
+.world3 .tongue { color: #24e }
+.world2 .eyes, .world3 .eyes { width: 40px !important; height: 30px !important; font-size: 50px; text-shadow: none }

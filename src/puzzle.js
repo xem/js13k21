@@ -17,6 +17,7 @@ draw_puzzle = () => {
   bricks = current_puzzle[6] || [];
   portals1 = current_puzzle[7] || 0;
   portals2 = current_puzzle[8] || 0;
+  mirroring = 0;//current_puzzle[9];
 
   // Snake globals
   snake_length = current_puzzle[4]-1; // without head  
@@ -31,7 +32,6 @@ draw_puzzle = () => {
   on_wall = 0;
   high = 0;
   behind = 0;
-  mirroring = 0;
   trees = [];
   flowers = [];
   animals = [];
@@ -90,7 +90,7 @@ draw_puzzle = () => {
   C.sprite({g:"head_scale",n:"head_circle",x:0,y:0,w:50,h:50,z:25,css:"head circle"});
   C.group({g:"head_scale",n:"head_decoration",w:50,h:50,z:25});
   C.group({g:"head_decoration",n:"head_decoration_inner",w:50,h:50,x:25,y:25,rz:head_angle});
-  C.plane({g:"head_decoration_inner",x:25,y:15,z:27,w:30,h:15,rx:-20,css:"eyes emoji",html:[,"👀","🕶️"][world]});
+  C.plane({g:"head_decoration_inner",x:25,y:15,z:27,w:30,h:15,rx:-20,css:"eyes emoji",html:[,"👀","🕶️","🥽"][world]});
   C.plane({g:"head_decoration_inner",x:25,y:53,z:3,w:13,h:20,rx:180,css:"tongue",html:"Y"});
   
   // Snake's body
@@ -108,8 +108,8 @@ draw_puzzle = () => {
     if(!(x > -9 && x < w+3 && y > -3 && y < h+3) && (y < 2 || y > 4)){
       if(!trees.find(a => (a[0] > x-3 && a[0] < x+3) || (a[1] > y-3 && a[1] < y+3))){
         trees.push([x,y]);
-        C.sprite({g:"puzzlefloor",x:x*50-20,y:y*50,z:5,w:65,h:75,sx:1.8,sy:1.8,sz:1.8,css:"tree emoji",html:[,"🌳","🌵"][world],o:"bottom center"});
-        C.plane({g:"puzzlefloor",x:x*50-20,y:y*50,z:2,rz:(world==1?280:311),w:65,h:75,sx:1.8,sy:2.5,sz:1.8,css:"tree shadow emoji",html:[,"🌳","🌵"][world],o:"bottom center"});
+        C.sprite({g:"puzzlefloor",x:x*50-20,y:y*50,z:5,w:65,h:75,sx:1.8,sy:1.8,sz:1.8,css:"tree emoji",html:[,"🌳","🌵","🌲"][world],o:"bottom center"});
+        C.plane({g:"puzzlefloor",x:x*50-20,y:y*50,z:2,rz:(world==1?280:311),w:65,h:75,sx:1.8,sy:2.5,sz:1.8,css:"tree shadow emoji",html:[,"🌳","🌵","🌲"][world],o:"bottom center"});
       }
     }
   }
@@ -121,7 +121,7 @@ draw_puzzle = () => {
     if(!(x > -9 && x < w+2 && y > -2 && y < h+2)){
       if(!flowers.find(a => a[0] > (~~x)-2 && a[0] < (~~x)+2 && a[1] > (~~y)-2 && a[1] < (~~y)+2) && (y < 2 || y > 4) && !trees.find(a => a[0] > (~~x)-2 && a[0] < (~~x)+2 && a[1] > (~~y)-2 && a[1] < (~~y)+2)){
         flowers.push([~~x,~~y]);
-        C.plane({g:"puzzlefloor",w:45,h:world==1?34:42,z:5,x:x*50,y:y*50,z:1,rx:0,o:"bottom",css:"emoji flower",html:[,"🌼","🪨"][world]});
+        C.plane({g:"puzzlefloor",w:45,h:world==1?34:42,z:5,x:x*50,y:y*50,z:1,rx:0,o:"bottom",css:"emoji flower",html:[,"🌼","🪨","❄️"][world]});
       }
     }
   }
@@ -140,6 +140,9 @@ draw_puzzle = () => {
         
         // World 2
         [x,y,[..."🐪🐫🦒🦘"][~~(Math.random() * 4)]],
+        
+        // World 3
+        [x,y,[..."⛄️🐧🦭🎁"][~~(Math.random() * 4)]],
         
       ][world]];
       scale = [,1.5,1.8][world];

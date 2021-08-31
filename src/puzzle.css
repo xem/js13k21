@@ -2,6 +2,7 @@
 .world-3 #scene .floor { background: radial-gradient(#000a,#000e 80%),url(grass.svg); }
 .world1 #scene .floor { background: radial-gradient(#0000,#000e 80%),url(grass.svg); }
 .world2 #scene .floor { background: radial-gradient(#fff8,#fff0 80%),url(desert.svg); border-radius: 150px; }
+.world3 #scene .floor { background: radial-gradient(#fff,#adf 80%); border-radius: 50%; }
 #puzzlefloor { background: #0005; }
 .tile { background: #fff; border: 3px solid #777; }
 .wall_tile { background: #bbb }
@@ -19,7 +20,9 @@
 .shadow { text-shadow: none; filter: contrast(0)brightness(0); opacity: .6 }
 #mirror .cubefront, #mirror .cubeback { background: linear-gradient(#0000 30%,#02db 80%); }
 #mirror .cubeleft, #mirror .cuberight { background: linear-gradient(#0000 30%,#f81b 80%); }
-.bricks div { fill: #f50; }
+.world1 .bricks div { fill: #f50; }
+.world2 .bricks div { fill: #ccc; }
+.world3 .bricks div { fill: #8cfb; }
 .bricks .cubetop { filter: brightness(.8) }
 .bricks .cubeleft { filter: brightness(.5) }
 .bricks .cubefront.bricks .cubeback { filter: brightness(.7) }
