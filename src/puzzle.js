@@ -8,7 +8,7 @@ draw_puzzle = () => {
   
   // Puzzle
   current_puzzle = data[world][puzzle];
-  console.log(current_puzzle);
+  //console.log(current_puzzle);
   
   w = current_puzzle[2];
   h = current_puzzle[3] || w;
@@ -45,7 +45,7 @@ draw_puzzle = () => {
   C.reset();
   
   // Scene
-  camrx = 30;
+  camrx = (world==2&&puzzle==30)?50:30;
   camrz = 0;
   b.classList.remove("menu");
   b.classList.remove("win");
@@ -255,10 +255,10 @@ check_puzzle = () => {
     coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
     b.classList.add("win");
     setTimeout(()=>{
-      C.plane({g:"puzzlefloor",n:"coin",x:head_position[0]*50+25,y:head_position[1]*50+15,z:head_position[2]*50+25,w:50,h:50,rx:high?-90:-45,html:"🪙",css:"emoji coin",sx:.5,sy:.5,sz:.5});
+      C.plane({g:"puzzlefloor",n:"coin",x:head_position[0]*50+25,y:y=head_position[1]*50+15,z:head_position[2]*50+45,w:50,h:50,rx:high?-90:-45,html:"🪙",css:"emoji coin",sx:.5,sy:.5,sz:.5});
     },200);
     setTimeout(()=>{
-      C.move({n:"coin",y:(wall && head_position[1] == 0) ? 100 : 0, z:head_position[2]*50+200,sx:1.5,sy:1.5,sz:1.5,ry:1080});
+      C.move({n:"coin",y:y+50, z:head_position[2]*50+200,sx:1.5,sy:1.5,sz:1.5,ry:1080});
     },300);
     setTimeout(()=>{
       play_sound(coin_sound);

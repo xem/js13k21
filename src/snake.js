@@ -283,11 +283,11 @@ check_wall = () => {
     if(pos[2] > 0){
       high = 1;
       b.classList.add("high");
-      C.camera({rx:camrx=(world==1&&puzzle==33?30:70),y:0});
+      C.camera({rx:camrx=((world==1&&puzzle==33)?30:(world==2&&puzzle==30)?50:70),y:0});
     }
     else {
       b.classList.remove("high");
-      C.camera({rx:camrx=30,y:h*10});
+      C.camera({rx:camrx=(world==2&&puzzle==30)?50:30,y:h*10});
     }
   }
   
@@ -302,7 +302,7 @@ check_wall = () => {
     b.classList.remove("on_wall");
     b.classList.remove("behind");
     C.move({n:"head_decoration",rx:0});
-    if(world > 0) C.camera({rx:camrx=30,y:h*10});
+    if(world > 0) C.camera({rx:camrx=(world==2&&puzzle==30)?50:30,y:h*10});
   }
 }
 
