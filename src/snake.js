@@ -319,7 +319,7 @@ inbounds = () => {
 move_left = () => {
   
   // Next position (if all goes well)
-  var target_position = current_puzzle.mirror && inbounds()
+  var target_position = mirror && inbounds()
     ? [(head_position[0] - 1 + w) % w, head_position[1], head_position[2]]
     : [head_position[0] - 1, head_position[1], head_position[2]];
     
@@ -346,7 +346,7 @@ move_left = () => {
     }
     
     // Mirroring
-    if(current_puzzle.mirror && inbounds()){
+    if(mirror && inbounds()){
       if(head_position[0] - 1 != ((head_position[0] - 1 + w) % w)){
         mirror_animation();
       }
@@ -385,7 +385,7 @@ move_right = () => {
   world == -3 ?
     [head_position[0] + 1, head_position[1], head_position[2]]
   :
-    (current_puzzle.mirror && inbounds())
+    (mirror && inbounds())
     ? [(head_position[0] + 1) % w, head_position[1], head_position[2]]
     : [head_position[0] + 1, head_position[1], head_position[2]];
     
@@ -411,7 +411,7 @@ move_right = () => {
     }
     
     // Mirroring
-    if(world > 0 && current_puzzle.mirror && inbounds()){
+    if(world > 0 && mirror && inbounds()){
       if(head_position[0] + 1 != ((head_position[0] + 1) % h)){
         mirror_animation();
       }
@@ -447,7 +447,7 @@ move_right = () => {
 move_up = () => {
   
   // Next position (if all goes well)
-  var target_position = current_puzzle.mirror && inbounds()
+  var target_position = mirror && inbounds()
     ? [head_position[0], head_position[1], (head_position[2] + 1) % h]
     : [head_position[0], head_position[1], head_position[2] + 1];
   
@@ -471,7 +471,7 @@ move_up = () => {
     }
     
     // Mirroring
-    if(current_puzzle.mirror && inbounds()){
+    if(mirror && inbounds()){
       if(head_position[2] + 1 != ((head_position[2] + 1) % h)){
         mirror_animation();
       }
@@ -506,7 +506,7 @@ move_up = () => {
 move_down = () => {
   
   // Next position (if all goes well)
-  var target_position = current_puzzle.mirror && inbounds()
+  var target_position = mirror && inbounds()
     ? [head_position[0], head_position[1], (head_position[2] - 1 + h) % h]
     : [head_position[0], head_position[1], head_position[2] - 1];
   
@@ -524,7 +524,7 @@ move_down = () => {
       portal_animation();
     }
     
-    if(current_puzzle.mirror && inbounds()){
+    if(mirror && inbounds()){
       if(head_position[2] + 1 != ((head_position[2] - 1 + h) % h)){
         mirror_animation();
       }
@@ -561,7 +561,7 @@ move_front = () => {
   //console.log("front");
   
   // Next position (if all goes well)
-  var target_position = current_puzzle.mirror && inbounds()
+  var target_position = mirror && inbounds()
     ? [head_position[0], (head_position[1] + 1) % h, head_position[2]]
     : [head_position[0], head_position[1] + 1, head_position[2]];
   
@@ -588,7 +588,7 @@ move_front = () => {
     }
     
     // Mirroring
-    if(current_puzzle.mirror && inbounds()){
+    if(mirror && inbounds()){
       if(head_position[1] + 1 != ((head_position[1] + 1) % h)){
         mirror_animation();
       }
@@ -623,7 +623,7 @@ move_front = () => {
 move_back = () => {
   
   // Next position (if all goes well)
-  var target_position = (current_puzzle.mirror && inbounds())
+  var target_position = (mirror && inbounds())
     ? [head_position[0], (head_position[1] - 1 + h) % h, head_position[2]]
     : [head_position[0], head_position[1] - 1, head_position[2]];
     
@@ -650,7 +650,7 @@ move_back = () => {
     }
     
     // Mirroring
-    else if(current_puzzle.mirror && inbounds()){
+    else if(mirror && inbounds()){
       if(head_position[1] - 1 != ((head_position[1] - 1 + h) % h)){
         mirror_animation();
       }

@@ -74,6 +74,7 @@ C = {
   cube: t => {
     t.n||(t.n=`c${C.cube_count++}`),
     C.init(t),
+    console.log(t);
     C.group(t),
     C.plane({g:t.n,y:t.d/2,w:t.d,h:t.h,b:t.b1||t.b,rx:-90,ry:-90,o:"bottom",css:"cubeleft",html:t.htmlside}),
     C.plane({g:t.n,x:t.w,y:t.d/2,w:t.d,h:t.h,b:t.b2||t.b,rx:-90,ry:90,o:"bottom",css:"cuberight",html:t.htmlside}),

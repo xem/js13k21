@@ -1,7 +1,7 @@
 @font-face { font-family: emoji; src: url(//xem.github.io/unicode13/Twemoji.ttf) }
-* { margin: 0; padding: 0; box-sizing: border-box; transform-style: preserve-3d; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; pointer-events: none; }
+* { margin: 0; padding: 0; box-sizing: border-box; transform-style: preserve-3d; cursor: pointer; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; pointer-events: none; }
 html, body { height: 100vh; overflow: hidden; position: relative; }
-body { background: #000; -webkit-tap-highlight-color: transparent; overscroll-behavior: contain; font: 14px calibri,arial,sans-serif; text-shadow: 0 0 5px #000; scrollbar-width: thin; }
+body { background: #000; -webkit-tap-highlight-color: transparent; overscroll-behavior: contain; font: 14px calibri,arial,sans-serif; scrollbar-width: thin; }
 ::-webkit-scrollbar { width: 8px; height: 8px; background: #000; }
 ::-webkit-scrollbar-thumb { background: #666; }
 #b { max-width: 800px; margin: auto; }
@@ -13,11 +13,11 @@ body { background: #000; -webkit-tap-highlight-color: transparent; overscroll-be
 .circle { border-radius: 50% }
 .emoji { font-family: emoji; }
 .dpad { position: absolute; bottom: 10px; left: 10px; z-index: 2; }
-.dpad svg { cursor: pointer; margin: 10px; width: 50px; height: 50px; border-radius: 5px; background: linear-gradient(45deg, #ddd, #888); box-shadow: 2px 2px 5px #000; }
+.dpad svg { margin: 10px; width: 50px; height: 50px; border-radius: 5px; background: linear-gradient(45deg, #ddd, #888); box-shadow: 2px 2px 5px #000; }
 .dpad svg:first-child { position: absolute; top: calc(100% - 140px); left: 73px }
 #fade { position: fixed; top: 0; left: 0; width: 105%; height: 105%; z-index: 3; background: #000; transition: opacity .5s }
 .fadein #fade { opacity: 0 }
-#puzzlename, #coincount, .back { color: #fff; text-shadow: none; cursor: pointer;pointer-events: all; position: absolute; font-size: 30px; width: 50px; height: 50px; z-index: 2; top: 10px; }
+#puzzlename, #coincount, .back { color: #fff; text-shadow: 0 0 10px #000; pointer-events: all; position: absolute; font-size: 30px; width: 50px; height: 50px; z-index: 2; top: 10px; }
 .back { left: 20px; }
 #puzzlename { width: 200px; left: 50%; transform: translateX(-50%); text-align: center; }
 #coincount { width: 150px; right: 20px; text-align: right; }

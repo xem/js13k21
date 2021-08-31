@@ -1,12 +1,10 @@
 .head { background: radial-gradient(circle at 77%,#fa0,#a50); box-shadow: 0 0 5px #000; }
-#head_circle { cursor: pointer; }
 #head, #head_decoration, #head_decoration_inner { transition: transform .2s }
 .body, .toggle .body.odd { background: linear-gradient(-90deg,#fa0,#a50); transition: transform .03s; }
 .body.high { filter: none; }
 .body.odd, .toggle .body { background: linear-gradient(-90deg,#c70,#720); }
 .eyes { font-size: 30px }
 .tongue { font-size: 25px; color: red; font-weight: bold; }
-.on_wall.high #scene .trigger { display: none; }
 .body:last-of-type { display: none }
 .body:nth-last-of-type(2) { display: none }
 .mirroring #head { transition: none }
@@ -14,10 +12,10 @@
 .world2 .body.odd, .world2 .toggle .body { background: linear-gradient(-90deg,#29f,#26a); }
 .world2 .body, .world2 .toggle .body.odd { background: linear-gradient(-90deg,#07f,#048); }
 
-.world3 .head { background: radial-gradient(circle at 77%,#c00,#700); box-shadow: 0 0 5px #000; }
-.world3 .body.odd, .world2 .toggle .body { background: linear-gradient(#c00,#700); }
-.world3 .body, .world2 .toggle .body.odd { background: linear-gradient(#900,#400); }
+.world3 .head { background: radial-gradient(circle at 77%,#e40,#930); box-shadow: 0 0 5px #000; }
+.world3 .body.odd, .world2 .toggle .body { background: linear-gradient(#e40,#930); }
+.world3 .body, .world2 .toggle .body.odd { background: linear-gradient(#b30,#620); }
 
 .world2 .tongue { color: #740 }
 .world3 .tongue { color: #24e }
-.world2 .eyes, .world3 .eyes { width: 40px !important; height: 30px !important; font-size: 50px; text-shadow: none }
+.world2 .eyes, .world3 .eyes { width: 40px !important; height: 30px !important; font-size: 50px; }

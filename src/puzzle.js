@@ -1,7 +1,7 @@
 // Draw current puzzle
 draw_puzzle = () => {
   
-  song = 1;
+  song = 7;
   
   if(puzzle) puzzlename.innerHTML = world + " - " + puzzle;
   if(coins) coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
@@ -17,7 +17,8 @@ draw_puzzle = () => {
   bricks = current_puzzle[6] || [];
   portals1 = current_puzzle[7] || 0;
   portals2 = current_puzzle[8] || 0;
-  mirroring = 0;//current_puzzle[9];
+  mirror = current_puzzle[9];
+  console.log(mirror);
 
   // Snake globals
   snake_length = current_puzzle[4]-1; // without head  
@@ -38,6 +39,7 @@ draw_puzzle = () => {
   halt = 0;
   win = 0;
   steps = 0;
+  mirroring = 0;
   
   var i, j, x, y, head_position, scale;
 
@@ -50,7 +52,7 @@ draw_puzzle = () => {
   b.classList.remove("menu");
   b.classList.remove("win");
   
-  C.camera({z:-300+w*50,x:-150,y:h*10,rx:camrx,rz:camrz});
+  C.camera({z:-300+w*50+mirror*100,x:-150,y:h*10,rx:camrx,rz:camrz});
   
   // Remove menu class from body
   setTimeout(()=>{b.classList.add("fadein")},1000);
@@ -63,8 +65,8 @@ draw_puzzle = () => {
   C.group({n:"puzzlefloor",w:w*50,h:(floor ? h : 1)*50,z:2});
   C.group({n:"puzzlewall",w:w*50,h:h*50,y:-(floor ? h : 1)*50/2,z:2,rx:-90,o:"bottom"});
   
-  if(current_puzzle.mirror){
-    C.cube({g:"puzzlefloor",n:"mirror",w:w*50,h:h*50,d:h*50,x:w*50/2,y:h*50/2});
+  if(mirror){
+    C.cube({g:"puzzlefloor",n:"wrap",w:w*50,h:h*50,d:h*50,x:w*50/2,y:h*50/2});
   }
   
   if(floor){
@@ -114,8 +116,8 @@ draw_puzzle = () => {
     }
   }
   
-  // Flowers
-  for(i = 0; i < 10; i++){
+  // Flowers / Rocks / ice
+  for(i = 0; i < (world == 3 ? 30 : 10); i++){
     x = ((Math.random() * 14) - 5).toFixed(1);
     y = ((Math.random() * 10) - 5).toFixed(1);
     if(!(x > -9 && x < w+2 && y > -2 && y < h+2)){

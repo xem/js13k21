@@ -9,6 +9,7 @@ next_target = 0;
 portaling = 0;
 portals1 = 0;
 portals2 = 0;
+mirror = 0;
 
 // List of SVGs
 svg = [
