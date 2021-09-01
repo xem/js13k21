@@ -1,6 +1,6 @@
 // Global vars
-world = 3; // 0: main menu, 1-5: current world
-puzzle = 1; // 0: level menu, 1-n: current puzzle
+world = 1; // 0: main menu, 1-5: current world
+puzzle = 49; // 0: level menu, 1-n: current puzzle
 coins = 0;
 win = 0;
 haltwin = 0;

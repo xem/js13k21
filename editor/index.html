@@ -1,36 +1,62 @@
-﻿<!doctype html>
-<title>SNAKE</title>
-<meta content="width=device-width,user-scalable=no"name=viewport>
-<link rel=stylesheet href=snake.css>
-<script src=init.js></script>
-<script src=gameplay.js></script>
-<body id=b class=editor onload=editor()>
-<div id=form>
-<label>Grid</label> <input id=gridsize type=range value=5 min=3 max=8 step=1>
-<span id=gridval>5</span>
-<br>
-<label>Snake</label> <input id=snakesize type=range value=5 min=5 max=40 step=1>
-<span id=snakeval>5</span>
-<br>
-<input type=checkbox id=ground> <label for=ground id=groundlabel>Ground</label>
-<script>document.write("<input type=checkbox id=wall> <label for=wall>Wall</label>")</script>
-<script>document.write("<input type=checkbox id=wrap> <label for=wrap>Wrap</label>")</script>
-<br>
-<!--(use middle / right click to add teleporters 1 / 2)-->
-<button id=test>Test</button>
-<button id=share>Share</button>
-<button id=reset>Reset</button>
-<button id=quit>Quit</button>
-<div id=perspective>
-<div id=scene>
-<div class="cube wrap" id=puzzle0>
-<div class=left></div>
-<div class=right></div>
-<div id=down class=down></div>
-<div id=back class=back></div>
-<div class=up></div>
-<div class=front></div>
+﻿<meta name=viewport content=width=device-width,initial-scale=1>
+<meta name=apple-mobile-web-app-capable content=yes>
+<meta name=mobile-web-app-capable content=yes>
+<link rel=stylesheet href='../src/global.css'>
+<link rel=stylesheet href='../src/menu.css'>
+<link rel=stylesheet href='../src/snake.css'>
+<link rel=stylesheet href='../src/puzzle.css'>
+<title>LOSSST</title>
+<body id=body>
+<div id=b class='menu world0'>
+  <div id=viewport>
+    <div id=camera>
+      <div id=scene></div>
+    </div>
+  </div>
+  <div class=back onclick="nav_back()">&lt;</div>
+  <div id=ui>
+    Width <input type=range id=W min=3 max=8 value=5> &nbsp; &nbsp;
+    Height <input type=range id=H min=3 max=8 value=5> &nbsp; &nbsp;
+    Snake size <input type=number id=SNAKE min=3 max=30 value=3>
+    <br>
+    <input type=checkbox id=FLOOR checked> Floor &nbsp; &nbsp;
+    <input type=checkbox id=WALL checked> Wall &nbsp; &nbsp;
+    <input type=checkbox id=WRAP> Wrap &nbsp; &nbsp;
+    <br>
+    <br>
+    <button onclick='if(confirm("sure?"))location=location'>Reset</button> &nbsp; &nbsp;
+    <button onclick='share()'>Play/share</button>
+  </div>
 </div>
-<div id=snake></div>
-<div class=grass>
-<div class=sun>
+<script src='../src/global.js'></script>
+<script src='../src/css3d.js'></script>
+<script src='../src/data.js'></script>
+<script src='screen.js'></script>
+<!---script src='../src/input.js'></scrit-->
+<script src='../src/snake.js'></script>
+<script src='../src/puzzle.js'></script>
+<script src='../src/music.js'></script>
+<script>draw_screen()</script>
+
+<style>
+#camera { top: 80% }
+#ui { color: #fff; position: fixed; top: 20px; left: 0; width: 100%; text-align: center; font-size: 30px; line-height: 45px; }
+input, button { background: #555; color: #fff; font: 30px calibri, arial; padding: 0 5px; }
+input { max-width: 100px }
+#puzzlefloor .tile { opacity: 0; }
+#puzzlewall .tile { opacity: 0; }
+#wrap div { opacity: 0; pointer-events: none; }
+.hasfloor #puzzlefloor .tile { opacity: 1; }
+.haswall #puzzlewall .tile { opacity: 1; }
+.haswrap #wrap div { opacity: 1; }
+.tile * { opacity: 0; pointer-events: none; background: #e40; border: 2px solid #000; }
+.tile :nth-child(1) { background: linear-gradient(90deg, #e40 24px, #000 24px, #000 26px, #e40 26px); }
+.tile :nth-child(2) { background: linear-gradient(90deg, #e40 17px, #000 17px, #000 19px, #e40 19px, #e40 34px, #000 34px, #000 36px, #e40 36px); }
+.tile :nth-child(3) { background: linear-gradient(90deg, #e40 24px, #000 24px, #000 26px, #e40 26px); }
+#puzzlefloor { background: linear-gradient(#0005 50px, #0000 50px) }
+#wrap .cubefront, #wrap .cubeback, #wrap .cubeleft, #wrap .cuberight {  background: linear-gradient(#0000,#55fd); }
+.tile1 { background : #000 }
+.tile2 { background : radial-gradient(#e0e, #505 70%, #000 75%) }
+.tile3 { background : radial-gradient(#fc0, #c60 70%, #000 75%) }
+.tile4 svg { opacity: 1; }
+</style>
