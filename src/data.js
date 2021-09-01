@@ -835,6 +835,36 @@ data = [
     [
     
       // Floor
+      ,
+      
+      // Wall
+      [
+        0b1000110,
+        0b1001111,
+        0b1001111,
+        0b1000111
+      ],
+      
+      // Width
+      4,
+      
+      // Height
+      ,
+      
+      // Snake length
+      13,
+      
+      // Moves
+      17
+      
+      // Bricks
+      
+    ],
+    
+    // Puzzle 28
+    [
+    
+      // Floor
       [
         0b1000000,
         0b1000110,
@@ -863,7 +893,7 @@ data = [
       [[3,1],[4,1],[4,2]]
     ],
     
-    // Puzzle 28
+    // Puzzle 29
     [
     
       // Floor
@@ -897,7 +927,7 @@ data = [
       // Bricks
     ],
 
-    // Puzzle 29
+    // Puzzle 30
     [
     
       // Floor
@@ -928,7 +958,7 @@ data = [
       // Bricks
     ],
     
-    // Puzzle 30
+    // Puzzle 31
     [
     
       // Floor
@@ -955,36 +985,6 @@ data = [
       18
       
       // Bricks
-    ],
-
-    // Puzzle 31
-    [
-    
-      // Floor
-      ,
-      
-      // Wall
-      [
-        0b1000110,
-        0b1001111,
-        0b1001111,
-        0b1000111
-      ],
-      
-      // Width
-      4,
-      
-      // Height
-      ,
-      
-      // Snake length
-      13,
-      
-      // Moves
-      17
-      
-      // Bricks
-      
     ],
     
     // Puzzle 32
@@ -1189,65 +1189,6 @@ data = [
     
       // Floor
       [
-        0b1000010,
-        0b1000111,
-        0b1000010
-      ],
-      
-      // Wall
-      ,
-      
-      // Width
-      3,
-      
-      // Height
-      ,
-      
-      // Snake length
-      15,
-      
-      // Moves
-      18
-      
-      // Bricks
-      
-    ],
-    
-    // Puzzle 39
-    [
-    
-      // Floor
-      [
-        0b1000001,
-        0b1000111,
-        0b1000110,
-        0b1001101
-      ],
-      
-      // Wall
-      ,
-      
-      // Width
-      4,
-      
-      // Height
-      ,
-      
-      // Snake length
-      16,
-      
-      // Moves
-      20,
-      
-      // Bricks
-      
-    ],
-    
-    // Puzzle 40
-    [
-    
-      // Floor
-      [
         0b1001010,
         0b1001011,
         0b1001110,
@@ -1274,7 +1215,7 @@ data = [
     ],
 
     
-    // Puzzle 41
+    // Puzzle 39
     [
     
       // Floor
@@ -1305,7 +1246,7 @@ data = [
       [[3,3]]
     ],
     
-    // Puzzle 42
+    // Puzzle 40
     [
     
       // Floor
@@ -1336,7 +1277,7 @@ data = [
       // Bricks
     ],
     
-    // Puzzle 43
+    // Puzzle 41
     [
     
       // Floor
@@ -1363,6 +1304,65 @@ data = [
       21
       
       // Bricks
+    ],
+    
+    // Puzzle 42
+    [
+    
+      // Floor
+      [
+        0b1000010,
+        0b1000111,
+        0b1000010
+      ],
+      
+      // Wall
+      ,
+      
+      // Width
+      3,
+      
+      // Height
+      ,
+      
+      // Snake length
+      15,
+      
+      // Moves
+      18
+      
+      // Bricks
+      
+    ],
+    
+    // Puzzle 43
+    [
+    
+      // Floor
+      [
+        0b1000001,
+        0b1000111,
+        0b1000110,
+        0b1001101
+      ],
+      
+      // Wall
+      ,
+      
+      // Width
+      4,
+      
+      // Height
+      ,
+      
+      // Snake length
+      16,
+      
+      // Moves
+      20,
+      
+      // Bricks
+      
     ],
     
     // Puzzle 44
@@ -1458,36 +1458,6 @@ data = [
     
       // Floor
       [
-        0b1000110,
-        0b1111111,
-        0b1110101,
-        0b1011101,
-        0b1001111
-      ],
-      
-      // Wall
-      ,
-      
-      // Width
-      6,
-      
-      // Height
-      5,
-      
-      // Snake length
-      20,
-      
-      // Moves
-      26
-     
-      // Bricks
-    ],
-    
-    // Puzzle 48
-    [
-    
-      // Floor
-      [
         0b1001111,
         0b1001000,
         0b1001001,
@@ -1519,7 +1489,7 @@ data = [
       // Bricks
     ],
    
-    // Puzzle 49
+    // Puzzle 48
     [
     
       // Floor
@@ -1547,6 +1517,37 @@ data = [
       
       // Bricks
       [[1,-1],[0,1],[-1,1],[3,1],[1,3]]
+    ],
+    
+    // Puzzle 49
+    [
+    
+      // Floor
+      [
+        0b1000110,
+        0b1111111,
+        0b1110101,
+        0b1011101,
+        0b1001111
+      ],
+      
+      // Wall
+      ,
+      
+      // Width
+      6,
+      
+      // Height
+      5,
+      
+      // Snake length
+      20,
+      
+      // Moves
+      37,
+     
+      // Bricks
+      [[-1,1,0],[1,5,0],[3,0,0],[6,2,0]]
     ],
     
     // Puzzle 50
@@ -1872,6 +1873,39 @@ data = [
     [
     
       // Floor
+      ,
+      
+      // Wall
+      [
+        0b1000111,
+        0b1000101,
+        0b1000111,
+      ],
+      
+      // Width
+      3,
+      
+      // Height
+      ,
+      
+      // Snake length
+      8,
+      
+      // Moves
+      12,
+      
+      // Bricks
+      ,
+      
+      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
+      [[2,0,1],[0,0,1]],
+    
+    ],
+    
+    // 10
+    [
+    
+      // Floor
       [
         0b1001110,
         0b1001010,
@@ -1900,39 +1934,6 @@ data = [
       
       // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
       [[2,0,0],[3,0,0]],
-    
-    ],
-    
-    // 10
-    [
-    
-      // Floor
-      ,
-      
-      // Wall
-      [
-        0b1000111,
-        0b1000101,
-        0b1000111,
-      ],
-      
-      // Width
-      3,
-      
-      // Height
-      ,
-      
-      // Snake length
-      8,
-      
-      // Moves
-      12,
-      
-      // Bricks
-      ,
-      
-      // Portals 1: [x,y,z] * 2 (z = 0: floor, z>0: wall)
-      [[2,0,1],[0,0,1]],
     
     ],
     
