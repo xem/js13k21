@@ -1,6 +1,6 @@
 // Global vars
-world = 1; // 0: main menu, 1-5: current world
-puzzle = 49; // 0: level menu, 1-n: current puzzle
+world = 0; // 0: main menu, 1-5: current world
+puzzle = 0; // 0: level menu, 1-n: current puzzle
 coins = 0;
 win = 0;
 haltwin = 0;
@@ -10,6 +10,7 @@ portaling = 0;
 portals1 = 0;
 portals2 = 0;
 mirror = 0;
+custom = 0;
 
 // List of SVGs
 svg = [

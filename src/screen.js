@@ -1,6 +1,16 @@
 // Draw screen
 draw_screen = () => {
   
+  // Custom puzzle
+  if(location.search  && location.search.length > 3){
+    world = 1;
+    puzzle = 99;
+    b.className = "puzzle world1";
+    custom = JSON.parse(location.search.slice(3));
+    draw_puzzle();
+    return;
+  }
+  
   // HTML string
   var i, j, html = "";
   
@@ -74,11 +84,14 @@ draw_screen = () => {
 
 nav_back = () => {
   var tmp;
-  if(puzzle){
+  if(custom){
+    location.search = "";
+  }
+  else if(puzzle){
     tmp = world;
     world = -1;
     puzzle = 0;
-    self.location.href = "#world_"+tmp;
+    location.href = "#world_"+tmp;
   }
   else {
     world = 0;
@@ -97,6 +110,7 @@ fadeout = (text) => {
     setTimeout(draw_screen, 4000);
   }
   else {
+    
     setTimeout(draw_screen, 600);
   }
 }

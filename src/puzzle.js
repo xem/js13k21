@@ -1,13 +1,15 @@
 // Draw current puzzle
 draw_puzzle = () => {
   
+  console.log(custom);
+  
   song = 7;
   
-  if(puzzle) puzzlename.innerHTML = world + " - " + puzzle;
-  if(coins) coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
+  if(puzzle && !custom) puzzlename.innerHTML = world + " - " + puzzle;
+  if(coins && !custom) coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
   
   // Puzzle
-  current_puzzle = data[world][puzzle];
+  current_puzzle = custom || data[world][puzzle];
   //console.log(current_puzzle);
   
   w = current_puzzle[2];
@@ -18,7 +20,7 @@ draw_puzzle = () => {
   portals1 = current_puzzle[7] || 0;
   portals2 = current_puzzle[8] || 0;
   mirror = current_puzzle[9];
-  console.log(mirror);
+  //console.log(mirror);
 
   // Snake globals
   snake_length = current_puzzle[4]-1; // without head  
@@ -86,6 +88,7 @@ draw_puzzle = () => {
     }
   }
   
+  console.log(world);
   // Snake's head
   C.group({g:"puzzlefloor",n:"head",x:snake_position[0][0]*50+25,y:snake_position[0][1]*50+25,z:4});
   C.group({g:"head",n:"head_scale"})
@@ -254,13 +257,25 @@ check_puzzle = () => {
     }
   }
   if(win && !haltwin){
+    if(custom){
+      world = 0;
+      puzzle = 0;
+      custom = 0;
+      setTimeout(()=>{location.search = '';},1400);
+    }
+    else {
+      coins++;
+      puzzle++;
+      if(puzzle >= data[world].length){
+        world++;
+        puzzle = 1;
+        coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
+      }
+    }
     haltwin = 1;
-    coins++;
-    puzzle++;
-    coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
     b.classList.add("win");
     setTimeout(()=>{
-      C.plane({g:"puzzlefloor",n:"coin",x:head_position[0]*50+25,y:y=head_position[1]*50+15,z:head_position[2]*50+45,w:50,h:50,rx:high?-90:-45,html:"🪙",css:"emoji coin",sx:.5,sy:.5,sz:.5});
+      C.plane({g:"puzzlefloor",n:"coin",x:(next_target||head_position)[0]*50+25,y:y=(next_target||head_position)[1]*50+15,z:(next_target||head_position)[2]*50+45,w:50,h:50,rx:high?-90:-45,html:"🪙",css:"emoji coin",sx:.5,sy:.5,sz:.5});
     },200);
     setTimeout(()=>{
       C.move({n:"coin",y:y+50, z:head_position[2]*50+200,sx:1.5,sy:1.5,sz:1.5,ry:1080});

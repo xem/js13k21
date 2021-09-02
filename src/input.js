@@ -91,17 +91,6 @@ onmousemove = ontouchmove = e => {
     // Rotate camera
     C.camera({rx:camrx,rz:camrz}) 
   }
-  
-  // Mode "move snake"
-  /*else if(pointer_mode == "move" && !halt && !win){
-
-    // Find which HTML element is actually under the pointer at any moment
-    // (warning: e.target only contains the element touched before moving the cursor, so it's not useful here)
-    real_target = document.elementFromPoint(e.clientX, e.clientY);
-  
-    // Handle snake movement & collisions
-    move_snake(real_target);
-  }*/
 }
 
 oncontextmenu = () => { return false; }
@@ -111,7 +100,6 @@ oncontextmenu = () => { return false; }
 canskip = 1;
 u = r = d = l = 0;
 onkeydown = onkeyup = e => {
-  //console.log(e);
   if(canskip && e.key == "n") { puzzle++; fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }
   if(canskip && e.key == "p") { puzzle--; fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }
   if(canskip && e.key == "r") { fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }

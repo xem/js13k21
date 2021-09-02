@@ -144,5 +144,7 @@ share = () => {
       }
     }
   }
-  console.log(current_puzzle);
+  if(prompt("Your puzzle URL: (click OK to play it)", "../src/?p=" + JSON.stringify(current_puzzle))){
+    window.open("../src/?p="+JSON.stringify(current_puzzle));
+  }
 }
