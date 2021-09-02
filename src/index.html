@@ -17,10 +17,11 @@
   <div id=puzzlename></div>
   <div id=coincount></div>
   <div class=dpad>
-    <svg onmousedown="u=1;move_snake(b)" onmouseup="u=0" ontouchstart="u=1;move_snake(b)" ontouchend="u=0" width=50 height=50><path d="M12 30L25 15L38 30" stroke="#000"/></svg>
-    <svg onmousedown="l=1;move_snake(b)" onmouseup="l=0" ontouchstart="l=1;move_snake(b)" ontouchend="l=0" width=50 height=50><path d="M30 12L15 25L30 38" stroke="#000"/></svg>
-    <svg onmousedown="d=1;move_snake(b)" onmouseup="d=0" ontouchstart="d=1;move_snake(b)" ontouchend="d=0" width=50 height=50><path d="M12 20L25 35L38 20" stroke="#000"/></svg>
-    <svg onmousedown="r=1;move_snake(b)" onmouseup="r=0" ontouchstart="r=1;move_snake(b)" ontouchend="r=0" width=50 height=50><path d="M20 12L35 25L20 38" stroke="#000"/></svg>
+    <svg onclick="u=1;move_snake();setTimeout(()=>u=0,50)" width=50 height=50><path d="M12 30L25 15L38 30" stroke="#000"/></svg>
+    <svg onclick="l=1;move_snake();setTimeout(()=>l=0,50)" width=50 height=50><path d="M30 12L15 25L30 38" stroke="#000"/></svg>
+    <svg onclick="d=1;move_snake(),setTimeout(()=>d=0,50)" width=50 height=50><path d="M12 20L25 35L38 20" stroke="#000"/></svg>
+    <svg onclick="r=1;move_snake();setTimeout(()=>r=0,50)" width=50 height=50><path d="M20 12L35 25L20 38" stroke="#000"/></svg>
+    <svg id=reset onclick="fadeout()"><text x=10 y=40>↺</svg>
   </div>
   <div id=fade></div>
   <div id=presents></div>

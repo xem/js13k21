@@ -1,4 +1,4 @@
-move_snake = target => {
+move_snake = () => {
   
   if(!halt && (puzzle || world==-3) && !win){
     

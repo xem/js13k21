@@ -2,11 +2,12 @@
 draw_screen = () => {
   
   // Custom puzzle
-  if(location.search  && location.search.length > 3){
+  if(location.search && location.search.length > 3){
     world = 1;
     puzzle = 99;
     b.className = "puzzle world1";
-    custom = JSON.parse(location.search.slice(3));
+    scene.innerHTML = "";
+    custom = eval(location.search.slice(3));
     draw_puzzle();
     return;
   }
@@ -111,7 +112,6 @@ fadeout = (text) => {
     setTimeout(draw_screen, 4000);
   }
   else {
-    
     setTimeout(draw_screen, 600);
   }
 }

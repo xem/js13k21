@@ -27,4 +27,6 @@
 .bricks .cubeleft { filter: brightness(.5) }
 .bricks .cubefront.bricks .cubeback { filter: brightness(.7) }
 .bricks .cuberight { filter: brightness(.9) }
-.coin { font-size: 50px; text-shadow: 0 0 15px #fff; transition: transform 1.7s}
+.coin { font-size: 50px; text-shadow: 0 0 15px #fff; transition: transform 1.7s }
+#reset { position: absolute; right: 20px; }
+#reset text { font-size: 40px; font-weight: bold }
