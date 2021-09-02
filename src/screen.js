@@ -76,6 +76,7 @@ draw_screen = () => {
   else {
     b.classList.remove("menu");
     b.classList.add("puzzle");
+    b.classList.add("puzzle" + puzzle);
     draw_puzzle();
     return;
   }

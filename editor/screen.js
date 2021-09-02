@@ -74,10 +74,10 @@ share = () => {
     h,              //  height*,
     +SNAKE.value,   //  snake_length,
     ,               //  moves,
-    []              //  bricks?,
+    [],             //  bricks?,
     ,               //  portals_1*,
     ,               //  portals_2*
-    +WRAP.checked,  // mirroring
+    +WRAP.checked,  //  mirroring
   ];                
 
   

@@ -1,7 +1,7 @@
 // Draw current puzzle
 draw_puzzle = () => {
   
-  console.log(custom);
+  //console.log(custom);
   
   song = 7;
   
@@ -150,7 +150,7 @@ draw_puzzle = () => {
         [x,y,[..."⛄️🐧🦭🎁"][~~(Math.random() * 4)]],
         
       ][world]];
-      scale = [,1.5,1.8][world];
+      scale = [,1.5,1.8,1.8][world];
       C.sprite({g:"puzzlefloor",w:50,h:55,z:8,x:x*50+20,y:y*50+15,z:3,rx:0,sx:scale,sy:scale,sz:scale,o:"bottom",css:"emoji animal",html:animals[0][2]});
       C.plane({g:"puzzlefloor",x:x*50+20,y:y*50-10,z:1,rz:350,w:50,h:55,css:"emoji animal shadow",html:animals[0][2],sx:scale,sy:scale,sz:scale,o:"bottom center"});
     }
@@ -275,7 +275,7 @@ check_puzzle = () => {
     haltwin = 1;
     b.classList.add("win");
     setTimeout(()=>{
-      C.plane({g:"puzzlefloor",n:"coin",x:(next_target||head_position)[0]*50+25,y:y=(next_target||head_position)[1]*50+15,z:(next_target||head_position)[2]*50+45,w:50,h:50,rx:high?-90:-45,html:"🪙",css:"emoji coin",sx:.5,sy:.5,sz:.5});
+      C.plane({g:"puzzlefloor",n:"coin",x:(next_target||head_position)[0]*50+25,y:y=(next_target||head_position)[1]*50+25,z:(next_target||head_position)[2]*50+45,w:50,h:50,rx:high?-90:-45,html:"🪙",css:"emoji coin",sx:.5,sy:.5,sz:.5});
     },200);
     setTimeout(()=>{
       C.move({n:"coin",y:y+50, z:head_position[2]*50+200,sx:1.5,sy:1.5,sz:1.5,ry:1080});

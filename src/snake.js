@@ -10,9 +10,13 @@ move_snake = target => {
     if(on_wall && !high && d){
       
       //console.log("quit wall");
-      if(head_angle_modulo == 180){
+      if(head_angle_modulo == 180 && snake_position[snake_position.length-2][1] > 0){
         go_back();
         return;
+      }
+      if(head_angle_modulo != 0){
+        head_angle += 180;
+        head_angle_modulo += 180;
       }
       target_position = move_front();
     }
@@ -568,6 +572,8 @@ move_front = () => {
   // Check portals
   next_target = check_portals1(target_position) || check_portals2(target_position);
   
+  console.log(target_position, next_target);
+  
   // Bounds
   if(target_position[1] > h + 9) return;
   
@@ -767,7 +773,7 @@ check_portals2 = (target_position) => {
 }
 
 go_on_next_target = (target_position) => {
-  console.log(target_position, next_target);
+  //console.log(target_position, next_target);
   if(next_target){
     // Start on floor
     if(target_position[2] == 0 && floor){

@@ -19,6 +19,7 @@
 .instant .tree { transition: none; }
 .shadow { filter: contrast(0)brightness(0); opacity: .6 }
 #wrap .cubefront, #wrap .cubeback, #wrap .cubeleft, #wrap .cuberight { background: linear-gradient(#0000 50%,#02d8); }
+.puzzle7 #wrap .cubefront, .puzzle7 #wrap .cubeback, .puzzle7 #wrap .cubeleft, .puzzle7 #wrap .cuberight { background: linear-gradient(#0000 30%,#02d); }
 .world1 .bricks div { fill: #f50; }
 .world2 .bricks div { fill: #ccc; }
 .world3 .bricks div { fill: #8cfb; }
