@@ -260,8 +260,6 @@ check_puzzle = () => {
     if(custom){
       world = 0;
       puzzle = 0;
-      custom = 0;
-      setTimeout(()=>{location.search = '';},1400);
     }
     else {
       coins++;
@@ -284,6 +282,6 @@ check_puzzle = () => {
       play_sound(coin_sound);
       haltwin = 0;
     },600);
-    setTimeout(fadeout,2000);
+    setTimeout((custom ? () => {coin.style.opacity = 0} : fadeout),2000);
   }
 }
