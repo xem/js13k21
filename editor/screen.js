@@ -102,7 +102,7 @@ share = () => {
           if(current_puzzle[8] && current_puzzle[8].length == 1){
             current_puzzle[8].push([i,j,0]);
           }
-          else if(!current_puzzle[7]){
+          else if(!current_puzzle[8]){
             current_puzzle[8] = [[i,j,0]];
           }
         }
@@ -134,7 +134,7 @@ share = () => {
           if(current_puzzle[8] && current_puzzle[8].length == 1){
             current_puzzle[8].push([i,0,h-1-j]);
           }
-          else {
+          else if(!current_puzzle[8]){
             current_puzzle[8] = [[i,0,h-1-j]];
           }
         }
