@@ -64,7 +64,7 @@ draw_screen = () => {
   
   // World -2: Bonus
   else if(world == -2){
-    html = "<div class='main bonus'><h1>BONUS</h1><span>(win 200 trophies to unlock everything)</span><p><a>Puzzle editor</a><span>(WebMonetization bonus)</span><p><a>Snake editor</a><span>(NEAR bonus)</span><p><a>Leaderboards</a><span>(IPFS bonus)</span><p><a>Get more coins</a><span>(FLUX bonus)</span><p><a>Delete save</a><p><a>Share</a>";
+    html = "<div class='main bonus'><h1>BONUS</h1><p><a onclick='if(self.document.monetization && self.document.monetization.state==\'started\")location=\"xem.github.io/js13k21/editor\"'>Puzzle editor</a><span>(WebMonetization bonus)</span><p><a href=//xem.github.io/js13k21/NEAR>Snake editor</a><span>(NEAR bonus)</span><p><a href=//xem.github.io/js13k21/NEAR>Leaderboards</a><span>(IPFS bonus)</span><p><a href=//xem.github.io/js13k21/FLUX>Get more coins</a><span>(FLUX bonus)</span><p><a onclick=\"if(confirm())delete localStorage.LOSSST\">Delete save</a><p><a>Share</a>";
     scene.innerHTML = html;
   }
   
@@ -102,6 +102,7 @@ nav_back = () => {
 }
 
 fadeout = (text) => {
+  l = u = r = d = 0;
   if(navigator.userAgent.includes("Mobile")) b.requestFullscreen();
   fade.style.display = "block";
   setTimeout(()=>{b.classList.remove("fadein")},100);
