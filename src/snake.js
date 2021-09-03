@@ -14,7 +14,7 @@ move_snake = () => {
         go_back();
         return;
       }
-      if(head_angle_modulo != 0){
+      if(head_angle_modulo == 180){
         head_angle += 180;
         head_angle_modulo += 180;
       }
@@ -564,20 +564,24 @@ move_front = () => {
   
   //console.log("front");
   
+  console.log(mirror, inbounds());
+  
   // Next position (if all goes well)
   var target_position = mirror && inbounds()
     ? [head_position[0], (head_position[1] + 1) % h, head_position[2]]
     : [head_position[0], head_position[1] + 1, head_position[2]];
+    
+  console.log(target_position);
   
   // Check portals
   next_target = check_portals1(target_position) || check_portals2(target_position);
   
-  console.log(target_position, next_target);
+  //console.log(target_position, next_target);
   
   // Bounds
   if(target_position[1] > h + 9) return;
   
-  // No collision with wall
+  // No collision with wall if no mirroring
   if(wall && target_position[0] >= 0 && target_position[0] < w && target_position[1] == 0){
     return;
   }

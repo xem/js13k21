@@ -145,7 +145,7 @@ share = () => {
     }
   }
   console.log(current_puzzle);
-  if(prompt("Your puzzle URL: (click OK to play it)", "../src/?p=" + JSON.stringify(current_puzzle).replace(/null/g,""))){
-    window.open("//xem.hithub.io/src/?p="+JSON.stringify(current_puzzle).replace(/null/g,""));
+  if(prompt("Your puzzle URL: (click OK to play it)", "//xem.github.io/src/?p=" + JSON.stringify(current_puzzle).replace(/null/g,""))){
+    window.open("../src/?p="+JSON.stringify(current_puzzle).replace(/null/g,""));
   }
 }
