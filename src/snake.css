@@ -9,13 +9,18 @@
 .body:nth-last-of-type(2) { display: none }
 .mirroring #head { transition: none }
 .world2 .head { background: radial-gradient(circle at 77%,#07f,#048); box-shadow: 0 0 5px #000; }
-.world2 .body.odd, .world2 .toggle .body { background: linear-gradient(-90deg,#29f,#26a); }
-.world2 .body, .world2 .toggle .body.odd { background: linear-gradient(-90deg,#07f,#048); }
+.world2 .body.odd { background: linear-gradient(-90deg,#29f,#26a); }
+.world2 .body { background: linear-gradient(-90deg,#07f,#048); }
 
 .world3 .head { background: radial-gradient(circle at 77%,#e40,#930); box-shadow: 0 0 5px #000; }
-.world3 .body.odd, .world2 .toggle .body { background: linear-gradient(#e40,#930); }
-.world3 .body, .world2 .toggle .body.odd { background: linear-gradient(#b30,#620); }
+.world3 .body.odd { background: linear-gradient(#e40,#930); }
+.world3 .body { background: linear-gradient(#b30,#620); }
+
+.world4 .head { background: radial-gradient(circle at 77%,#fe4,#776); box-shadow: 0 0 5px #000; }
+.world4 .body.odd { background: linear-gradient(#777,#555); }
+.world4 .body { background: linear-gradient(#fe4,#776); }
 
 .world2 .tongue { color: #740 }
 .world3 .tongue { color: #24e }
+.world4 .tongue { color: #888 }
 .world2 .eyes, .world3 .eyes { width: 40px !important; height: 30px !important; font-size: 50px; }

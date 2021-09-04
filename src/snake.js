@@ -1,6 +1,6 @@
 move_snake = () => {
   
-  if(!halt && (puzzle || world==-3) && !win){
+  if(!halt && (puzzle || world<=-3) && !win){
     
     var i, target_position, x, y, z, match;
     
@@ -105,7 +105,7 @@ move_snake = () => {
     // Target set: do the move
     if(target_position){
       
-      st.innerHTML = ++steps;
+      if(world > 0) st.innerHTML = ++steps;
       
       if(world > 0) play_next_note();
       
@@ -388,7 +388,7 @@ move_right = () => {
 
   // Next position (if all goes well)
   var target_position = 
-  world == -3 ?
+  world <= -3 ?
     [head_position[0] + 1, head_position[1], head_position[2]]
   :
     (mirror && inbounds())

@@ -103,11 +103,13 @@ C = {
     scene.style.transform=`translateX(${-C.camX}px)translateY(${-C.camY}px)translateZ(${-C.camZ}px)rotateX(${C.camRX}deg)rotateY(${C.camRY}deg)rotateZ(${C.camRZ}deg)`;
     for(var r in C.sprites){
       var n=C.$(C.sprites[r]);
-      o=n.style.transform.replace(/ *rotate.*\(.*?deg\)/g,"");
-      rz = -C.camRZ;
-      rx = -C.camRX;
-      if(rx > -15) rx = -15;
-      n.style.transform=o+`rotateZ(${rz}deg)rotateX(${rx}deg)`
+      if(n){
+        o=n.style.transform.replace(/ *rotate.*\(.*?deg\)/g,"");
+        rz = -C.camRZ;
+        rx = -C.camRX;
+        if(rx > -15) rx = -15;
+        n.style.transform=o+`rotateZ(${rz}deg)rotateX(${rx}deg)`
+      }
     }
   },
 

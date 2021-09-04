@@ -161,13 +161,20 @@ bzzt_sound = i => {
   return Math.sin(i/55*Math.sin(i/99)+Math.sin(i/100))*q/5;
 }
 
+brrr_sound = i => {
+  var n=9e5;
+  if (i > n) return null;
+  var q = t(i,n);
+  return Math.sin(i*0.001*Math.sin(0.001*i+Math.sin(i/100)))*q*q/3;
+}
+
 play_sound = (f) => {
   var A, m, b, i, s; 
   t=(i,n)=>(n-i)/n;
   var A=new AudioContext()
-  var m=A.createBuffer(1,96e3,48e3)
+  var m=A.createBuffer(1,2e5,48e3)
   var b=m.getChannelData(0)
-  for(i=96e3;i--;)b[i]=f(i)
+  for(i=2e5;i--;)b[i]=f(i)
   s=A.createBufferSource()
   s.buffer=m
   s.connect(A.destination)

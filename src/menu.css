@@ -15,7 +15,7 @@
 .intro #scene,.intro .sprite { transition: 5s }
 .intro2 #scene { transition: .5s; }
 .moon { font-size: 50px }
-.rocket { font-size: 75px }
+.rocket { font-size: 75px; transition: 10s; }
 .stars svg { width: 100%; height: 100%; }
 .eyestars { width: 65px !important }
 .intro2 .eyes { transition: transform .05s }

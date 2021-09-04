@@ -49,7 +49,10 @@ draw_screen = () => {
       if(i != 0){
         html += "<h2 id='world_"+i+"'>World " + i + "</h2>";
         if(i==1){
-          html += "<span style='width:61vh' onclick='world=-3;fadeout()'>intro</span><br>";
+          html += "<span style='width:61vh' onclick='world=-3;fadeout()'>Intro</span><br>";
+        }
+        if(i==4){
+          html += "<span style='width:61vh' onclick='world=-4;fadeout()'>Take off!</span><br>";
         }
         for(j in data[i]){
           //console.log(j);
@@ -69,7 +72,7 @@ draw_screen = () => {
   }
   
   // World -3: Intro
-  else if(world == -3){
+  else if(world <= -3){
     intro();
   }
   
@@ -129,7 +132,10 @@ intro = () => {
   play_note(1);
   var song_interval;
   
-  C.camera({x:-200,y:50,z:-200,rx:50,rz:30});
+  if(world == -3)
+    C.camera({x:-200,y:50,z:-200,rx:50,rz:30});
+  else 
+    C.camera({x:-200,y:50,z:200,rx:50,rz:0});
   
   // Scene
   camrx = 30;
@@ -185,92 +191,125 @@ intro = () => {
   }
   
   // Flowers
-  for(i = 0; i < 15; i++){
-    x = ~~(Math.random() * 15) - 6;
-    y = ~~(Math.random() * 15) - 6;
-    if(!flowers.find(a => a[0] > x-2 && a[0] < x+2 && a[1] > y-2 && a[1] < y+2) && (y < -3 || y > 3)){
-      flowers.push([x,y]);
-      //console.log(x, y);
-      C.plane({g:"puzzlefloor",w:40,h:34,z:5,x:x*50,y:y*50,z:1,rx:0,o:"bottom",css:"emoji flower",html:"🌼"});
+  if(world == -3){
+    for(i = 0; i < 15; i++){
+      x = ~~(Math.random() * 15) - 6;
+      y = ~~(Math.random() * 15) - 6;
+      if(!flowers.find(a => a[0] > x-2 && a[0] < x+2 && a[1] > y-2 && a[1] < y+2) && (y < -3 || y > 3)){
+        flowers.push([x,y]);
+        //console.log(x, y);
+        C.plane({g:"puzzlefloor",w:40,h:34,z:5,x:x*50,y:y*50,z:1,rx:0,o:"bottom",css:"emoji flower",html:"🌼"});
+      }
     }
   }
   
   // Stars
   C.plane({w:5000,h:3000,x:-1000,z:1000,rx:45,css:"stars",html:svg[0]});
-  C.plane({x:-100,z:900,rx:45,rz:-70,sx:2,sy:2,sz:2,css:"emoji moon",html:"🌙"});
+  C.plane({x:-100,y:world==-4?500:0,z:world==-4?2000:900,rx:45,rz:-70,sx:2,sy:2,sz:2,css:"emoji moon",html:"🌙"});
   for(i=500;i--;)star.innerHTML+=`<text x=${Math.random()*5000} y=${Math.random()*3000}>.`;
-  
-  // Animation:
-  
-  // Move right 9 times
-  for(i = 0; i < 7; i ++){
+
+  // Move right 7 times (world 1) / 10 times (world 4)
+  for(i = 0; i < (7 + ((world == -3) ? 0 : 3)); i++){
+    //console.log("move");
     setTimeout(()=>{r=1;halt=0;move_snake(b);r=0;}, 300 + i * 250);
   }
+    
+  // Animation (world 1):
+  if(world == -3){
+    
+    // Sign
+    C.plane({x:300,y:220,w:5,h:105,z:55,rx:-90,ry:-35,css:"sign"});
+    C.plane({x:300,y:221,w:100,h:60,z:72,rx:-90,ry:-35,css:"sign",html:"SALE<p><span class=emoji>🪙</span> x 100"});
+    
+    // Look up
+    setTimeout(()=>C.move({n:"head_decoration",z:28,ry:-45}), 3000);
+    setTimeout(()=>C.camera({rx:120, z:-100,y:-300}),3500);
+    
+    
+    // js13k presents
+    setTimeout(()=>presents.style.opacity = 1, 6000);
+    setTimeout(()=>presents.style.opacity = 0, 9000);
+    
+    
+    // Look down
+    setTimeout(()=>{
+      C.camera({x:-200,y:50,z:-200,rx:50,rz:30});
+      C.plane({w:350,h:350,x:480,y:200,z:85,html:svg[1],rx:-90,ry:-20,rz:-45,css:"rocket"});
+    }, 10200);
+    
+    setTimeout(()=>{
+      C.move({n:"head_decoration",ry:0})
+    }, 14000);
+    
+    // Move right
+    setTimeout(()=>{r=1;halt=0;move_snake(b);r=0}, 15500);
+    setTimeout(()=>{r=1;halt=0;move_snake(b);r=0}, 15700);
+    
+    // Blink
+    setTimeout(()=>{
+      C.move({n:"p0",sx:.2,sy:.2,sz:.2});
+    }, 17500);
+    
+    // Eye stars
+    setTimeout(()=>{
+      p0.classList.add("eyestars");
+      C.move({n:"p0",sx:1,sy:1,sz:1});
+      p0.innerHTML = "⭐⭐";
+      b.classList.remove("intro2");
+      b.classList.add("intro");
+    }, 17600);
+    
+    // Show rocket
+    setTimeout(()=>{
+      C.camera({x:450,y:-70,z:-100,rx:60,rz:-20});
+    }, 18500);
+    
+    // Show sign
+    setTimeout(()=>{
+      C.camera({x:370,y:0,z:-400,rx:60,rz:-40});
+    }, 23500);
+    
+    // Fade out
+    setTimeout(()=>{
+      world = 1;
+      puzzle = 1;
+      fadeout("<h1>LOSSST</h1>");
+    }, 30000);
+    
+    setTimeout(()=>{
+      clearTimeout(song_interval);
+      song = 1;
+      note = 75;
+    }, 33000);
+  }
   
-  // Sign
-  C.plane({x:300,y:220,w:5,h:105,z:55,rx:-90,ry:-35,css:"sign"});
-  C.plane({x:300,y:221,w:100,h:60,z:72,rx:-90,ry:-35,css:"sign",html:"SALE<p><span class=emoji>🪙</span> x 100"});
-  
-  // Look up
-  setTimeout(()=>C.move({n:"head_decoration",z:28,ry:-45}), 3000);
-  setTimeout(()=>C.camera({rx:120, z:-100,y:-300}),3500);
-  
-  
-  // js13k presents
-  setTimeout(()=>presents.style.opacity = 1, 6000);
-  setTimeout(()=>presents.style.opacity = 0, 9000);
-  
-  
-  // Look down
-  setTimeout(()=>{
-    C.camera({x:-200,y:50,z:-200,rx:50,rz:30});
-    C.plane({w:350,h:350,x:480,y:200,z:85,html:svg[1],rx:-90,ry:-20,rz:-45,css:"rocket"});
-  }, 10200);
-  
-  setTimeout(()=>{
-    C.move({n:"head_decoration",ry:0})
-  }, 14000);
-  
-  // Move right
-  setTimeout(()=>{r=1;halt=0;move_snake(b);r=0}, 15500);
-  setTimeout(()=>{r=1;halt=0;move_snake(b);r=0}, 15700);
-  
-  // Blink
-  setTimeout(()=>{
-    C.move({n:"p0",sx:.2,sy:.2,sz:.2});
-  }, 17500);
-  
-  // Eye stars
-  setTimeout(()=>{
-    p0.classList.add("eyestars");
-    C.move({n:"p0",sx:1,sy:1,sz:1});
-    p0.innerHTML = "⭐⭐";
-    b.classList.remove("intro2");
-    b.classList.add("intro");
-  }, 17600);
-  
-  // Show rocket
-  setTimeout(()=>{
-    C.camera({x:450,y:-70,z:-100,rx:60,rz:-20});
-  }, 18500);
-  
-  // Show sign
-  setTimeout(()=>{
-    C.camera({x:370,y:0,z:-400,rx:60,rz:-40});
-  }, 23500);
-  
-  // Fade out
-  setTimeout(()=>{
-    world = 1;
-    puzzle = 1;
-    fadeout("<h1>LOSSST</h1>");
-  }, 30000);
-  
-  setTimeout(()=>{
-    clearTimeout(song_interval);
-    song = 1;
-    note = 75;
-  }, 33000);
-  
+  // World 4
+  else {
+    C.plane({n:"rocket",w:350,h:350,x:-150,y:200,z:85,html:svg[1],rx:-90,ry:0,rz:-45,css:"rocket"});
+    
+    // Remove snake
+    // Play sound
+    // Move rocket
+    // Look up
+    setTimeout(()=>{
+      puzzlefloor.remove();
+      play_sound(brrr_sound);
+      C.move({n:"rocket",y: -1000, z: 4000});
+      C.camera({rx: 140, y: -1000});
+    
+    }, 4000);
+    
+    setTimeout(()=>{
+      world = 4;
+      puzzle = 1;
+      fadeout();
+    }, 10000);
+    
+    setTimeout(()=>{
+      clearTimeout(song_interval);
+      song = 1;
+      note = 75;
+    }, 10500);
+  }
   
 }
