@@ -1,3 +1,4 @@
+@keyframes a { 0%, 100% { transform: rotateY(-5deg) } 50% { transform: rotateY(5deg) } }
 .puzzle #viewport { background: radial-gradient(circle at 50% 50%, #fff, #07e); }
 .world-3 #scene .floor { background: radial-gradient(#000a,#000e 80%),url(grass.svg); }
 .world1 #scene .floor { background: radial-gradient(#0000,#000e 80%),url(grass.svg); }
@@ -16,6 +17,7 @@
 .tree { font-size: 75px; filter: brightness(0.7); transition: transform .5s; }
 .flower { font-size: 45px; overflow: hidden; }
 .animal { font-size: 55px; }
+.animal div { animation: a 2s infinite }
 .instant .tree { transition: none; }
 .shadow { filter: contrast(0)brightness(0); opacity: .6 }
 #wrap .cubefront, #wrap .cubeback, #wrap .cubeleft, #wrap .cuberight { background: linear-gradient(#0000 50%,#02d8); }

@@ -84,7 +84,8 @@ share = () => {
   if(FLOOR.checked){
     current_puzzle[0] = [];
     for(j = 0; j < h; j++){
-      current_puzzle[0][j] = 0b10000000;
+      if(w < 7) current_puzzle[0][j] = 0b1000000;
+      else current_puzzle[0][j] = 1 << (w+1);
       for(i = 0; i < w; i++){
         s = states["tile_"+i+"_"+j];
         if(s == 1 || s == 2 || s == 3){
@@ -116,7 +117,8 @@ share = () => {
   if(WALL.checked){
     current_puzzle[1] = [];
     for(j = 0; j < h; j++){
-      current_puzzle[1][j] = 0b10000000;
+      if(w < 7) current_puzzle[1][j] = 0b1000000;
+      else current_puzzle[1][j] = 1 << (w+1);
       for(i = 0; i < w; i++){
         s = states["walltile_"+i+"_"+j];
         if(s == 1 || s == 2 || s == 3){

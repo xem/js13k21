@@ -105,7 +105,7 @@ move_snake = () => {
     // Target set: do the move
     if(target_position){
       
-      steps++;
+      st.innerHTML = ++steps;
       
       if(world > 0) play_next_note();
       
@@ -126,9 +126,9 @@ move_snake = () => {
       // Make the body move 5 steps forward (with a bit of delay for the steps 3-5 to animate the movement)
       move_body();
       move_body();
-      setTimeout(move_body, 40);
+      setTimeout(move_body, 30);
       setTimeout(move_body, 60);
-      setTimeout(move_body, 120);
+      setTimeout(move_body, 90);
       
       // Rotate head's inner decoration (eyes, tongue), but not the whole head because it contains the head circle that must always face the camera
       C.move({n:"head_decoration_inner", rz:head_angle});
@@ -149,7 +149,7 @@ move_snake = () => {
     // Next target set: do the move
     if(next_target){
       setTimeout(()=>{
-        steps++;
+        st.innerHTML = ++steps;
         
         // Save current modulo angle for the 5 new steps
         for(i = 1; i <= 5; i++){
@@ -235,10 +235,12 @@ move_body_back = () => {
 // Move whole snake backwards one full move (5 steps)
 go_back = () => {
   
-  play_last_note();
-  
   // If it's still possible to go back (body has moved at least 5 steps)
   if(body_moves >= 5){
+    
+    st.innerHTML = ++steps;
+  
+    play_last_note();
     
     // Retrieve previous position, angle and angle modulo (to make them the current ones)
     head_position = snake_position[snake_position.length - 5 - 1];
@@ -287,11 +289,11 @@ check_wall = () => {
     if(pos[2] > 0){
       high = 1;
       b.classList.add("high");
-      C.camera({rx:camrx=((world==1&&puzzle==33)?30:(world==2&&puzzle==30)?50:70),y:0});
+      C.camera({rx:camrx=(world==1&&puzzle==33)?30:((world==2&&puzzle==30)||(world==3&&puzzle==25))?50:70,y:0});
     }
     else {
       b.classList.remove("high");
-      C.camera({rx:camrx=(world==2&&puzzle==30)?50:30,y:h*10});
+      C.camera({rx:camrx=((world==2&&puzzle==30)||(world==3&&puzzle==25))?50:30,y:h*10});
     }
   }
   
@@ -306,7 +308,7 @@ check_wall = () => {
     b.classList.remove("on_wall");
     b.classList.remove("behind");
     C.move({n:"head_decoration",rx:0});
-    if(world > 0) C.camera({rx:camrx=(world==2&&puzzle==30)?50:30,y:h*10});
+    if(world > 0) C.camera({rx:camrx=((world==2&&puzzle==30)||(world==3&&puzzle==25))?50:30,y:h*10});
   }
 }
 
@@ -451,7 +453,7 @@ move_right = () => {
 move_up = () => {
   
   // Next position (if all goes well)
-  var target_position = mirror && inbounds()
+  var target_position = mirror && world > 3 && inbounds()
     ? [head_position[0], head_position[1], (head_position[2] + 1) % h]
     : [head_position[0], head_position[1], head_position[2] + 1];
   
@@ -517,6 +519,8 @@ move_down = () => {
   // Check portals
   next_target = check_portals1(target_position) || check_portals2(target_position);
   
+  //console.log(head_position, target_position, next_target);
+  
   // No collision with cubes or trees
   if(collision(target_position)) return;
   
@@ -529,7 +533,7 @@ move_down = () => {
     }
     
     if(mirror && inbounds()){
-      if(head_position[2] + 1 != ((head_position[2] - 1 + h) % h)){
+      if(head_position[2] - 1 != ((head_position[2] - 1 + h) % h)){
         mirror_animation();
       }
     }
@@ -564,14 +568,14 @@ move_front = () => {
   
   //console.log("front");
   
-  console.log(mirror, inbounds());
+  //console.log(mirror, inbounds());
   
   // Next position (if all goes well)
-  var target_position = mirror && inbounds()
+  var target_position = mirror && (!wall || world>3) && inbounds()
     ? [head_position[0], (head_position[1] + 1) % h, head_position[2]]
     : [head_position[0], head_position[1] + 1, head_position[2]];
     
-  console.log(target_position);
+  //console.log(target_position);
   
   // Check portals
   next_target = check_portals1(target_position) || check_portals2(target_position);

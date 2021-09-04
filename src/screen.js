@@ -64,7 +64,7 @@ draw_screen = () => {
   
   // World -2: Bonus
   else if(world == -2){
-    html = "<div class='main bonus'><h1>BONUS</h1><p><a onclick='if(self.document.monetization && self.document.monetization.state==\'started\")location=\"xem.github.io/js13k21/editor\"'>Puzzle editor</a><span>(WebMonetization bonus)</span><p><a href=//xem.github.io/js13k21/NEAR>Snake editor</a><span>(NEAR bonus)</span><p><a href=//xem.github.io/js13k21/NEAR>Leaderboards</a><span>(IPFS bonus)</span><p><a href=//xem.github.io/js13k21/FLUX>Get more coins</a><span>(FLUX bonus)</span><p><a onclick=\"if(confirm())delete localStorage.LOSSST\">Delete save</a><p><a href=//xem.github.io/js13k21/share>Share</a>";
+    html = "<div class='main bonus'><h1>BONUS</h1><p><a onclick='if(self.document.monetization && self.document.monetization.state==\'started\")location=\"xem.github.io/js13k21/editor\"'>Puzzle editor</a><span>(WebMonetization bonus)</span><p><a href=//xem.github.io/js13k21/NEAR>Snake editor</a><span>(NEAR bonus)</span><p><a href=//xem.github.io/js13k21/NEAR>Leaderboards</a><span>(IPFS bonus)</span><p><a href=//xem.github.io/js13k21/FLUX>Get more coins</a><span>(FLUX bonus)</span><p><a onclick=\"if(confirm())delete localStorage.LOSSST\">Delete save</a><p><a href=//xem.github.io/js13k21/share>Share</a><p><a href=//xem.github.io/articles/js13k21.html>Making-of";
     scene.innerHTML = html;
   }
   
