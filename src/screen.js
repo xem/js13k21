@@ -106,7 +106,7 @@ nav_back = () => {
 
 fadeout = (text) => {
   l = u = r = d = 0;
-  if(navigator.userAgent.includes("Mobile")) b.requestFullscreen();
+  if(navigator.userAgent.includes("Mobile") && b.requestFullscreen) b.requestFullscreen();
   fade.style.display = "block";
   setTimeout(()=>{b.classList.remove("fadein")},100);
   if(text){
