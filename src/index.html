@@ -17,11 +17,14 @@
   <div id=puzzlename></div>
   <div id=coincount></div>
   <div class=dpad>
-    <svg onmousedown="u=1;move_snake(b)" onmouseup="u=0" ontouchstart="u=1;move_snake(b)" width=50 height=50><path d="M12 30L25 15L38 30" stroke="#000"/></svg>
-    <svg onmousedown="l=1;move_snake(b)" onmouseup="l=0" ontouchstart="l=1;move_snake(b)" width=50 height=50><path d="M30 12L15 25L30 38" stroke="#000"/></svg>
-    <svg onmousedown="d=1;move_snake(b)" onmouseup="d=0" ontouchstart="d=1;move_snake(b)" width=50 height=50><path d="M12 20L25 35L38 20" stroke="#000"/></svg>
-    <svg onmousedown="r=1;move_snake(b)" onmouseup="r=0" ontouchstart="r=1;move_snake(b)" width=50 height=50><path d="M20 12L35 25L20 38" stroke="#000"/></svg>
-    <svg id=reset onclick="fadeout()"><text x=10 y=40>↺</svg>
+    <div class=w4 onmousedown="U=1;move_snake(b)" onmouseup="U=0" ontouchstart="U=1;move_snake(b)">↑</div>
+    <div onmousedown="u=1;move_snake(b)" onmouseup="u=0" ontouchstart="u=1;move_snake(b)">▲</div>
+    <div class=w4 onmousedown="D=1;move_snake(b)" onmouseup="D=0" ontouchstart="D=1;move_snake(b)">↓</div>
+    <br>
+    <div onmousedown="l=1;move_snake(b)" onmouseup="l=0" ontouchstart="l=1;move_snake(b)">◀︎</div>
+    <div onmousedown="d=1;move_snake(b)" onmouseup="d=0" ontouchstart="d=1;move_snake(b)">▼</div>
+    <div onmousedown="r=1;move_snake(b)" onmouseup="r=0" ontouchstart="r=1;move_snake(b)">▶︎</div>
+    <div id=reset onclick="fadeout()">↺</div>
   </div>
   <div id=fade></div>
   <div id=presents></div>

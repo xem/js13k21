@@ -98,12 +98,12 @@ oncontextmenu = () => { return false; }
 // Keyboard (arrows / WASD / ZQSD) to move the snake
 // From https://xem.github.io/articles/jsgamesinputs.html
 canskip = 1;
-u = r = d = l = 0;
+u = r = d = l = U = D = 0;
 onkeydown = onkeyup = e => {
   if(canskip && e.key == "n") { puzzle++; fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }
   if(canskip && e.key == "p") { puzzle--; fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }
   if(canskip && e.key == "r") { fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }
-  this['lurd************************l**r************l*d***u**u'[e.which - 37]] = e.type[5];
+  this['lurd************************l*Dr************l*d***uU*u'[e.which - 37]] = e.type[5];
   if(snake_position) move_snake();
 }
 

@@ -206,11 +206,9 @@ intro = () => {
   // Stars
   C.plane({w:5000,h:3000,x:-1000,z:1000,rx:45,css:"stars",html:svg[0]});
   C.plane({x:-100,y:world==-4?500:0,z:world==-4?2000:900,rx:45,rz:-70,sx:2,sy:2,sz:2,css:"emoji moon",html:"🌙"});
-  for(i=500;i--;)star.innerHTML+=`<text x=${Math.random()*5000} y=${Math.random()*3000}>.`;
 
   // Move right 7 times (world 1) / 10 times (world 4)
   for(i = 0; i < (7 + ((world == -3) ? 0 : 3)); i++){
-    //console.log("move");
     setTimeout(()=>{r=1;halt=0;move_snake(b);r=0;}, 300 + i * 250);
   }
     
@@ -224,7 +222,6 @@ intro = () => {
     // Look up
     setTimeout(()=>C.move({n:"head_decoration",z:28,ry:-45}), 3000);
     setTimeout(()=>C.camera({rx:120, z:-100,y:-300}),3500);
-    
     
     // js13k presents
     setTimeout(()=>presents.style.opacity = 1, 6000);

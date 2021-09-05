@@ -33,6 +33,4 @@
 .bricks .cubefront.bricks .cubeback { filter: brightness(.7) }
 .bricks .cuberight { filter: brightness(.9) }
 .coin { font-size: 50px; text-shadow: 0 0 15px #fff; transition: 1.7s }
-#reset { position: absolute; right: 20px; }
-#reset text { font-size: 40px; font-weight: bold }
 .crater { border-radius: 50%; box-shadow: inset 20px -2px 0 0px #444; background: #777; }

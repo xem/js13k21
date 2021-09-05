@@ -65,15 +65,14 @@ draw_puzzle = () => {
   C.plane({n:"floordiv",w:1500,h:1500,css:"floor circle"});
   setTimeout(()=>{floordiv.style.height = '1450px'},500); // Fx fix
   
-  C.group({n:"puzzlefloor",w:w*50,h:(floor ? h : 1)*50,z:2});
-  C.group({n:"puzzlewall",w:w*50,h:h*50,y:-(floor ? h : 1)*50/2,z:2,rx:-90,o:"bottom"});
+  C.group({n:"puzzlefloor",w:w*50,h:((floor || world > 3) ? h : 1)*50,z:2});
+  C.group({n:"puzzlewall",w:w*50,h:h*50,y:-((floor || world > 3) ? h : 1)*50/2,z:2,rx:-90,o:"bottom"});
   
   // World 4
   if(world == 4){
     
     // Stars
-    C.plane({w:5000,h:3000,x:500,z:500,rx:45,css:"stars",html:svg[0]});
-    for(i=500;i--;)star.innerHTML+=`<text x=${Math.random()*5000} y=${Math.random()*3000}>.`;
+    C.plane({w:5000,h:3000,x:500,y:-500,z:500,rx:45,css:"stars",html:svg[0]});
     
     // Rocket
     if(puzzle == 1){
@@ -82,12 +81,9 @@ draw_puzzle = () => {
     }
     
     // Craters
-    for(i = 0; i < 4; i++){
-      for(j = 0; j < 4; j++){
-        if(Math.random() > .7){
-          C.plane({g:"puzzlefloor",x:(2-i)*300+Math.random()*50,y:(2-j)*300+Math.random()*100,w:scale=50+Math.random()*100,h:scale,css:"crater"});
-        }
-      }
+    for(i = 0; i < 3; i++){
+      C.plane({g:"puzzlefloor",x:(1.5-i)*300+Math.random()*50,y:-250+Math.random()*200,w:scale=50+Math.random()*100,h:scale,css:"crater"});
+      C.plane({g:"puzzlefloor",x:(1.5-i)*300+Math.random()*50,y:400+Math.random()*200,w:scale=50+Math.random()*100,h:scale,css:"crater"});
     }
   }
   
@@ -132,11 +128,11 @@ draw_puzzle = () => {
   
   // Trees
   for(i = 0; i < 10; i++){
-    x = ~~(Math.random() * 14) - 5;
-    y = ~~(Math.random() * 10) - 5;
-    if(!(x > -9 && x < w+4 && y > -3 && y < h+3) && (y < 2 || y > 4)){
-      if(!trees.find(a => (a[0] > x-3 && a[0] < x+3) || (a[1] > y-3 && a[1] < y+3))){
-        trees.push([x,y]);
+    x = (Math.random() * 14).toFixed(1) - 5;
+    y = (Math.random() * 18).toFixed(1) - 6;
+    if((y < -3 || y > h+2)){
+      if(!trees.find(a => a[0] > (~~x)-4 && a[0] < (~~x)+4 && a[1] > (~~y)-2 && a[1] < (~~y)+2)){
+        trees.push([~~x,~~y]);
         C.sprite({g:"puzzlefloor",x:x*50-20,y:y*50,z:5,w:65,h:75,sx:1.8,sy:1.8,sz:1.8,css:"tree emoji",html:[,"🌳","🌵","🌲",""][world],o:"bottom center"});
         C.plane({g:"puzzlefloor",x:x*50-20,y:y*50,z:2,rz:(world==1?280:311),w:65,h:75,sx:1.8,sy:2.5,sz:1.8,css:"tree shadow emoji",html:[,"🌳","🌵","🌲",""][world],o:"bottom center"});
       }
@@ -145,8 +141,8 @@ draw_puzzle = () => {
   
   // Flowers / Rocks / ice
   for(i = 0; i < (world == 3 ? 30 : 10); i++){
-    x = ((Math.random() * 14) - 5).toFixed(1);
-    y = ((Math.random() * 10) - 5).toFixed(1);
+    x = (Math.random() * 14).toFixed(1) - 5;
+    y = (Math.random() * 10).toFixed(1) - 5;
     if(!(x > -9 && x < w+1 && y > -2 && y < h+1)){
       if(!flowers.find(a => a[0] > (~~x)-2 && a[0] < (~~x)+2 && a[1] > (~~y)-2 && a[1] < (~~y)+2) && (y < 2 || y > 4) && !trees.find(a => a[0] > (~~x)-2 && a[0] < (~~x)+2 && a[1] > (~~y)-2 && a[1] < (~~y)+2)){
         flowers.push([~~x,~~y]);
@@ -185,7 +181,7 @@ draw_puzzle = () => {
   
   // Bricks
   for(i of bricks){
-    C.cube({g:"puzzlefloor",x:i[0]*50+25,y:i[1]*50+24,z:(i[2]||0)*50-(i[2] ? 0 : 17),w:50,h:50,d:50,css:"cube bricks",html:(i[1]%2)?(svg[9]+svg[10]+svg[9]):(svg[10]+svg[9]+svg[10]),htmlside:((i[1]+i[2])%2)?(svg[10]+svg[9]+svg[10]):(svg[9]+svg[10]+svg[9])});
+    C.cube({g:"puzzlefloor",x:i[0]*50+25,y:i[1]*50+24,z:(i[2]||0)*50-(world<4 ? 17 : 0),w:50,h:50,d:50,css:"cube bricks",html:(i[1]%2)?(svg[9]+svg[10]+svg[9]):(svg[10]+svg[9]+svg[10]),htmlside:((i[1]+i[2])%2)?(svg[10]+svg[9]+svg[10]):(svg[9]+svg[10]+svg[9])});
   }
   
   // Portals 1
@@ -218,7 +214,9 @@ draw_puzzle = () => {
   
   // PAR sign
   C.plane({g:"puzzlefloor",x:w*50+55,y:-50,w:5,h:105,z:55,rx:-95,ry:-35,css:"sign"});
-  C.plane({g:"puzzlefloor",x:w*50+55,y:-47,w:100,h:60,z:72,rx:-95,ry:-35,css:"sign",html:"Steps: <span id=st>0</span><br>Par: <span>"+par+"</span>"});
+  C.plane({g:"puzzlefloor",x:w*50+50,y:-73,w:5,h:30,z:2,rx:0,ry:0,rz:-30,css:"sign shadow"});
+  C.plane({g:"puzzlefloor",x:w*50+55,y:-47,w:100,h:60,z:72,rx:-95,ry:-35,css:"sign",html:"Steps: <span id=st>0</span><br>Par: "+par});
+  C.plane({g:"puzzlefloor",x:w*50+28,y:-112,w:100,h:60,z:2,rx:0,ry:0,rz:-30,css:"sign shadow"});
 };
 
 check_puzzle = () => {
@@ -261,7 +259,7 @@ check_puzzle = () => {
     for(y = 0; y < h; y++){
       for(x = 0; x < w; x++){
         val = (wall[y]>>x)&1
-        snake_on_current_cell = current_positions.find(a => a[0] == x && a[1] >= 0 && a[1] < (floor ? h : 1) && a[2] == h - y - 1);
+        snake_on_current_cell = current_positions.find(a => a[0] == x && a[1] >= 0 && a[1] < (world > 3 ? 10 : floor ? h : 1) && a[2] == h - y - 1);
         
         // Not ok if there's a snake body part on a white cell
         if(val == 0){
