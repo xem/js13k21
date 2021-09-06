@@ -47,7 +47,8 @@ draw_screen = () => {
     html = "<div class='main levels'><h1>PUZZLES</h1>";
     for(var i in data){
       if(i != 0){
-        html += "<h2 id='world_"+i+"'>World " + i + "</h2>";
+        if(i == 4) html += "<h2 id='world_"+i+"'>The Moon</h2>";
+        else html += "<h2 id='world_"+i+"'>World " + i + "</h2>";
         if(i==1){
           html += "<span style='width:61vh' onclick='world=-3;fadeout()'>Intro</span><br>";
         }
