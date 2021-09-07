@@ -24,6 +24,7 @@ draw_screen = () => {
   b.className = "";
   b.classList.add("menu");
   b.classList.add("world" + world);
+  if(mobile) b.classList.add("m");
   
   // Fade in
   fade.style.display = "block";
@@ -107,7 +108,6 @@ nav_back = () => {
 
 fadeout = (text) => {
   l = u = r = d = 0;
-  if(navigator.userAgent.includes("Mobile") && b.requestFullscreen) b.requestFullscreen();
   fade.style.display = "block";
   setTimeout(()=>{b.classList.remove("fadein")},100);
   if(text){
@@ -115,9 +115,11 @@ fadeout = (text) => {
     setTimeout(()=>presents.style.opacity=1, 800);
     setTimeout(()=>presents.style.opacity=0, 3500);
     setTimeout(draw_screen, 4000);
+    setTimeout(()=>{clearInterval(song_interval)}, 5000);
   }
   else {
     setTimeout(draw_screen, 600);
+    setTimeout(()=>clearInterval(song_interval), 1600);
   }
 }
 
@@ -232,7 +234,7 @@ intro = () => {
     // Look down
     setTimeout(()=>{
       C.camera({x:-200,y:50,z:-200,rx:50,rz:30});
-      C.plane({w:350,h:350,x:480,y:200,z:85,html:svg[1],rx:-90,ry:-20,rz:-45,css:"rocket"});
+      C.plane({w:100,h:100,x:397,y:145,z:72,html:svg[1],rx:-90,ry:-22,sx:4,sy:4.5,sz:4,css:"rocket"});
     }, 10200);
     
     setTimeout(()=>{
@@ -275,7 +277,7 @@ intro = () => {
     }, 30000);
     
     setTimeout(()=>{
-      clearTimeout(song_interval);
+      clearInterval(song_interval);
       song = 1;
       note = 75;
     }, 33000);
@@ -283,7 +285,7 @@ intro = () => {
   
   // World 4
   else {
-    C.plane({n:"rocket",w:350,h:350,x:-150,y:200,z:85,html:svg[1],rx:-90,ry:0,rz:-45,css:"rocket"});
+    C.plane({n:"rocket",w:100,h:100,x:-150,y:200,z:72,html:svg[1],rx:-90,sx:4,sy:4.5,sz:4,css:"rocket"});
     
     // Remove snake
     // Play sound
@@ -304,7 +306,7 @@ intro = () => {
     }, 10000);
     
     setTimeout(()=>{
-      clearTimeout(song_interval);
+      clearInterval(song_interval);
       song = 1;
       note = 75;
     }, 10500);

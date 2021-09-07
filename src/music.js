@@ -165,7 +165,7 @@ brrr_sound = i => {
   var n=9e5;
   if (i > n) return null;
   var q = t(i,n);
-  return Math.sin(i*0.001*Math.sin(0.001*i+Math.sin(i/100)))*q*q/3;
+  return Math.sin(i*0.001*Math.sin(0.001*i+Math.sin(i/100)))*q*q/5;
 }
 
 play_sound = (f) => {

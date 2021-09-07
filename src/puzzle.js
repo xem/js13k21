@@ -76,20 +76,20 @@ draw_puzzle = () => {
     
     // Rocket
     if(puzzle == 1){
-      C.plane({w:350,h:350,x:-200,y:-350,z:85,html:svg[1],rx:-90,ry:0,rz:-45,css:"rocket"});
-      C.plane({w:350,h:350,x:-231,y:-387,z:3,html:svg[1],rx:356,ry:0,rz:260,css:"rocket shadow"});
+      C.plane({w:100,h:100,x:-200,y:-350,z:72,html:svg[1],rx:-90,sx:3,sy:3,sz:3,css:"rocket"});
+      C.plane({w:100,h:100,x:-237,y:-395,z:3,html:svg[1],rx:356,ry:0,rz:319,sx:3,sy:3.5,sz:3,css:"rocket shadow"});
     }
     
     // Craters
-    for(i = 0; i < 3; i++){
-      C.plane({g:"puzzlefloor",x:(1.5-i)*300+Math.random()*50,y:-250+Math.random()*200,w:scale=50+Math.random()*100,h:scale,css:"crater"});
-      C.plane({g:"puzzlefloor",x:(1.5-i)*300+Math.random()*50,y:400+Math.random()*200,w:scale=50+Math.random()*100,h:scale,css:"crater"});
+    for(i = 0; i < (puzzle == 1 ? 2: 3); i++){
+      C.plane({g:"puzzlefloor",x:(1.5-i)*300+Math.random()*50,y:-300+Math.random()*200,w:scale=100+Math.random()*100,h:scale,css:"crater"});
+      C.plane({g:"puzzlefloor",x:(1.5-i)*300+Math.random()*50,y:400+Math.random()*200,w:scale=100+Math.random()*100,h:scale,css:"crater"});
     }
   }
   
   
   if(mirror){
-    C.cube({g:"puzzlefloor",n:"wrap",w:w*50,h:h*50,d:h*50,x:w*50/2,y:h*50/2});
+    C.cube({g:"puzzlefloor",n:"wrap",w:w*50,h:h*50,d:h*50,x:w*50/2,y:h*50/2 + (world > 3 ? 2 : 0)});
   }
   
   if(floor){
@@ -259,7 +259,7 @@ check_puzzle = () => {
     for(y = 0; y < h; y++){
       for(x = 0; x < w; x++){
         val = (wall[y]>>x)&1
-        snake_on_current_cell = current_positions.find(a => a[0] == x && a[1] >= 0 && a[1] < (world > 3 ? 10 : floor ? h : 1) && a[2] == h - y - 1);
+        snake_on_current_cell = current_positions.find(a => a[0] == x && a[1] >= 0 && a[1] < ((world > 3 || floor) ? h : 1) && a[2] == h - y - 1);
         
         // Not ok if there's a snake body part on a white cell
         if(val == 0){
@@ -311,6 +311,8 @@ check_puzzle = () => {
       play_sound(coin_sound);
       haltwin = 0;
     },600);
+    setTimeout(()=>{song_interval = setInterval(play_next_note,300)},500);
     setTimeout((custom ? () => {coin.style.opacity = 0} : fadeout),2000);
   }
+  
 }

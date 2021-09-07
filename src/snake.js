@@ -590,7 +590,6 @@ move_front = () => {
     ? [head_position[0], (head_position[1] + 1) % h, head_position[2]]
     : [head_position[0], head_position[1] + 1, head_position[2]];
     
-  //console.log(target_position);
   
   // Check portals
   next_target = check_portals1(target_position) || check_portals2(target_position);
@@ -601,9 +600,10 @@ move_front = () => {
   if(target_position[1] > h + 9) return;
   
   // No collision with wall if no mirroring
-  if(wall && target_position[0] >= 0 && target_position[0] < w && target_position[1] == 0){
+  if(wall && target_position[0] >= 0 && target_position[0] < w && target_position[1] == 0 && head_position[1] < 0){
     return;
   }
+  //console.log(target_position);
   
   // No collision with cubes or trees
   if(collision(target_position)) return;

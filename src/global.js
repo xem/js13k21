@@ -1,6 +1,6 @@
 // Global vars
 world = 4; // 0: main menu, 1-5: current world
-puzzle = 20; // 0: level menu, 1-n: current puzzle
+puzzle = 21; // 0: level menu, 1-n: current puzzle
 coins = 0;
 win = 0;
 haltwin = 0;
@@ -13,6 +13,9 @@ mirror = 0;
 custom = 0;
 html = "";
 for(i=500;i--;)html += `<text x=${Math.random()*5000} y=${Math.random()*5000}>.</text>`;
+mobile = navigator.userAgent.match("Mobile");
+song_interval = 0;
+
 
 // List of SVGs
 svg = [
@@ -21,7 +24,7 @@ svg = [
   '<svg fill="#aaa">'+html+'</svg>',
   
   // Rocket
-  '<svg viewBox="0 0 36 36"><path fill="#A01" d="M1 17l8-7 16 1 1 16-7 8s0-6-6-12-12-6-12-6z"/><path fill="#FA3" d="M1 35s0-8 3-11S15 21 15 21 15 29 12 32c-3 3-11 3-11 3z"/><circle fill="#FC4" cx="9" cy="27" r="4"/><path fill="#5AE" d="M36 0s-10 0-22 10c-6 5-6 14-4 16s11 2 16-4c10-12 10-22 10-22z"/><path d="M26 5c-1.6 0-3.0.9-3.6 2.3.5-.2 1-.3 1.6-.3 2.2 0 4 1.7 4 4 0 .5-0 1-.3 1.6 1.3-.6 2.3-2 2.3-3.6 0-2.2-1.7-4-4-4z"/><path fill="#A01" d="M8 28s0-4 1-5 13-11 14-10-9 13-10 14S8 28 8 28z"/></svg>',
+  '<svg width=99 height=99><path d="M28 50L20 60L20 75L80 75L80 60L72 50Z" fill="#a01"/><path d="M50 0Q20 44 30 75L70 75Q80 44 50 0" fill="#5AE"/><circle cx=50 cy=35 r=9 fill="#000"/><path d="M46 75M45 75Q50 25 55 75" fill="#a01"/><path d="M35 75Q30 84 50 99Q70 84 65 75Z" fill="#fa3"/><path d="M42 75Q35 80 50 90Q65 80 58 76Z" fill="#fc4"/></svg>',
   
   ,,,
   
