@@ -213,10 +213,10 @@ draw_puzzle = () => {
   }
   
   // PAR sign
-  C.plane({g:"puzzlefloor",x:w*50+55,y:-50,w:5,h:105,z:55,rx:-95,ry:-35,css:"sign"});
-  C.plane({g:"puzzlefloor",x:w*50+50,y:-73,w:5,h:30,z:2,rx:0,ry:0,rz:-30,css:"sign shadow"});
-  C.plane({g:"puzzlefloor",x:w*50+55,y:-47,w:100,h:60,z:72,rx:-95,ry:-35,css:"sign",html:"Steps: <span id=st>0</span><br>Par: "+par});
-  C.plane({g:"puzzlefloor",x:w*50+28,y:-112,w:100,h:60,z:2,rx:0,ry:0,rz:-30,css:"sign shadow"});
+  C.plane({g:"puzzlefloor",x:w*50+105,y:-50,w:5,h:105,z:55,rx:-95,ry:-35,css:"sign"});
+  C.plane({g:"puzzlefloor",x:w*50+100,y:-73,w:5,h:30,z:2,rx:0,ry:0,rz:-30,css:"sign shadow"});
+  C.plane({g:"puzzlefloor",x:w*50+105,y:-47,w:100,h:60,z:72,rx:-95,ry:-35,css:"sign",html:"Steps: <span id=st>0</span><br>Par: "+[par||"?"]});
+  C.plane({g:"puzzlefloor",x:w*50+78,y:-112,w:100,h:60,z:2,rx:0,ry:0,rz:-30,css:"sign shadow"});
 };
 
 check_puzzle = () => {
@@ -224,6 +224,11 @@ check_puzzle = () => {
   var x, y, val, snake_on_current_cell;
   win = 1;
   var current_positions = snake_position.slice(-(snake_length + 1) * 5);
+  if(world == 4){
+    if(!current_positions.every(a => a[0] > -1 && a[0] < w && a[1] > -1 && a[1] < h && a[2] < h)){
+      win = 0;
+    }
+  }
   if(floor){
     for(y = 0; y < (floor ? h : 1); y++){
       for(x = 0; x < w; x++){

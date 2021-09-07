@@ -1,6 +1,4 @@
 move_snake = () => {
-  
-  console.log(head_angle);
 
   if(!halt && (puzzle || world<=-3) && !win){
     
@@ -846,7 +844,7 @@ gravity = () => {
         snake_positions = current_positions;
         steps = 0;
         document.querySelectorAll(".body").forEach(a=>{
-          C.move({n:a.id, z: +(a.style.transform.match(/slateZ\((\d+)px/)[1])-50});
+          C.move({n:a.id, z: +(a.style.transform.match(/slateZ\((-?\d+)px/)[1])-50});
         });
         C.move({n:"head", z: +(head.style.transform.match(/slateZ\((\d+)px/)[1])-50});
         flying = 0;
