@@ -128,7 +128,10 @@ play_note = n => {
 }
 
 play_next_note = () => {
-  if(songs[song][note])play_note(songs[song][note]);
+  if(songs[song][note]){
+    play_note(songs[song][note]);
+    time = new Date();
+  }
   note++;
   if(song > 0) note %= (songs[song].length + 1);
   //console.log(note);

@@ -5,12 +5,26 @@ move_snake = () => {
     var i, target_position, x, y, z, match;
     
     head_position = snake_position[snake_position.length - 1];
+    previous_position = snake_position[snake_position.length - 2];
+    
+    // Moon: tilt head up/down when moving up/down
+    if(world > 3){
+      if(previous_position[2] > head_position[2]){
+        C.move({n:"head_decoration_tilt",rx:-45});
+      }
+      else if(previous_position[2] < head_position[2]){
+        C.move({n:"head_decoration_tilt",rx:45});
+      }
+      else {
+        C.move({n:"head_decoration_tilt",rx:0});
+      }
+    }
     
     // Quit climbing a wall:
     if(world < 4 && on_wall && !high && d){
       
       //console.log("quit wall");
-      if(head_angle_modulo == 180 && snake_position[snake_position.length-2][1] > 0){
+      if(head_angle_modulo == 180 && previous_position[1] > 0){
         go_back();
         return;
       }
@@ -28,8 +42,8 @@ move_snake = () => {
       if(r){
         
         // Backtrack if head is turned to the left
-        if(head_angle_modulo == 90){
-          if(world > 3 || head_portal[head_portal.length-1]){
+        if(previous_position[0] > head_position[0]){
+          if(head_portal[head_portal.length-1]){
             head_angle += 180;
             head_angle_modulo += 180;
           }
@@ -47,8 +61,8 @@ move_snake = () => {
       else if(d){
 
         // Backtrack if head is turned to the back
-        if(head_angle_modulo == 180){
-          if(world > 3 || head_portal[head_portal.length-1]){
+        if(previous_position[1] > head_position[1]){
+          if(head_portal[head_portal.length-1]){
             head_angle += 180;
             head_angle_modulo += 180;
           }
@@ -66,8 +80,8 @@ move_snake = () => {
       else if(l){
         
         // Backtrack if head is turned to the right
-        if(head_angle_modulo == 270){
-          if(world > 3 || head_portal[head_portal.length-1]){
+        if(previous_position[0] < head_position[0]){
+          if(head_portal[head_portal.length-1]){
             head_angle += 180;
             head_angle_modulo += 180;
           }
@@ -85,8 +99,8 @@ move_snake = () => {
       else if(u){
         
         // Backtrack if head is turned to the front
-        if(head_angle_modulo == 0){
-          if(world > 3 || head_portal[head_portal.length-1]){
+        if(previous_position[1] < head_position[1]){
+          if(head_portal[head_portal.length-1]){
             head_angle += 180;
             head_angle_modulo += 180;
           }
@@ -101,12 +115,24 @@ move_snake = () => {
       }
       
       else if(world > 3 && U){
-        console.log(head_angle);
+        
+        // Backtrack if head is turned to the bottom
+        if(previous_position[2] > head_position[2]){
+          go_back();
+          return;
+        }
+        
+        //console.log(head_angle);
         target_position = move_up();
-        console.log(head_angle);
+        //console.log(head_angle);
       }
       
       else if(world > 3 && D){
+        // Backtrack if head is turned to the bottom
+        if(previous_position[2] < head_position[2]){
+          go_back();
+          return;
+        }
         target_position = move_down();
       }
     }
@@ -114,9 +140,12 @@ move_snake = () => {
     // Target set: do the move
     if(target_position){
       
-      if(world > 0) st.innerHTML = ++steps;
-      
-      if(world > 0) play_next_note();
+      if(world > 0) {
+        st.innerHTML = ++steps;
+        song_interval && clearInterval(song_interval);
+        if(new Date() - time > 200) play_next_note();
+        song_interval = 0;
+      }
       
       head_position = target_position;
 
@@ -275,7 +304,6 @@ go_back = () => {
       check_wall();
       check_puzzle();
     }, 200);
-    
   }
 }
 
@@ -287,7 +315,7 @@ check_wall = () => {
   var pos = snake_position[snake_position.length - 1];
   
   // Snake is "on wall" if there's a wall and head is inbounds and Y == 0
-  if(world > 0 && wall && pos[1] == 0 && pos[0] >= 0 && pos[0] < w){
+  if(world > 0 && world < 4 && wall && pos[1] == 0 && pos[0] >= 0 && pos[0] < w){
     on_wall = 1;
     C.move({n:"head",y:35});
     b.classList.add("on_wall");

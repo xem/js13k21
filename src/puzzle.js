@@ -2,6 +2,9 @@
 draw_puzzle = () => {
   
   //console.log(custom);
+  // Keep track of current world/puzzle for easter-eggs
+  lastworld = world;
+  lastpuzzle = puzzle;
 
   song = 7;
   
@@ -93,7 +96,7 @@ draw_puzzle = () => {
   }
   
   if(floor){
-    for(j = (floor ? h : 1); j--;){
+    for(j = h; j--;){
       for(i = w; i--;){
         C.plane({g:"puzzlefloor",n:"tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:52,h:52,css:"tile "+(((floor[j]>>i)&1) ? "black" : "")});
       }
@@ -115,8 +118,9 @@ draw_puzzle = () => {
   C.sprite({g:"head_scale",n:"head_circle",x:0,y:0,w:50,h:50,z:25,css:"head circle"});
   C.group({g:"head_scale",n:"head_decoration",w:50,h:50,z:25});
   C.group({g:"head_decoration",n:"head_decoration_inner",w:50,h:50,x:25,y:25,rz:head_angle});
-  C.plane({g:"head_decoration_inner",x:25,y:15,z:27,w:30,h:15,rx:-20,css:"eyes emoji",html:[,"👀","🕶️","🥽","👀"][world]});
-  C.plane({g:"head_decoration_inner",x:25,y:53,z:3,w:13,h:20,rx:180,css:"tongue",html:"Y"});
+  C.group({g:"head_decoration_inner",n:"head_decoration_tilt",w:50,h:50,x:25,y:25});
+  C.plane({g:"head_decoration_tilt",x:25,y:15,z:27,w:30,h:15,rx:-20,css:"eyes emoji",html:[,"👀","🕶️","🥽","👀"][world]});
+  C.plane({g:"head_decoration_tilt",x:25,y:53,z:3,w:13,h:20,rx:180,css:"tongue",html:"Y"});
   
   // Snake's body
   head_position = snake_position[0];
@@ -130,7 +134,7 @@ draw_puzzle = () => {
   for(i = 0; i < 10; i++){
     x = (Math.random() * 14).toFixed(1) - 5;
     y = (Math.random() * 18).toFixed(1) - 6;
-    if((y < -3 || y > h+2)){
+    if((y < -3 || y > h+2) && (x < w || x > w + 3)){
       if(!trees.find(a => a[0] > (~~x)-4 && a[0] < (~~x)+4 && a[1] > (~~y)-2 && a[1] < (~~y)+2)){
         trees.push([~~x,~~y]);
         C.sprite({g:"puzzlefloor",x:x*50-20,y:y*50,z:5,w:65,h:75,sx:1.8,sy:1.8,sz:1.8,css:"tree emoji",html:[,"🌳","🌵","🌲",""][world],o:"bottom center"});
@@ -174,7 +178,7 @@ draw_puzzle = () => {
         
       ][world]];
       scale = [,1.5,1.8,1.8][world];
-      C.sprite({g:"puzzlefloor",w:50,h:55,z:8,x:x*50+20,y:y*50+15,z:3,rx:0,sx:scale,sy:scale,sz:scale,o:"bottom",css:"emoji animal",html:"<div>"+animals[0][2]});
+      C.plane({g:"puzzlefloor",w:50,h:55,z:8,x:x*50+20,y:y*50+15,z:3,rx:-50,sx:scale,sy:scale,sz:scale,o:"bottom",css:"emoji animal",html:"<div>"+animals[0][2]});
       C.plane({g:"puzzlefloor",x:x*50+20,y:y*50-10,z:1,rz:350,w:50,h:55,css:"emoji animal shadow",html:animals[0][2],sx:scale,sy:scale,sz:scale,o:"bottom center"});
     }
   }
@@ -215,8 +219,8 @@ draw_puzzle = () => {
   // PAR sign
   C.plane({g:"puzzlefloor",x:w*50+105,y:-50,w:5,h:105,z:55,rx:-95,ry:-35,css:"sign"});
   C.plane({g:"puzzlefloor",x:w*50+100,y:-73,w:5,h:30,z:2,rx:0,ry:0,rz:-30,css:"sign shadow"});
-  C.plane({g:"puzzlefloor",x:w*50+105,y:-47,w:100,h:60,z:72,rx:-95,ry:-35,css:"sign",html:"Steps: <span id=st>0</span><br>Par: "+[par||"?"]});
-  C.plane({g:"puzzlefloor",x:w*50+78,y:-112,w:100,h:60,z:2,rx:0,ry:0,rz:-30,css:"sign shadow"});
+  C.plane({g:"puzzlefloor",x:w*50+105,y:-47,w:105,h:60,z:72,rx:-95,ry:-35,css:"sign",html:"Steps: <span id=st>0</span><br>Par: "+[par||"?"]});
+  C.plane({g:"puzzlefloor",x:w*50+78,y:-112,w:105,h:60,z:2,rx:0,ry:0,rz:-30,css:"sign shadow"});
 };
 
 check_puzzle = () => {
@@ -296,11 +300,18 @@ check_puzzle = () => {
       puzzle = 0;
     }
     else {
-      coins++;
+      if(!save[world][puzzle]) { save[world][puzzle] = steps; coins++ }
+      else if(save[world][puzzle] > steps) { save[world][puzzle] = steps }
+      localStorage["lossst"]=JSON.stringify(save);
       puzzle++;
       if(puzzle >= data[world].length){
         world++;
         puzzle = 1;
+        if(lastworld == 3 && world == 4){
+          if(coins >= 100 ) world = -4; 
+          else world = 0;
+          puzzle = 0
+        }
         coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
       }
     }
@@ -316,7 +327,7 @@ check_puzzle = () => {
       play_sound(coin_sound);
       haltwin = 0;
     },600);
-    setTimeout(()=>{song_interval = setInterval(play_next_note,300)},500);
+    setTimeout(()=>{song_interval = setInterval(play_next_note,300)},300);
     setTimeout((custom ? () => {coin.style.opacity = 0} : fadeout),2000);
   }
   

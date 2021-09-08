@@ -18,9 +18,12 @@ a { text-decoration: none; color: #fff }
 .dpad { position: absolute; width: 100%; bottom: 40px; left: 10px; z-index: 2; }
 .dpad div { display: none; font-size: 35px; pointer-events: all; margin: 10px; text-align: center; width: 50px; height: 50px; border-radius: 5px; background: linear-gradient(45deg, #ddd, #888); box-shadow: 2px 2px 5px #000; font-weight: bold; padding: 4px 0 0; }
 .m .dpad div { display: inline-block }
-.w4 { visibility: hidden; }
-.world4 .w4 { visibility: visible; display: inline-block; }
-#fade { position: fixed; top: 0; left: 0; width: 105%; height: 105%; z-index: 3; background: #000; transition: opacity .5s }
+.up, .dn { visibility: hidden; }
+.up:hover:before { content: "X"; background: linear-gradient(45deg, #e84, #b51); position: absolute; top: -50px; left: 0; width: 50px; border-radius: 5px; }
+.dn:hover:before { content: "C"; background: linear-gradient(45deg, #e84, #b51); position: absolute; top: -50px; left: 0; width: 50px; border-radius: 5px; }
+#reset:hover:before { content: "R"; background: linear-gradient(45deg, #e84, #b51); position: absolute; top: -50px; left: 0; width: 50px; border-radius: 5px; }
+.world4 .up, .world4 .dn { visibility: visible; display: inline-block; }
+#fade { position: fixed; top: 0; left: 0; width: 105%; height: 105%; z-index: 3; background: #000; transition: opacity .5s, background 5s; }
 .fadein #fade { opacity: 0 }
 #puzzlename, #coincount, .back { color: #fff; text-shadow: 0 0 10px #000; pointer-events: all; position: absolute; font-size: 30px; width: 50px; height: 50px; z-index: 2; top: 10px; }
 .back { left: 20px; }

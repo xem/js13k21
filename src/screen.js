@@ -1,6 +1,8 @@
 // Draw screen
 draw_screen = () => {
   
+  if(coins) coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
+  
   // Custom puzzle
   if(location.search && location.search.length > 3){
     world = 1;
@@ -39,7 +41,7 @@ draw_screen = () => {
   // World 0: main menu
   if(world == 0){
     puzzle = 0;
-    html = "<div class=main><h1>LOSSST</h1><p><a onclick='world=-3;fadeout()'><h2>PLAY</h2></a><p><a onclick=world=-1;fadeout()>Select puzzle</a><p><a onclick=world=-2;fadeout()>Bonus</a><p class='emoji hide'>🌼<img src=grass.svg height=1><img src=desert.svg height=1>";
+    html = "<div class=main><h1>LOSSST</h1><p><a onclick='world=-3;fadeout()'><h2>PLAY</h2></a><p><a onclick=world=-1;fadeout()>Select puzzle</a><p><a onclick=world=-2;fadeout()>Bonus</a><p class='emoji hide'>🌼";
     scene.innerHTML = html;
   }
   
@@ -57,9 +59,9 @@ draw_screen = () => {
           html += "<span style='width:61vh' onclick='world=-4;fadeout()'>Take off!</span><br>";
         }
         for(j in data[i]){
-          //console.log(j);
+          if(i==1)console.log(save[i][j], data[i][j]);
           if(j != 0){
-            html += "<span onclick='world="+i+";puzzle="+j+";fadeout()'>" + j + "</span>";
+            html += "<span class='"+ (save[i][j] ? "won" : "") + (save[i][j] && save[i][j] <= data[i][j][5] ? " par" : "") + "' onclick='world="+i+";puzzle="+j+";fadeout()'>" + j + "</span>";
           }
         }
       }
@@ -90,6 +92,7 @@ draw_screen = () => {
 
 
 nav_back = () => {
+  clearInterval(song_interval);
   var tmp;
   if(custom){
     location.search = "";
@@ -106,20 +109,56 @@ nav_back = () => {
   fadeout();
 }
 
+// Transition to the next puzzle, with optional text.
+// Also, easter-eggs at the end of worlds 3 and 4
 fadeout = (text) => {
+  var i, j, k, secret = 0;
   l = u = r = d = 0;
   fade.style.display = "block";
+  presents.innerHTML = "";
+  
+  if(lastworld == 3 && lastpuzzle > 35 && win){ // 3 - 36 to 45
+    setTimeout(()=>presents.style.opacity=1, 800);
+    text = "<p><table id=ta width=450 height=180>";
+    for(k = 1; k < 11; k++){
+      if(k == 6){
+        text += "<tr>";
+      }
+      text += "<td id=pu"+ k + ((k == 46 - lastpuzzle) ? " style='transform:scale(.01)'" : "") + ">";
+    }
+    presents.innerHTML = text;
+    
+    for(k = 1; k < 11; k++){
+      if(save[3][46-k]){
+        secret++;
+        current_puzzle = data[3][46-k];
+        w = current_puzzle[2];
+        h = current_puzzle[3] || w;
+        floor = current_puzzle[0];
+        
+        for(j = h; j--;){
+          for(i = w; i--;){
+            C.plane({g:"pu"+k,o:"top left",x:i*85/w,y:j*85/h,w:85/w+2,h:85/h+2,css:"tile "+(((floor[j]>>i)&1) ? "black" : "")});
+          }
+        }
+      }
+    }
+  }
   setTimeout(()=>{b.classList.remove("fadein")},100);
   if(text){
-    presents.innerHTML = text;
+    if(!secret) presents.innerHTML = text;
+    else if(lastworld == 3){
+      setTimeout(()=>{C.$("pu"+ (46 - lastpuzzle)).style.transform="";},1000);
+    }
     setTimeout(()=>presents.style.opacity=1, 800);
-    setTimeout(()=>presents.style.opacity=0, 3500);
-    setTimeout(draw_screen, 4000);
-    setTimeout(()=>{clearInterval(song_interval)}, 5000);
+    setTimeout(()=>presents.style.opacity=0, secret == 10 ? 11500 : 3500);
+    if(lastworld == 3 && secret == 10){
+      setTimeout(()=>{b.classList.add("egg3");}, 2500);
+    }
+    setTimeout(draw_screen, lastworld == 3 && secret == 10 ? 12000 : 4000);
   }
   else {
     setTimeout(draw_screen, 600);
-    setTimeout(()=>clearInterval(song_interval), 1600);
   }
 }
 

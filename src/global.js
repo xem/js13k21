@@ -1,6 +1,8 @@
 // Global vars
-world = 4; // 0: main menu, 1-5: current world
-puzzle = 1; // 0: level menu, 1-n: current puzzle
+world = 0; // 0: main menu; 1-5: current world; -1; levels -3/-4: cutscenes
+puzzle = 0; // 0: level menu; 1-n: current puzzle
+lastworld = 0;
+lastpuzzle = 0;
 coins = 0;
 win = 0;
 haltwin = 0;
@@ -15,7 +17,18 @@ html = "";
 for(i=500;i--;)html += `<text x=${Math.random()*5000} y=${Math.random()*5000}>.</text>`;
 mobile = navigator.userAgent.match("Mobile");
 song_interval = 0;
+time = 0;
+head_position = [];
+previous_position = [];
+save = eval(localStorage["lossst"])||[[],[],[],[],[]];
+extracoins = eval(localStorage["lossst_e"])||0;
 
+for(i of save){
+  for(j of i){
+    if(j) coins++;
+  }
+}
+coins += extracoins;
 
 // List of SVGs
 svg = [

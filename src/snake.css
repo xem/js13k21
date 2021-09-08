@@ -1,5 +1,5 @@
 .head { background: radial-gradient(circle at 77%,#fa0,#a50); box-shadow: 0 0 5px #000; }
-#head, #head_decoration, #head_decoration_inner { transition: transform .2s }
+#head, #head_decoration, #head_decoration_inner, #head_decoration_tilt { transition: transform .2s }
 .body { background: linear-gradient(-90deg,#fa0,#a50); transition: transform .2s; }
 .body.odd { background: linear-gradient(-90deg,#c70,#720); }
 .eyes { font-size: 30px }
