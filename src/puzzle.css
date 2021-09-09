@@ -4,7 +4,7 @@
 .world2 #scene .floor { background: radial-gradient(#fff8,#fff0 80%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3ClinearGradient id='a' x2='45' y2='80' spreadMethod='repeat' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23c85'/%3E%3Cstop offset='59%25' stop-color='%23b74'/%3E%3Cstop offset='100%25' stop-color='%23863'/%3E%3C/linearGradient%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.01' numOctaves='3'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='32'/%3E%3CfeGaussianBlur stdDeviation='1'/%3E%3C/filter%3E%3Crect x='-10%25' y='-10%25' width='120%25' height='120%25' fill='url(%23a)' filter='url(%23b)'/%3E%3C/svg%3E"); border-radius: 150px; }
 .world3 #scene .floor { background: radial-gradient(#fffd,#adfd 80%); border-radius: 50%; }
 .world4 #viewport { background: #000 }
-.world4 #scene .floor { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.02' numOctaves='5'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='.3 .58 .72 .78'/%3E%3C/feComponentTransfer%3E%3CfeColorMatrix values='0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E"); box-shadow: 0 0 150px #fff, -300px 0 200px 200px #000 inset; }
+.world4 #scene .floor { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.02' numOctaves='5'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='1 .7 .38 .24 .14 .06 0'/%3E%3C/feComponentTransfer%3E%3CfeDiffuseLighting diffuseConstant='1.5' surfaceScale='-2'%3E%3CfeDistantLight elevation='9'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E"); box-shadow: 0 0 150px #fff, -300px 0 200px 200px #000 inset; }
 #puzzlefloor { background: #0005; }
 .tile { background: #fff; border: 3px solid #777; }
 table .tile { top: 0; left: 0; border: 1px solid #777; transition: 5s; }
@@ -35,8 +35,9 @@ td { transition: .5s; padding: 45px }
 .bricks .cubefront.bricks .cubeback { filter: brightness(.7) }
 .bricks .cuberight { filter: brightness(.9) }
 .coin { font-size: 50px; text-shadow: 0 0 15px #fff; transition: 1.7s }
-.crater { border-radius: 50%; box-shadow: inset -20px 0 10px #0007; background: #0003; }
+.crater { border-radius: 50%; box-shadow: 10px 0 20px #000a, inset 20px 0 10px #000a, inset -20px 0 10px #fff2; background: #0004;}
 .egg3 #ta { transform: rotate(180deg) }
-.egg3 #fade { background: #fa0 }
-.egg3 .tile { opacity: 0; }
-.egg3 .tile.black { opacity: 1; border-color: #000 }
+.egg4 #ta { transform: rotate(90deg) scale(.5) }
+.egg3 #fade, .egg4 #fade { background: #fa0 }
+.egg3 .tile, .egg4 .tile { opacity: 0; }
+.egg3 .tile.black, .egg4 .tile.black { opacity: 1; border-color: #000 }

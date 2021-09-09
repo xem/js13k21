@@ -4,7 +4,7 @@ draw_screen = () => {
   if(coins) coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
   
   // Custom puzzle
-  if(location.search && location.search.length > 3){
+  if(location.search && location.search.length > 3 && !location.search.includes("account")){
     world = 1;
     puzzle = 99;
     b.className = "puzzle world1";
@@ -71,7 +71,7 @@ draw_screen = () => {
   
   // World -2: Bonus
   else if(world == -2){
-    html = "<div class='main bonus'><h1>BONUS</h1><p><a onclick='if(self.document.monetization && self.document.monetization.state==\'started\")location=\"xem.github.io/js13k21/editor\"'>Puzzle editor</a><span>(WebMonetization bonus)</span><p><a href=//xem.github.io/js13k21/NEAR>Snake editor</a><span>(NEAR bonus)</span><p><a href=//xem.github.io/js13k21/NEAR>Leaderboards</a><span>(IPFS bonus)</span><p><a href=//xem.github.io/js13k21/FLUX>Get more coins</a><span>(FLUX bonus)</span><p><a onclick=\"if(confirm())delete localStorage.LOSSST\">Delete save</a><p><a href=//xem.github.io/js13k21/share>Share</a><p><a href=//xem.github.io/articles/js13k21.html>Making-of";
+    html = `<div class='main bonus'><h1>BONUS</h1><p><a onclick='if(self.document.monetization && self.document.monetization.state=="started")location="xem.github.io/js13k21/editor";else alert("WebMonetization is not enabled")'>Puzzle editor</a><span>(WebMonetization bonus)</span><p><a href=//xem.github.io/js13k21/NEAR>Snake editor</a><span>(FLUX bonus)</span><p><a href=//xem.github.io/js13k21/NEAR>Leaderboards</a><span>(IPFS bonus)</span><p><a onclick=near()>Get more coins</a><span>(NEAR bonus)</span><p><a onclick=\"if(confirm())delete localStorage.LOSSST\">Delete save</a><p><a href=//xem.github.io/js13k21/share>Share</a><p><a href=//xem.github.io/articles/js13k21.html>Making-of`;
     scene.innerHTML = html;
   }
   
@@ -144,22 +144,66 @@ fadeout = (text) => {
       }
     }
   }
+  
+  if(lastworld == 4 && lastpuzzle > 36 && win){ // 3 - 37 to 40
+    setTimeout(()=>presents.style.opacity=1, 800);
+    text = "<p><table id=ta width=70 height=620>";
+    for(k = 1; k < 5; k++){
+      text += "<tr><td id=pu"+ k + ((k == lastpuzzle - 36) ? " style='transform:scale(.01)'" : "") + ">";
+    }
+    presents.innerHTML = text;
+    
+    for(k = 1; k < 5; k++){
+      if(save[4][36+k]){
+        secret++;
+        current_puzzle = data[4][36+k];
+        w = current_puzzle[2];
+        h = current_puzzle[3] || w;
+        floor = current_puzzle[0];
+        
+        for(j = h; j--;){
+          for(i = w; i--;){
+            C.plane({g:"pu"+k,o:"top left",x:i*70/w,y:80+j*70/h,w:70/w+2,h:70/h+2,css:"tile "+(((floor[j]>>i)&1) ? "black" : "")});
+          }
+        }
+        
+        floor = current_puzzle[1];
+        
+        for(j = h; j--;){
+          for(i = w; i--;){
+            C.plane({g:"pu"+k,o:"top left",x:i*70/w,y:j*70/h,w:70/w+2,h:70/h+2,css:"tile "+(((floor[j]>>i)&1) ? "black" : "")});
+          }
+        }
+      }
+    }
+  }
   setTimeout(()=>{b.classList.remove("fadein")},100);
   if(text){
     if(!secret) presents.innerHTML = text;
     else if(lastworld == 3){
       setTimeout(()=>{C.$("pu"+ (46 - lastpuzzle)).style.transform="";},1000);
     }
-    setTimeout(()=>presents.style.opacity=1, 800);
-    setTimeout(()=>presents.style.opacity=0, secret == 10 ? 11500 : 3500);
-    if(lastworld == 3 && secret == 10){
-      setTimeout(()=>{b.classList.add("egg3");}, 2500);
+    else if(lastworld == 4){
+      console.log(lastpuzzle - 36, C.$("pu"+ (lastpuzzle - 36)), C.$("pu"+ (lastpuzzle - 36)).style.transform)
+      
+      setTimeout(()=>{C.$("pu"+ (lastpuzzle - 36)).style.transform="";},1000);
     }
-    setTimeout(draw_screen, lastworld == 3 && secret == 10 ? 12000 : 4000);
+    setTimeout(()=>presents.style.opacity=1, 800);
+    setTimeout(()=>presents.style.opacity=0, ((lastworld == 3 && secret == 10) || (lastworld == 4 && secret == 4)) ? 11500 : 3500);
+    if(lastworld == 3 && secret == 10){
+      setTimeout(()=>{b.classList.add("egg3");lastpuzzle = lastworld = 0;}, 2500);
+    }
+    if(lastworld == 4 && secret == 4){
+      setTimeout(()=>{b.classList.add("egg4");lastpuzzle = lastworld = 0;}, 2500);
+    }
+    setTimeout(draw_screen, ((lastworld == 3 && secret == 10) || (lastworld == 4 && secret == 4)) ? 12000 : 4000);
+    
   }
   else {
+    lastpuzzle = lastworld = 0;
     setTimeout(draw_screen, 600);
   }
+  
 }
 
 intro = () => {
@@ -349,6 +393,47 @@ intro = () => {
       song = 1;
       note = 75;
     }, 10500);
+  }
+  
+};
+
+near = async () => {
+  
+  const { connect, keyStores, WalletConnection } = nearApi;
+
+  const config = {
+    networkId: "testnet",
+    keyStore: new keyStores.BrowserLocalStorageKeyStore(),
+    nodeUrl: "https://rpc.testnet.near.org",
+    walletUrl: "https://wallet.testnet.near.org",
+    helperUrl: "https://helper.testnet.near.org",
+    explorerUrl: "https://explorer.testnet.near.org",
+  };
+
+  // connect to NEAR
+  const near = await connect(config);
+
+  // create wallet connection
+  const wallet = new WalletConnection(near);
+
+  wallet.requestSignIn(
+    "example-contract.testnet", // contract requesting access
+    "http://localhost:8080/js13k21/NEAR", // optional
+  );
+  
+  if(wallet.isSignedIn()) {
+    console.log("logged");
+    const account = await near.account("xem06.testnet");
+    //console.log(await account.getAccountBalance());
+    // sends NEAR tokens
+    if(confirm("0.1 NEAR = 10 coins")){
+      //console.log(
+        await account.sendMoney(
+          "xem06.testnet", // receiver account
+          "100000000000000000000000" // amount in yoctoNEAR
+        );
+      //);
+    }
   }
   
 }
