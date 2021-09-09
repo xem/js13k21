@@ -1,7 +1,93 @@
-<h1>NEAR bonus</h1>
-<p>This page will allow you to create your own snake styles, use them in-game and share them on the NEAR network
-<p>(coming soon)
+﻿<!doctype html>
+<script src="https://js13kgames.com/src/near-api-js.js"></script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐍</text></svg>">
+<title>LOSSST shop</title>
+<h1>Welcome to the LOSSST shop</h1>
+
+<div id=start>
+<p><button id=login>Log in to your NEAR wallet</button>
+</div>
+<div id=shop>
+  <h3>Your balance: <span id=balance>0.0</span> NEAR</h3>
+  
+  <h3>Buy in-game coins<h3>
+  <p><button id=buy1>1 coin: 0.1 NEAR</button>
+  <br><button id=buy2>10 coins: 0.8 NEAR</button>
+  <br><button id=buy3>20 coins: 1.7 NEAR</button>
+  <br><button id=buy4>50 coins: 3 NEAR</button>
+  <br><button id=buy5>99 coin: 5 NEAR</button>
+  
+  <h3>Buy exclusive skins</h3>
+  <p>(Coming soon...)
+  
+  <h3>Buy exclusive puzzles</h3>
+  <p>(Coming soon...)
+</div>
+
+<script>
+
+// Login
+login.onclick = async () => {
+  
+  const { connect, keyStores, WalletConnection, KeyPair } = nearApi;
+  const keyStore = new keyStores.BrowserLocalStorageKeyStore();
+  config = {
+    networkId: "mainnet",
+    keyStore,
+    nodeUrl: "https://rpc.near.org",
+    contractName: "xem06.near",
+    walletUrl: "https://wallet.near.org",
+  };
+
+  // connect to NEAR
+  near = await connect(config, "xem06.near");
+
+  // create wallet connection
+  wallet = new WalletConnection(near);
+
+  wallet.requestSignIn(
+    "xem06.near", "LOSSST"
+  );
+  
+  if(wallet.isSignedIn()) {
+    start.remove();
+    shop.style.display = "block";
+    console.log("logged");
+    account = await near.account();
+    b = await account.getAccountBalance();
+    balance.innerHTML = nearApi.utils.format.formatNearAmount(b.available);
+  }
+  
+}
+
+// Buy
+buy1.onclick = async () => {
+
+  // sends NEAR tokens
+  const contract = new nearApi.Contract(
+    account, // the account object that is connecting
+    "xem06.near", // destination
+    {
+      // name of contract you're connecting to
+      viewMethods: [],
+      changeMethods: ["addMessage"], // change methods modify state
+      //sender: account, // account object to initialize and sign transactions.
+    }
+  );
+  
+  await contract.addMessage(
+    {},
+    300000000000000, // attached GAS (optional)
+    nearApi.utils.format.parseNearAmount("0.1") // attached deposit in yoctoNEAR (optional)
+  );
+}
+
+</script>
 
 
 <style>
-body { max-width: 600px; margin: auto; background: #000; color: #fff; font-family: calibri, arial; padding: 50px 0 0; }
+body { font-size: 22px; max-width: 600px; margin: auto; text-align: center; background: #000; color: #fff; font-family: calibri, arial; padding: 20px 0 0; }
+button, input { background: #555; color: #fff; font-family: calibri, arial; font-size: 24px; margin: 3px; }
+#shop { display: none }
+input { width: 600px }
+</style>

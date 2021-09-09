@@ -4,7 +4,7 @@ draw_screen = () => {
   if(coins) coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
   
   // Custom puzzle
-  if(location.search && location.search.length > 3 && !location.search.includes("account")){
+  if(location.search && location.search.length > 3){
     world = 1;
     puzzle = 99;
     b.className = "puzzle world1";
@@ -71,7 +71,7 @@ draw_screen = () => {
   
   // World -2: Bonus
   else if(world == -2){
-    html = `<div class='main bonus'><h1>BONUS</h1><p><a onclick='if(self.document.monetization && self.document.monetization.state=="started")location="xem.github.io/js13k21/editor";else alert("WebMonetization is not enabled")'>Puzzle editor</a><span>(WebMonetization bonus)</span><p><a href=//xem.github.io/js13k21/NEAR>Snake editor</a><span>(FLUX bonus)</span><p><a href=//xem.github.io/js13k21/NEAR>Leaderboards</a><span>(IPFS bonus)</span><p><a onclick=near()>Get more coins</a><span>(NEAR bonus)</span><p><a onclick=\"if(confirm())delete localStorage.LOSSST\">Delete save</a><p><a href=//xem.github.io/js13k21/share>Share</a><p><a href=//xem.github.io/articles/js13k21.html>Making-of`;
+    html = `<div class='main bonus'><h1>BONUS</h1><p><a onclick='document.monetization&&document.monetization.state=="started"?open("//xem.github.io/js13k21/editor"):(confirm("Log on Coil?")&&open("//coil.com/login"))'>Puzzle editor</a><span>(WebMonetization bonus)<p><a href=//xem.github.io/js13k21/NEAR>Snake editor</a><span>(FLUX bonus)<p><a href=//xem.github.io/js13k21/NEAR>Leaderboards</a><span>(IPFS bonus)<p><a onclick='open("//xem.github.io/js13k21/NEAR")'>Shop</a><span>(NEAR bonus)<p><a onclick=\"if(confirm())delete localStorage.LOSSST\">Delete save</a><p><a href=//xem.github.io/js13k21/share>Share</a><p><a href=//xem.github.io/articles/js13k21.html>Making-of`;
     scene.innerHTML = html;
   }
   
@@ -396,44 +396,3 @@ intro = () => {
   }
   
 };
-
-near = async () => {
-  
-  const { connect, keyStores, WalletConnection } = nearApi;
-
-  const config = {
-    networkId: "testnet",
-    keyStore: new keyStores.BrowserLocalStorageKeyStore(),
-    nodeUrl: "https://rpc.testnet.near.org",
-    walletUrl: "https://wallet.testnet.near.org",
-    helperUrl: "https://helper.testnet.near.org",
-    explorerUrl: "https://explorer.testnet.near.org",
-  };
-
-  // connect to NEAR
-  const near = await connect(config);
-
-  // create wallet connection
-  const wallet = new WalletConnection(near);
-
-  wallet.requestSignIn(
-    "example-contract.testnet", // contract requesting access
-    "http://localhost:8080/js13k21/NEAR", // optional
-  );
-  
-  if(wallet.isSignedIn()) {
-    console.log("logged");
-    const account = await near.account("xem06.testnet");
-    //console.log(await account.getAccountBalance());
-    // sends NEAR tokens
-    if(confirm("0.1 NEAR = 10 coins")){
-      //console.log(
-        await account.sendMoney(
-          "xem06.testnet", // receiver account
-          "100000000000000000000000" // amount in yoctoNEAR
-        );
-      //);
-    }
-  }
-  
-}
