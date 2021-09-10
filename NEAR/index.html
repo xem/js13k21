@@ -1,8 +1,8 @@
 ﻿<!doctype html>
 <script src="https://js13kgames.com/src/near-api-js.js"></script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐍</text></svg>">
-<title>LOSSST shop</title>
-<h1>Welcome to the LOSSST shop</h1>
+<title>Shop</title>
+<h1>Welcome to the shop</h1>
 
 <div id=start>
 <p><button id=login>Log in to your NEAR wallet</button>
@@ -12,50 +12,56 @@
   
   <h3>Buy in-game coins<h3>
   <p><button id=buy1>1 coin: 0.1 NEAR</button>
-  <br><button id=buy2>10 coins: 0.8 NEAR</button>
-  <br><button id=buy3>20 coins: 1.7 NEAR</button>
-  <br><button id=buy4>50 coins: 3 NEAR</button>
-  <br><button id=buy5>99 coin: 5 NEAR</button>
+  <br><button id=buy2 hidden>10 coins: 0.8 NEAR</button>
+  <br><button id=buy3 hidden>20 coins: 1.7 NEAR</button>
+  <br><button id=buy4 hidden>50 coins: 3 NEAR</button>
+  <br><button id=buy5 hidden>99 coin: 5 NEAR</button>
   
-  <h3>Buy exclusive skins</h3>
+  <!--h3>Buy exclusive skins</h3>
   <p>(Coming soon...)
   
   <h3>Buy exclusive puzzles</h3>
-  <p>(Coming soon...)
+  <p>(Coming soon...)-->
 </div>
 
 <script>
+nearAPI = nearApi;
 
 // Login
 login.onclick = async () => {
   
-  const { connect, keyStores, WalletConnection, KeyPair } = nearApi;
-  const keyStore = new keyStores.BrowserLocalStorageKeyStore();
-  config = {
-    networkId: "mainnet",
-    keyStore,
-    nodeUrl: "https://rpc.near.org",
-    contractName: "xem06.near",
-    walletUrl: "https://wallet.near.org",
-  };
+  const { keyStores, connect, WalletConnection } = nearAPI;
+  
+  keyStore = new keyStores.BrowserLocalStorageKeyStore();
 
+  config = {
+    networkId: "testnet",
+    keyStore, // optional if not signing transactions
+    contractName: "test.testnet",
+    nodeUrl: "https://rpc.testnet.near.org",
+    walletUrl: "https://wallet.testnet.near.org",
+    helperUrl: "https://helper.testnet.near.org",
+    explorerUrl: "https://explorer.testnet.near.org",
+  };
+  
   // connect to NEAR
-  near = await connect(config, "xem06.near");
+  near = await connect(config);
 
   // create wallet connection
   wallet = new WalletConnection(near);
 
   wallet.requestSignIn(
-    "xem06.near", "LOSSST"
+    "xem06.testnet", // contract requesting access
+    "LOSSST", // optional
   );
   
   if(wallet.isSignedIn()) {
     start.remove();
     shop.style.display = "block";
     console.log("logged");
-    account = await near.account();
-    b = await account.getAccountBalance();
-    balance.innerHTML = nearApi.utils.format.formatNearAmount(b.available);
+    account = await near.account("xem06.testnet");
+    console.log(b = await account.getAccountBalance());
+    balance.innerHTML = nearApi.utils.format.formatNearAmount(b.available,2);
   }
   
 }
@@ -64,21 +70,20 @@ login.onclick = async () => {
 buy1.onclick = async () => {
 
   // sends NEAR tokens
-  const contract = new nearApi.Contract(
+  const contract = new nearAPI.Contract(
     account, // the account object that is connecting
-    "xem06.near", // destination
+    "xem06.testnet", // destination
     {
-      // name of contract you're connecting to
       viewMethods: [],
-      changeMethods: ["addMessage"], // change methods modify state
-      //sender: account, // account object to initialize and sign transactions.
+      changeMethods: ["add"],
+      sender: account,
     }
   );
   
-  await contract.addMessage(
-    {},
-    300000000000000, // attached GAS (optional)
-    nearApi.utils.format.parseNearAmount("0.1") // attached deposit in yoctoNEAR (optional)
+  await contract.add(
+    {}, // message
+    "300000000000000", // gas
+    "100000000000000000" //  deposit (0.1N = 10000000000000000000000000)
   );
 }
 
