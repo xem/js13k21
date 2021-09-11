@@ -111,3 +111,4 @@ setInterval(() => {
   if(world > 0 && snake_position) move_snake();
 },33);
 
+onscroll = e => e.preventDefault();
