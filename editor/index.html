@@ -15,9 +15,11 @@
   </div>
   <div class=back onclick="nav_back()">&lt;</div>
   <div id=ui>
-    Width <input type=range id=W min=3 max=7 value=5> &nbsp; &nbsp;
-    Height <input type=range id=H min=3 max=8 value=5> &nbsp; &nbsp;
-    Snake size <input type=number id=SNAKE min=3 max=30 value=3>
+    Puzzle width <input type=range id=W min=3 max=7 value=5> &nbsp; &nbsp;
+    Height <input type=range id=H min=3 max=8 value=5>
+    <br>
+    Snake length <input type=number id=SNAKE min=3 max=30 value=3>&nbsp; &nbsp;
+    World <input type=number id=wor min=1 max=4 value=1>
     <br>
     <input type=checkbox id=FLOOR checked> Floor &nbsp; &nbsp;
     <input type=checkbox id=WALL> Wall &nbsp; &nbsp;
@@ -40,8 +42,8 @@
 
 <style>
 #camera { top: 80% }
-#ui { color: #fff; position: fixed; top: 20px; left: 0; width: 100%; text-align: center; font-size: 25px; line-height: 30px; }
-input, button { background: #555; color: #fff; font: 25px calibri, arial; padding: 0 5px; }
+#ui { color: #fff; position: fixed; top: 20px; left: 0; width: 100%; text-align: center; font-size: 20px; line-height: 30px; }
+input, button { background: #555; color: #fff; font: 20px calibri, arial; padding: 0 3px; }
 input { max-width: 100px }
 #puzzlefloor .tile { opacity: 0; }
 #puzzlewall .tile { opacity: 0; }

@@ -17,14 +17,11 @@ Track list:
 - 7: Georges Bizet - L'arlésienne suite No.2. IV: Farandole
 - 8: Ludwig van Beethoven - Für Elise, WoO 59
 - 9: Johann Sebastien Bach - Bwv1067 Orchestral Suite No. 2 - Badinerie
+- 10: Johann Strauss - Blue Danube
 
 
-Track ideas:
+Other track ideas:
 
-- Antonin Dvorak - Symphony No 9 in E Minor, Op. 95, B.187 "from the new world"
-- Maurice Ravel - Boléro
-- Antonio Vivaldi - Concerto No. 4 in F minor, Op. 8, RV 297, 'L'inverno' (Winter) - Allegro non molto
-- Johann Strauss - Le beau Danube bleu
 - Johann Sebastian Bach - Orchestral Suite No 2 in B Minor "badinerie"
 - Ludwig Von Beethoven - Symphony no 5 in C Minor, Op 67 allegro con brio
 - Georges Bizet - L'Arlésienne suite no 2 IV. Farandole

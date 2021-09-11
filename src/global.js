@@ -20,8 +20,10 @@ song_interval = 0;
 time = 0;
 head_position = [];
 previous_position = [];
-save = eval(localStorage["lossst"])||[[],[],[],[],[]];
-extracoins = eval(localStorage["lossst_e"])||0;
+save = eval(localStorage.lossst)||[[0],[0],[0],[0],[0]];
+extracoins = eval(localStorage.lossst_e)||0;
+song = 0;
+song_interval = 0;
 
 for(i of save){
   for(j of i){

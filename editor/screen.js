@@ -68,16 +68,17 @@ onclick = e => {
 
 share = () => {
   current_puzzle = [
-    ,               //  floor*,
-    ,               //  wall*,
-    w,              //  width,
-    h,              //  height*,
-    +SNAKE.value,   //  snake_length,
-    ,               //  moves,
-    [],             //  bricks?,
-    ,               //  portals_1*,
-    ,               //  portals_2*
-    +WRAP.checked,  //  mirroring
+    ,               // floor*,
+    ,               // wall*,
+    w,              // width,
+    h,              // height*,
+    +SNAKE.value,   // snake_length,
+    ,               // moves,
+    [],             // bricks?,
+    ,               // portals_1*,
+    ,               // portals_2*
+    +WRAP.checked,  // mirroring
+    +wor.value       // world
   ];                
 
   
@@ -147,7 +148,15 @@ share = () => {
     }
   }
   console.log(current_puzzle);
-  if(prompt("Your puzzle URL: (click OK to play it)", "//xem.github.io/src/?p=" + JSON.stringify(current_puzzle).replace(/null/g,""))){
-    window.open("../src/?p="+JSON.stringify(current_puzzle).replace(/null/g,""));
+  if(prompt("Your puzzle URL: (click OK to play it)", "//xem.github.io/src/#" + JSON.stringify(current_puzzle).replace(/null/g,""))){
+    window.open("../src/#"+JSON.stringify(current_puzzle).replace(/null/g,""));
   }
+}
+
+wor.onchange = wor.oninput = () => {
+  b.classList.remove("world1");
+  b.classList.remove("world2");
+  b.classList.remove("world3");
+  b.classList.remove("world4");
+  b.classList.add("world" + wor.value);
 }

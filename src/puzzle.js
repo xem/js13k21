@@ -1,12 +1,54 @@
 // Draw current puzzle
 draw_puzzle = () => {
   
+  if(world == 1){
+    if(puzzle > 30){
+      set_song(3)
+    }
+    
+    else if(puzzle > 15){
+      set_song(2)
+    }
+    
+    else {
+      set_song(1)
+    }
+  }
+  else if(world == 2){
+    if(puzzle > 15){
+      set_song(5)
+    }
+    
+    else {
+      set_song(4);
+    }
+  }
+  else if(world == 3){
+    if(puzzle > 30){
+      set_song(8)
+    }
+    
+    else if(puzzle > 15){
+      set_song(7)
+    }
+    
+    else {
+      set_song(6)
+    }
+  }
+  else if(world == 4){
+    if(puzzle > 15){
+      set_song(10)
+    }
+    
+    else {
+      set_song(9)
+    }
+  }
   //console.log(custom);
   // Keep track of current world/puzzle for easter-eggs
   lastworld = world;
   lastpuzzle = puzzle;
-
-  song = 9;
   
   if(puzzle && !custom) puzzlename.innerHTML = world + " - " + puzzle;
   if(coins && !custom) coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
@@ -15,6 +57,10 @@ draw_puzzle = () => {
   current_puzzle = custom || data[world][puzzle];
   //console.log(current_puzzle);
   
+  if(puzzle > 5 && !(location.host.includes("s13k") || location.host.includes("calh")  || location.host.includes("xem.github.io"))){
+    location = "//js13kgames.com/entries/lossst-a-snake-in-space";
+  }
+  
   w = current_puzzle[2];
   h = current_puzzle[3] || w;
   floor = current_puzzle[0];
@@ -22,7 +68,7 @@ draw_puzzle = () => {
   bricks = current_puzzle[6] || [];
   portals1 = current_puzzle[7] || 0;
   portals2 = current_puzzle[8] || 0;
-  mirror = current_puzzle[9];
+  mirror = current_puzzle[9] || 0;
   //console.log(mirror);
 
   // Snake globals
@@ -58,7 +104,7 @@ draw_puzzle = () => {
   b.classList.remove("menu");
   b.classList.remove("win");
   
-  C.camera({z:-300+w*50+mirror*100,x:-150,y:h*10,rx:camrx,rz:camrz});
+  C.camera({z:-100+w*50+mirror*100,x:-150,y:h*10,rx:camrx,rz:camrz});
   
   // Fade in
   setTimeout(()=>{b.classList.add("fadein");},1500);
@@ -219,10 +265,10 @@ draw_puzzle = () => {
   }
   
   // PAR sign
-  C.plane({g:"puzzlefloor",x:w*50+105,y:-50,w:5,h:105,z:55,rx:-95,ry:-35,css:"sign"});
-  C.plane({g:"puzzlefloor",x:w*50+100,y:-73,w:5,h:30,z:2,rx:0,ry:0,rz:-30,css:"sign shadow"});
-  C.plane({g:"puzzlefloor",x:w*50+105,y:-47,w:105,h:60,z:72,rx:-95,ry:-35,css:"sign",html:"Steps: <span id=st>0</span><br>Par: "+[par||"?"]});
-  C.plane({g:"puzzlefloor",x:w*50+78,y:-112,w:105,h:60,z:2,rx:0,ry:0,rz:-30,css:"sign shadow"});
+  C.plane({g:"puzzlefloor",x:w*50+105-50,y:-50+60,w:5,h:105,z:55,rx:-95,ry:-35,css:"sign"});
+  C.plane({g:"puzzlefloor",x:w*50+100-50,y:-73+60,w:5,h:30,z:2,rx:0,ry:0,rz:-30,css:"sign shadow"});
+  C.plane({g:"puzzlefloor",x:w*50+105-50,y:-47+60,w:105,h:60,z:72,rx:-95,ry:-35,css:"sign",html:"Steps: <span id=st>0</span><br>Par: "+[par||"?"]});
+  C.plane({g:"puzzlefloor",x:w*50+78-50,y:-112+60,w:105,h:60,z:2,rx:0,ry:0,rz:-30,css:"sign shadow"});
 };
 
 check_puzzle = () => {
@@ -302,7 +348,7 @@ check_puzzle = () => {
       puzzle = 0;
     }
     else {
-      if(!save[world][puzzle]) { save[world][puzzle] = steps; coins++ }
+      if(!save[world][puzzle] && !custom) { save[world][puzzle] = steps; coins++ }
       else if(save[world][puzzle] > steps) { save[world][puzzle] = steps }
       localStorage["lossst"]=JSON.stringify(save);
       puzzle++;

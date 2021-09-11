@@ -71,12 +71,12 @@ buy1.onclick = async () => {
 
   // sends NEAR tokens
   const contract = new nearAPI.Contract(
-    account, // the account object that is connecting
+    wallet.account(), // the account object that is connecting
     "xem06.testnet", // destination
     {
       viewMethods: [],
       changeMethods: ["add"],
-      sender: account,
+      sender: wallet.account(),
     }
   );
   

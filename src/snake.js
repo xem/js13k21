@@ -35,22 +35,24 @@ move_snake = () => {
       target_position = move_front();
     }
 
-    // Move on floor
+    // Move on floor + wall (worlds 1-3) / in the air (world 4)
     else {
       
       // Right
       if(r){
         
+        //console.log(head_portal[head_portal.length-1], previous_position[0], head_position[0]);
+        
         // Backtrack if head is turned to the left
-        if(previous_position[0] > head_position[0]){
-          if(head_portal[head_portal.length-1]){
+        if(head_angle_modulo == 90){
+          if(head_portal[head_portal.length-1] || (world > 3 && previous_position[2] != head_position[2])){
             head_angle += 180;
             head_angle_modulo += 180;
           }
           else {
             go_back();
+            return;
           }
-          return;
         }
         
         // Or try to move on the right
@@ -61,15 +63,15 @@ move_snake = () => {
       else if(d){
 
         // Backtrack if head is turned to the back
-        if(previous_position[1] > head_position[1]){
-          if(head_portal[head_portal.length-1]){
+        if(head_angle_modulo == 180){
+          if(head_portal[head_portal.length-1] || (world > 3 && previous_position[2] != head_position[2])){
             head_angle += 180;
             head_angle_modulo += 180;
           }
           else {
             go_back();
+            return;
           }
-          return;
         }
         
         // Or try to move to the front / down
@@ -80,15 +82,15 @@ move_snake = () => {
       else if(l){
         
         // Backtrack if head is turned to the right
-        if(previous_position[0] < head_position[0]){
-          if(head_portal[head_portal.length-1]){
+        if(head_angle_modulo == 270){
+          if(head_portal[head_portal.length-1] || (world > 3 && previous_position[2] != head_position[2])){
             head_angle += 180;
             head_angle_modulo += 180;
           }
           else {
             go_back();
+            return;
           }
-          return;
         }
         
         // Or try to move to the left
@@ -99,15 +101,15 @@ move_snake = () => {
       else if(u){
         
         // Backtrack if head is turned to the front
-        if(previous_position[1] < head_position[1]){
-          if(head_portal[head_portal.length-1]){
+        if(head_angle_modulo == 0){
+          if(head_portal[head_portal.length-1] || (world > 3 && previous_position[2] != head_position[2])){
             head_angle += 180;
             head_angle_modulo += 180;
           }
           else {
             go_back();
+            return;
           }
-          return;
         }
 
         // Or try to move to the back / up
@@ -159,7 +161,7 @@ move_snake = () => {
       }
       
       // Move whole head
-      C.move({n:"head", x:head_position[0]*50+25, y:head_position[1]*50+25 + (behind ? -5 : 0), z:head_position[2]*50+4 + (behind ? 10 : 0)});
+      C.move({n:"head", x:head_position[0]*50+25, y:head_position[1]*50+27 + (behind ? -5 : 0), z:head_position[2]*50+4 + (behind ? 10 : 0)});
       
       // Make the body move 5 steps forward (with a bit of delay for the steps 3-5 to animate the movement)
       move_body();
@@ -182,7 +184,7 @@ move_snake = () => {
       C.camera();
       check_wall();
       check_puzzle();
-      document.title = steps;
+      //document.title = steps;
     }
     
     // Next target set: do the move
@@ -196,7 +198,7 @@ move_snake = () => {
         }
         
         // Move whole head
-        C.move({n:"head", x:next_target[0]*50+25, y:next_target[1]*50+25 + (behind ? -5 : 0), z:next_target[2]*50+4 + (behind ? 10 : 0)});
+        C.move({n:"head", x:next_target[0]*50+25, y:next_target[1]*50+27 + (behind ? -5 : 0), z:next_target[2]*50+4 + (behind ? 10 : 0)});
         
         // Make the body move 5 steps forward (with a bit of delay for the steps 3-5 to animate the movement)
         move_body();
@@ -221,7 +223,7 @@ move_snake = () => {
         C.camera();
         check_wall();
         check_puzzle();
-        document.title = steps;
+        //document.title = steps;
       },200);
     }
   }
@@ -234,7 +236,7 @@ move_body = () => {
   var pos = snake_position[snake_length * 5 + body_moves];
   
   // Create a new body part close to the head
-  C.plane({g:"snakebody",n:"body"+(snake_length*5+body_moves),x:pos[0]*50+25,y:pos[1]*50+25,w:30,h:30,z:pos[2]*50+25,rx:-45,ry:5,css:"body circle " + (body_moves%2 ? "odd" : "")});
+  if(pos)C.plane({g:"snakebody",n:"body"+(snake_length*5+body_moves),x:pos[0]*50+25,y:pos[1]*50+25,w:30,h:30,z:pos[2]*50+25,rx:-45,ry:5,css:"body circle " + (body_moves%2 ? "odd" : "")});
   
   // Remove older part after the tail
   C.$("body" + body_moves).remove();
@@ -285,7 +287,7 @@ go_back = () => {
     head_angle_modulo = head_angles_modulo[head_angles.length - 5 - 1];
     
     // Move head
-    C.move({n:"head", x:head_position[0]*50+25, y:head_position[1]*50+25 + (behind ? -5 : 0), z:head_position[2]*50+4 + (behind ? 10 : 0)});
+    C.move({n:"head", x:head_position[0]*50+25, y:head_position[1]*50+27 + (behind ? -5 : 0), z:head_position[2]*50+4 + (behind ? 10 : 0)});
     
     // Rotate head decoration (eyes, tongue)
     C.move({n:"head_decoration_inner", rz:head_angle});

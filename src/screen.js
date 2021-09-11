@@ -1,18 +1,19 @@
 // Draw screen
 draw_screen = () => {
-  
-  if(coins) coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
-  
+
   // Custom puzzle
-  if(location.search && location.search.length > 3){
+  if(location.hash && location.hash.length > 1){
     world = 1;
     puzzle = 99;
-    b.className = "puzzle world1";
     scene.innerHTML = "";
-    custom = eval(location.search.slice(3));
+    custom = eval(decodeURI(location.hash.slice(1)));
+    if(custom) b.className = "puzzle world" + (world = custom[10]);
     draw_puzzle();
     return;
   }
+  
+  if(coins && !custom) coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
+  else coincount.innerHTML = "";
   
   // HTML string
   var i, j, html = "";
@@ -20,7 +21,7 @@ draw_screen = () => {
   // UI
   C.reset();
   puzzlename.innerHTML = "";
-  coincount.innerHTML = "";
+  presents.innerHTML = "";
   
   // Add "menu" and current world to body's class
   b.className = "";
@@ -41,7 +42,7 @@ draw_screen = () => {
   // World 0: main menu
   if(world == 0){
     puzzle = 0;
-    html = "<div class=main><h1>LOSSST</h1><p><a onclick='world=-3;fadeout()'><h2>PLAY</h2></a><p><a onclick=world=-1;fadeout()>Select puzzle</a><p><a onclick=world=-2;fadeout()>Bonus</a><p class='emoji hide'>🌼";
+    html = "<div class=main><h1>LOSSST</h1><b>A Snake in Space</b><p><a onclick='cont();fadeout()'><h2>"+(save[1][1]?coins>164?"":"Continue":"PLAY")+"</h2></a><p><a onclick=world=-1;fadeout()>Select puzzle</a><p><a onclick=world=-2;fadeout()>Bonus</a><p class='emoji hide'>🌼";
     scene.innerHTML = html;
   }
   
@@ -50,18 +51,23 @@ draw_screen = () => {
     html = "<div class='main levels'><h1>PUZZLES</h1>";
     for(var i in data){
       if(i != 0){
-        if(i == 4) html += "<h2 id='world_"+i+"'>The Moon</h2>";
+        if(i == 4) html += "<h2 id='world_"+i+"'>The Moon!</h2>";
         else html += "<h2 id='world_"+i+"'>World " + i + "</h2>";
         if(i==1){
-          html += "<span style='width:61vh' onclick='world=-3;fadeout()'>Intro</span><br>";
+          html += "<span style='width:61vh' onclick='world=-3;puzzle=0;fadeout()'>Intro</span><br>";
         }
-        if(i==4){
+        if(coins < [0,0,25,50,100][i]){
+          html += [0,0,25,50,100][i] + " coins to unlock";
+        }
+        else {
+          if(i==4){
           html += "<span style='width:61vh' onclick='world=-4;fadeout()'>Take off!</span><br>";
         }
-        for(j in data[i]){
-          if(i==1)console.log(save[i][j], data[i][j]);
-          if(j != 0){
-            html += "<span class='"+ (save[i][j] ? "won" : "") + (save[i][j] && save[i][j] <= data[i][j][5] ? " par" : "") + "' onclick='world="+i+";puzzle="+j+";fadeout()'>" + j + "</span>";
+          for(j in data[i]){
+            //if(i==1)console.log(save[i][j], data[i][j]);
+            if(j != 0){
+              html += "<span class='"+ (save[i][j] ? "won" : "") + (save[i][j] && save[i][j] <= data[i][j][5] ? " par" : "") + "' onclick='world="+i+";puzzle="+j+";lastworld=9;fadeout()'>" + j + "</span>";
+            }
           }
         }
       }
@@ -71,7 +77,7 @@ draw_screen = () => {
   
   // World -2: Bonus
   else if(world == -2){
-    html = `<div class='main bonus'><h1>BONUS</h1><p><a onclick='document.monetization&&document.monetization.state=="started"?open("//xem.github.io/js13k21/editor"):(confirm("Log on Coil?")&&open("//coil.com/login"))'>Puzzle editor</a><span>(WebMonetization bonus)<p><a href=//xem.github.io/js13k21/NEAR>Snake editor</a><span>(FLUX bonus)<p><a href=//xem.github.io/js13k21/NEAR>Leaderboards</a><span>(IPFS bonus)<p><a onclick='open("//xem.github.io/js13k21/NEAR")'>Shop</a><span>(NEAR bonus)<p><a onclick=\"if(confirm())delete localStorage.LOSSST\">Delete save</a><p><a href=//xem.github.io/js13k21/share>Share</a><p><a href=//xem.github.io/articles/js13k21.html>Making-of`;
+    html = `<div class='main bonus'><h1>BONUS</h1><p><a onclick='document.monetization&&document.monetization.state=="started"?open("//xem.github.io/js13k21/editor"):(confirm("Log on Coil?")&&open("//coil.com/login"))'>Puzzle editor</a><span>(WebMonetization bonus)<p><a href=//xem.github.io/js13k21/FLUX>Snake editor</a><span>(FLUX bonus)<p><a href=//xem.github.io/js13k21/IPFS>Leaderboards</a><span>(IPFS bonus)<p><a onclick='open("//xem.github.io/js13k21/NEAR")'>Shop</a><span>(NEAR bonus)<p><a onclick='if(confirm("Sure?"))delete localStorage.lossst,coins=0,fadeout()'>Delete save</a><p><a onclick='location="//xem.github.io/js13k21/share#"+JSON.stringify(save)'>Share</a><p><a href=//xem.github.io/articles/js13k21.html>Making-of`;
     scene.innerHTML = html;
   }
   
@@ -95,13 +101,13 @@ nav_back = () => {
   clearInterval(song_interval);
   var tmp;
   if(custom){
-    location.search = "";
+    location.hash = "";
+    song = ~~(Math.random()*10) + 1;
+    note = 0;
   }
   else if(puzzle){
-    tmp = world;
     world = -1;
     puzzle = 0;
-    location.href = "#world_"+tmp;
   }
   else {
     world = 0;
@@ -112,6 +118,7 @@ nav_back = () => {
 // Transition to the next puzzle, with optional text.
 // Also, easter-eggs at the end of worlds 3 and 4
 fadeout = (text) => {
+  //console.log(puzzle);
   var i, j, k, secret = 0;
   l = u = r = d = 0;
   fade.style.display = "block";
@@ -184,7 +191,7 @@ fadeout = (text) => {
       setTimeout(()=>{C.$("pu"+ (46 - lastpuzzle)).style.transform="";},1000);
     }
     else if(lastworld == 4){
-      console.log(lastpuzzle - 36, C.$("pu"+ (lastpuzzle - 36)), C.$("pu"+ (lastpuzzle - 36)).style.transform)
+      //console.log(lastpuzzle - 36, C.$("pu"+ (lastpuzzle - 36)), C.$("pu"+ (lastpuzzle - 36)).style.transform)
       
       setTimeout(()=>{C.$("pu"+ (lastpuzzle - 36)).style.transform="";},1000);
     }
@@ -195,28 +202,30 @@ fadeout = (text) => {
     }
     if(lastworld == 4 && secret == 4){
       setTimeout(()=>{b.classList.add("egg4");lastpuzzle = lastworld = 0;}, 2500);
+      setTimeout(()=>{open("//xem.github.io/js13k21/share#"+JSON.stringify(save))}, 11500);
     }
     setTimeout(draw_screen, ((lastworld == 3 && secret == 10) || (lastworld == 4 && secret == 4)) ? 12000 : 4000);
     
   }
   else {
-    lastpuzzle = lastworld = 0;
+    //lastpuzzle = lastworld = 0;
     setTimeout(draw_screen, 600);
   }
   
 }
 
 intro = () => {
-
+  //console.log(world, puzzle);
+  
   // UI
   C.reset();
-  song = 0;
+  if(world == -3) song = 0;
   presents.innerHTML = "js13kGames<br>presents";
   
   play_note(1);
   play_note(1);
   play_note(1);
-  var song_interval;
+  clearInterval(song_interval);
   
   if(world == -3)
     C.camera({x:-200,y:50,z:-200,rx:50,rz:30});
@@ -313,7 +322,6 @@ intro = () => {
     setTimeout(()=>presents.style.opacity = 1, 6000);
     setTimeout(()=>presents.style.opacity = 0, 9000);
     
-    
     // Look down
     setTimeout(()=>{
       C.camera({x:-200,y:50,z:-200,rx:50,rz:30});
@@ -390,9 +398,30 @@ intro = () => {
     
     setTimeout(()=>{
       clearInterval(song_interval);
-      song = 1;
-      note = 75;
+      song = 9;
+      note = 0;
     }, 10500);
   }
   
 };
+
+cont = () => {
+  //world = puzzle = 1;
+  var i,j;
+  if(save[1][1]){
+    for(i = 1; i < 5; i++){
+      for(j = 1; j < data[i].length; j++){
+        if(!save[i][j]) {
+          world=i;
+          puzzle=j;
+          lastworld=9;
+          return;
+        }
+      }
+    }
+  }
+  else{
+    world = -3;
+    puzzle = 0;
+  }
+}
