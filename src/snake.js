@@ -39,7 +39,7 @@ move_snake = () => {
     // Move on floor + wall (worlds 1-3) / in the air (world 4)
     else {
       
-        console.log("move", halt);
+      //console.log("move", halt);
       
       // Right
       if(r){
