@@ -1,14 +1,14 @@
 move_snake = () => {
 
-  if(!halt && (p || W<=-3) && !win){
-    //halt=1;
+  if(!a && (p || W<=-3) && !win){
+    //a=1;
     
     var i, target_position, x, y, z, match;
     
     hp = S[S.length - 1];
     pp = S[S.length - 2];
     
-    // Moon: tilt head up/down when moving up/down
+    // Moon: tilt B up/down when moving up/down
     if(W > 3){
       if(pp[2] > hp[2]){
         C.move({n:"h6",rx:-45});
@@ -25,13 +25,13 @@ move_snake = () => {
     if(W < 4 && on_wall && !high && d){
       
       //console.log("quit wall");
-      if(head_angle_modulo == 180 && pp[1] > 0){
+      if(B_angle_modulo == 180 && pp[1] > 0){
         go_back();
         return;
       }
-      if(head_angle_modulo == 180){
-        head_angle += 180;
-        head_angle_modulo += 180;
+      if(B_angle_modulo == 180){
+        B_angle += 180;
+        B_angle_modulo += 180;
       }
       target_position = move_front();
     }
@@ -39,18 +39,18 @@ move_snake = () => {
     // Move on floor + wall (worlds 1-3) / in the air (world 4)
     else {
       
-      //console.log("move", halt);
+      //console.log("move", a);
       
       // Right
       if(r){
         
-        //console.log(head_portal[head_portal.length-1], pp[0], hp[0]);
+        //console.log(B_portal[B_portal.length-1], pp[0], hp[0]);
         
-        // Backtrack if head is turned to the left
-        if(head_angle_modulo == 90){
-          if(head_portal[head_portal.length-1] || (W > 3 && pp[2] != hp[2])){
-            head_angle += 180;
-            head_angle_modulo += 180;
+        // Backtrack if B is turned to the left
+        if(B_angle_modulo == 90){
+          if(B_portal[B_portal.length-1] || (W > 3 && pp[2] != hp[2])){
+            B_angle += 180;
+            B_angle_modulo += 180;
           }
           else {
             go_back();
@@ -65,11 +65,11 @@ move_snake = () => {
       // Down (down if on wall, front if on floor)
       else if(d){
 
-        // Backtrack if head is turned to the back
-        if(head_angle_modulo == 180){
-          if(head_portal[head_portal.length-1] || (W > 3 && pp[2] != hp[2])){
-            head_angle += 180;
-            head_angle_modulo += 180;
+        // Backtrack if B is turned to the back
+        if(B_angle_modulo == 180){
+          if(B_portal[B_portal.length-1] || (W > 3 && pp[2] != hp[2])){
+            B_angle += 180;
+            B_angle_modulo += 180;
           }
           else {
             go_back();
@@ -84,11 +84,11 @@ move_snake = () => {
       // Left
       else if(l){
         
-        // Backtrack if head is turned to the right
-        if(head_angle_modulo == 270){
-          if(head_portal[head_portal.length-1] || (W > 3 && pp[2] != hp[2])){
-            head_angle += 180;
-            head_angle_modulo += 180;
+        // Backtrack if B is turned to the right
+        if(B_angle_modulo == 270){
+          if(B_portal[B_portal.length-1] || (W > 3 && pp[2] != hp[2])){
+            B_angle += 180;
+            B_angle_modulo += 180;
           }
           else {
             go_back();
@@ -103,11 +103,11 @@ move_snake = () => {
       // Up (up if on wall, back if on floor)
       else if(u){
         
-        // Backtrack if head is turned to the front
-        if(head_angle_modulo == 0){
-          if(head_portal[head_portal.length-1] || (W > 3 && pp[2] != hp[2])){
-            head_angle += 180;
-            head_angle_modulo += 180;
+        // Backtrack if B is turned to the front
+        if(B_angle_modulo == 0){
+          if(B_portal[B_portal.length-1] || (W > 3 && pp[2] != hp[2])){
+            B_angle += 180;
+            B_angle_modulo += 180;
           }
           else {
             go_back();
@@ -121,19 +121,19 @@ move_snake = () => {
       
       else if(W > 3 && U){
         
-        // Backtrack if head is turned to the bottom
+        // Backtrack if B is turned to the bottom
         if(pp[2] > hp[2]){
           go_back();
           return;
         }
         
-        //console.log(head_angle);
+        //console.log(B_angle);
         target_position = move_up();
-        //console.log(head_angle);
+        //console.log(B_angle);
       }
       
       else if(W > 3 && D){
-        // Backtrack if head is turned to the bottom
+        // Backtrack if B is turned to the bottom
         if(pp[2] < hp[2]){
           go_back();
           return;
@@ -155,16 +155,16 @@ move_snake = () => {
       hp = target_position;
 
       // Clamp modulo angle between 0 and 360
-      head_angle_modulo = (head_angle_modulo + 360) % 360;
+      B_angle_modulo = (B_angle_modulo + 360) % 360;
       
       // Save current modulo angle and portal traversal for the 5 new steps
       for(i = 1; i <= 5; i++){
-        head_angles_modulo.push(head_angle_modulo);
-        head_portal.push(portaling);
+        B_angles_modulo.push(B_angle_modulo);
+        B_portal.push(portaling);
       }
       
-      // Move whole head
-      C.move({n:"head", x:hp[0]*50+25, y:hp[1]*50+27 + (behind ? -5 : 0), z:hp[2]*50+4 + (behind ? 10 : 0)});
+      // Move whole B
+      C.move({n:"y", x:hp[0]*50+25, y:hp[1]*50+27 + (behind ? -5 : 0), z:hp[2]*50+4 + (behind ? 10 : 0)});
       
       // Make the body move 5 steps forward (with a bit of delay for the steps 3-5 to animate the movement)
       move_body();
@@ -174,16 +174,16 @@ move_snake = () => {
       setTimeout(move_body, 90);
       setTimeout(gravity, 120);
       
-      // Rotate head's inner decoration (eyes, tongue), but not the whole head because it contains the head circle that must always face the c
-      C.move({n:"h5", rz:head_angle});
+      // Rotate B's inner decoration (eyes, tongue), but not the whole B because it contains the B circle that must always face the c
+      C.move({n:"h5", rz:B_angle});
       
       // Block snake moves for 200ms
-      halt = 1;
+      a = 1;
       setTimeout(()=>{
-        halt = 0
+        a = 0
       }, 200);
       
-      // Call c() to update the sprites in the scene
+      // Call c() to update the sprites in the s
       C.c();
       check_wall();
       check_p();
@@ -197,11 +197,11 @@ move_snake = () => {
         
         // Save current modulo angle for the 5 new steps
         for(i = 1; i <= 5; i++){
-          head_angles_modulo.push(head_angle_modulo);
+          B_angles_modulo.push(B_angle_modulo);
         }
         
-        // Move whole head
-        C.move({n:"head", x:n[0]*50+25, y:n[1]*50+27 + (behind ? -5 : 0), z:n[2]*50+4 + (behind ? 10 : 0)});
+        // Move whole B
+        C.move({n:"y", x:n[0]*50+25, y:n[1]*50+27 + (behind ? -5 : 0), z:n[2]*50+4 + (behind ? 10 : 0)});
         
         // Make the body move 5 steps forward (with a bit of delay for the steps 3-5 to animate the movement)
         move_body();
@@ -211,18 +211,18 @@ move_snake = () => {
         setTimeout(move_body, 90);
         setTimeout(gravity, 120);
         
-        // Rotate head's inner decoration (eyes, tongue), but not the whole head because it contains the head circle that must always face the c
-        //C.move({n:"h5", rz:head_angle});
+        // Rotate B's inner decoration (eyes, tongue), but not the whole B because it contains the B circle that must always face the c
+        //C.move({n:"h5", rz:B_angle});
         
         // Block snake moves for 200ms
-        halt = 1;
+        a = 1;
         setTimeout(()=>{
-          halt = 0;
+          a = 0;
           portaling = 0;
           n = 0;
         }, 200);
         
-        // Call c() to update the sprites in the scene
+        // Call c() to update the sprites in the s
         C.c();
         check_wall();
         check_p();
@@ -238,7 +238,7 @@ move_body = () => {
   // Target position
   var pos = S[snake_length * 5 + body_moves];
   
-  // Create a new body part close to the head
+  // Create a new body part close to the B
   if(pos)C.plane({g:"sb",n:"body"+(snake_length*5+body_moves),x:pos[0]*50+25,y:pos[1]*50+25,w:30,h:30,z:pos[2]*50+25,rx:-45,ry:5,css:"body circle " + (body_moves%2 ? "odd" : "")});
   
   // Remove older part after the tail
@@ -261,14 +261,14 @@ move_body_back = () => {
   C.plane({g:"sb",n:"body"+body_moves,x:pos[0]*50+25,y:pos[1]*50+25,w:30,h:30,z:pos[2]*50+25,rx:-
   45,ry:5,css:"body circle " + (body_moves%2 ? "odd" : ""),i:"afterBegin"});
   
-  // Remove old body part close to the head
+  // Remove old body part close to the B
   C.$("body" + (snake_length * 5 + body_moves)).remove();
   
   // Cancel the last saved position, angle, modulo angle
   S.pop();
-  head_portal.pop();
-  head_angles.pop();
-  head_angles_modulo.pop();
+  B_portal.pop();
+  B_angles.pop();
+  B_angles_modulo.pop();
   
   // Optional: toggle colors
   // b.classList.toggle("toggle"); 
@@ -286,16 +286,16 @@ go_back = () => {
     
     // Retrieve previous position, angle and angle modulo (to make them the current ones)
     hp = S[S.length - 5 - 1];
-    head_angle = head_angles[head_angles.length - 5 - 1];
-    head_angle_modulo = head_angles_modulo[head_angles.length - 5 - 1];
+    B_angle = B_angles[B_angles.length - 5 - 1];
+    B_angle_modulo = B_angles_modulo[B_angles.length - 5 - 1];
     
-    // Move head
-    C.move({n:"head", x:hp[0]*50+25, y:hp[1]*50+27 + (behind ? -5 : 0), z:hp[2]*50+4 + (behind ? 10 : 0)});
+    // Move B
+    C.move({n:"y", x:hp[0]*50+25, y:hp[1]*50+27 + (behind ? -5 : 0), z:hp[2]*50+4 + (behind ? 10 : 0)});
     
-    // Rotate head decoration (eyes, tongue)
-    C.move({n:"h5", rz:head_angle});
+    // Rotate B decoration (eyes, tongue)
+    C.move({n:"h5", rz:B_angle});
     
-    // Make the body go back 1/5th of a step, at 40ms intervals (matching the head's transition duration)
+    // Make the body go back 1/5th of a step, at 40ms intervals (matching the B's transition duration)
     move_body_back();
     setTimeout(move_body_back, 40);
     setTimeout(move_body_back, 80);
@@ -303,9 +303,9 @@ go_back = () => {
     setTimeout(move_body_back, 160);
     
     // No more moves for 200ms
-    halt = 1;
+    a = 1;
     setTimeout(()=>{
-      halt = 0
+      a = 0
       check_wall();
       check_p();
     }, 200);
@@ -319,10 +319,10 @@ check_wall = () => {
   high = 0;
   var pos = S[S.length - 1];
   
-  // Snake is "on wall" if there's a wall and head is inbounds and Y == 0
+  // Snake is "on wall" if there's a wall and B is inbounds and Y == 0
   if(W > 0 && W < 4 && wall && pos[1] == 0 && pos[0] >= 0 && pos[0] < w){
     on_wall = 1;
-    C.move({n:"head",y:35});
+    C.move({n:"y",y:35});
     b.classList.add("on_wall");
     C.move({n:"h4",rx:hp[2] > 0 ? -90 : -45});
     
@@ -330,11 +330,11 @@ check_wall = () => {
     if(pos[2] > 0 && W < 4){
       high = 1;
       b.classList.add("high");
-      C.c({rx:camrx=(W==1&&p==33)?30:((W==2&&p==30)||(W==3&&p==25))?50:70,y:0});
+      C.c({rx:rx=(W==1&&p==33)?30:((W==2&&p==30)||(W==3&&p==25))?50:70,y:0});
     }
     else {
       b.classList.remove("high");
-      C.c({rx:camrx=((W==2&&p==30)||(W==3&&p==25))?50:30,y:h*10});
+      C.c({rx:rx=((W==2&&p==30)||(W==3&&p==25))?50:30,y:h*10});
     }
   }
   
@@ -342,14 +342,14 @@ check_wall = () => {
   else if(W > 0 && wall && pos[1] < 0 && pos[0] >= -1 && pos[0] < w + 1){
     behind = 1;
     b.classList.add("behind");
-    C.c({rx:camrx=-8,y:-h*5+20});
+    C.c({rx:rx=-8,y:-h*5+20});
   }
   
   else {
     b.classList.remove("on_wall");
     b.classList.remove("behind");
     C.move({n:"h4",rx:0});
-    if(W > 0) C.c({rx:camrx=((W==2&&p==30)||(W==3&&p==25))?50:30,y:h*10});
+    if(W > 0) C.c({rx:rx=((W==2&&p==30)||(W==3&&p==25))?50:30,y:h*10});
   }
 }
 
@@ -399,25 +399,25 @@ move_left = () => {
       }
     }
   
-    // Rotate right if the snake's head is facing right
-    if(head_angle_modulo == 0){ head_angle += 90; head_angle_modulo += 90; }
+    // Rotate right if the snake's B is facing right
+    if(B_angle_modulo == 0){ B_angle += 90; B_angle_modulo += 90; }
     
-    // Rotate left if the snake's head is facing left
-    else if(head_angle_modulo == 180){ head_angle -= 90; head_angle_modulo -= 90; }
+    // Rotate left if the snake's B is facing left
+    else if(B_angle_modulo == 180){ B_angle -= 90; B_angle_modulo -= 90; }
     
-    // Advance the snake 5 steps on the front, save the positions and angles of the head at each step
+    // Advance the snake 5 steps on the front, save the positions and angles of the B at each step
     S.push([hp[0] - 1/5, hp[1], hp[2]]);
-    head_angles.push(head_angle);
+    B_angles.push(B_angle);
     
     for(i = 2; i <= 5; i++){
       S.push([target_position[0] + 1 - i/5, target_position[1], target_position[2] + ((i < 4 && mirroring) ? -99 : 0)]);
-      head_angles.push(head_angle);
+      B_angles.push(B_angle);
     }
     
     // Next position (if portaling)
     go_on_n(target_position);
     
-    // Return new head position
+    // Return new B position
     return target_position;
   }
   
@@ -464,26 +464,26 @@ move_right = () => {
       }
     }
   
-    // Rotate right if the snake's head is facing right
-    if(head_angle_modulo == 180){ head_angle += 90; head_angle_modulo += 90; }
+    // Rotate right if the snake's B is facing right
+    if(B_angle_modulo == 180){ B_angle += 90; B_angle_modulo += 90; }
     
-    // Rotate left if the snake's head is facing left
-    else if(head_angle_modulo == 0){ head_angle -= 90; head_angle_modulo -= 90; }
+    // Rotate left if the snake's B is facing left
+    else if(B_angle_modulo == 0){ B_angle -= 90; B_angle_modulo -= 90; }
     
-    // Advance the snake 5 steps on the front, save the positions and angles of the head at each step
+    // Advance the snake 5 steps on the front, save the positions and angles of the B at each step
     S.push([hp[0] + 1/5, hp[1], hp[2]]);
-    head_angles.push(head_angle);
+    B_angles.push(B_angle);
     
     for(i = 2; i <= 5; i++){
       S.push([target_position[0] - 1 + i/5, target_position[1], target_position[2] + ((i < 4 && mirroring) ? -99 : 0)]);
-      head_angles.push(head_angle);
+      B_angles.push(B_angle);
     }
     if(W > 0) C.c({x:0});
     
     // Next position (if portaling)
     go_on_n(target_position);
     
-    // Return new head position
+    // Return new B position
     return target_position;
   }
   
@@ -524,25 +524,25 @@ move_up = () => {
       }
     }
   
-    // Rotate right if the snake's head is facing right
-    if(W < 4 && head_angle_modulo == 90){ head_angle += 90; head_angle_modulo += 90; }
+    // Rotate right if the snake's B is facing right
+    if(W < 4 && B_angle_modulo == 90){ B_angle += 90; B_angle_modulo += 90; }
     
-    // Rotate left if the snake's head is facing left
-    else if(W < 4 && head_angle_modulo == 270){ head_angle -= 90; head_angle_modulo -= 90; }
+    // Rotate left if the snake's B is facing left
+    else if(W < 4 && B_angle_modulo == 270){ B_angle -= 90; B_angle_modulo -= 90; }
     
-    // Advance the snake 5 steps on the front, save the positions and angles of the head at each step
+    // Advance the snake 5 steps on the front, save the positions and angles of the B at each step
     S.push([hp[0], hp[1], hp[2] + 1/5]);
-    head_angles.push(head_angle);
+    B_angles.push(B_angle);
     
     for(i = 2; i <= 5; i++){
       S.push([target_position[0], target_position[1], target_position[2] - 1 + i/5]);
-      head_angles.push(head_angle);
+      B_angles.push(B_angle);
     }
     
     // Next position (if portaling)
     go_on_n(target_position);
     
-    // Return new head position
+    // Return new B position
     return target_position;
   }
   
@@ -584,25 +584,25 @@ move_down = () => {
       }
     }
   
-    // Rotate right if the snake's head is facing right
-    if(W < 4 && head_angle_modulo == 270){ head_angle += 90; head_angle_modulo += 90; }
+    // Rotate right if the snake's B is facing right
+    if(W < 4 && B_angle_modulo == 270){ B_angle += 90; B_angle_modulo += 90; }
     
-    // Rotate left if the snake's head is facing left
-    else if(W < 4 && head_angle_modulo == 90){ head_angle -= 90; head_angle_modulo -= 90; }
+    // Rotate left if the snake's B is facing left
+    else if(W < 4 && B_angle_modulo == 90){ B_angle -= 90; B_angle_modulo -= 90; }
     
-    // Advance the snake 5 steps on the front, save the positions and angles of the head at each step
+    // Advance the snake 5 steps on the front, save the positions and angles of the B at each step
     S.push([hp[0], hp[1], hp[2] - 1/5]);
-    head_angles.push(head_angle);
+    B_angles.push(B_angle);
     
     for(i = 2; i <= 5; i++){
       S.push([target_position[0], target_position[1], target_position[2] + 1 - i/5]);
-      head_angles.push(head_angle);
+      B_angles.push(B_angle);
     }
     
     // Next position (if portaling)
     go_on_n(target_position);
     
-    // Return new head position
+    // Return new B position
     return target_position;
   }
   
@@ -654,25 +654,25 @@ move_front = () => {
       }
     }
   
-    // Rotate right if the snake's head is facing right
-    if(head_angle_modulo == 270){ head_angle += 90; head_angle_modulo += 90; }
+    // Rotate right if the snake's B is facing right
+    if(B_angle_modulo == 270){ B_angle += 90; B_angle_modulo += 90; }
     
-    // Rotate left if the snake's head is facing left
-    else if(head_angle_modulo == 90){ head_angle -= 90; head_angle_modulo -= 90; }
+    // Rotate left if the snake's B is facing left
+    else if(B_angle_modulo == 90){ B_angle -= 90; B_angle_modulo -= 90; }
     
-    // Advance the snake 5 steps on the front, save the positions and angles of the head at each step
+    // Advance the snake 5 steps on the front, save the positions and angles of the B at each step
     S.push([hp[0], hp[1] + 1/5, hp[2]]);
-    head_angles.push(head_angle);
+    B_angles.push(B_angle);
     
     for(i = 2; i <= 5; i++){
       S.push([target_position[0], target_position[1] - 1 + i/5, target_position[2] + ((i < 4 && mirroring) ? -99 : 0)]);
-      head_angles.push(head_angle);
+      B_angles.push(B_angle);
     }
     
     // Next position (if portaling)
     go_on_n(target_position);
     
-    // Return new head position
+    // Return new B position
     return target_position;
   }
   
@@ -716,25 +716,25 @@ move_back = () => {
       }
     }
 
-    // Rotate right if the snake's head is facing right
-    if(head_angle_modulo == 90){ head_angle += 90; head_angle_modulo += 90; }
+    // Rotate right if the snake's B is facing right
+    if(B_angle_modulo == 90){ B_angle += 90; B_angle_modulo += 90; }
     
-    // Rotate left if the snake's head is facing left
-    else if(head_angle_modulo == 270){ head_angle -= 90; head_angle_modulo -= 90; }
+    // Rotate left if the snake's B is facing left
+    else if(B_angle_modulo == 270){ B_angle -= 90; B_angle_modulo -= 90; }
     
-    // Advance the snake 5 steps on the front, save the positions and angles of the head at each step
+    // Advance the snake 5 steps on the front, save the positions and angles of the B at each step
     S.push([hp[0], hp[1] - 1/5, hp[2]]);
-    head_angles.push(head_angle);
+    B_angles.push(B_angle);
     
     for(i = 2; i <= 5; i++){
       S.push([target_position[0], target_position[1] + 1 - i/5, target_position[2] + ((i < 4 && mirroring) ? -99 : 0)]);
-      head_angles.push(head_angle);
+      B_angles.push(B_angle);
     }
     
     // Next position (if portaling)
     go_on_n(target_position);
     
-    // Return new head position
+    // Return new B position
     return target_position;
   }
   
@@ -851,11 +851,11 @@ go_on_n = (target_position) => {
       S.push([n[0], n[1] - 1/5, n[2]]);
       S.push([n[0], n[1], n[2]]);
     }
-    head_angles.push(head_angle);
-    head_angles.push(head_angle);
-    head_angles.push(head_angle);
-    head_angles.push(head_angle);
-    head_angles.push(head_angle);
+    B_angles.push(B_angle);
+    B_angles.push(B_angle);
+    B_angles.push(B_angle);
+    B_angles.push(B_angle);
+    B_angles.push(B_angle);
   }
 }
 
@@ -879,7 +879,7 @@ gravity = () => {
         document.querySelectorAll(".body").forEach(a=>{
           C.move({n:a.id, z: +(a.style.transform.match(/slateZ\((-?\d+)px/)[1])-50});
         });
-        C.move({n:"head", z: +(head.style.transform.match(/slateZ\((\d+)px/)[1])-50});
+        C.move({n:"y", z: +(y.style.transform.match(/slateZ\((\d+)px/)[1])-50});
         flying = 0;
       }
     //}

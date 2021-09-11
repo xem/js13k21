@@ -2,9 +2,9 @@ C = {
   camX: 0,
   camY: 0,
   camZ: 0,
-  camRX: 0,
+  rx: 0,
   camRY: 0,
-  camRZ: 0,
+  rz: 0,
   sprite_count: 0,
   sprites: [],
   plane_count: 0,
@@ -13,8 +13,8 @@ C = {
   options: {},
   $: t => self[t],
 
-  reset: t => {
-    C.sprite_count = C.plane_count = C.cube_count = C.camX = C.camY = C.camZ = C.camRX = C.camRY = C.camRZ = 0;
+  R: t => {
+    C.sprite_count = C.plane_count = C.cube_count = C.camX = C.camY = C.camZ = C.rx = C.camRY = C.rz = 0;
     C.sprites = [];
     C.planes = [];
     C.cubes = [];
@@ -24,9 +24,9 @@ C = {
   // Initialize an object's properties
   init: t => {
     t.css||(t.css=""),
-    t.html||(t.html=""),
-    t.htmlside||(t.htmlside=""),
-    t.g||(t.g="scene"),
+    t.H||(t.H=""),
+    t.Hside||(t.Hside=""),
+    t.g||(t.g="s"),
     t.o||(t.o="center"),
     t.o=="top left"&&(t.x+=t.w/2,t.y+=t.h/2),
     t.o=="bottom"&&(t.y-=t.h/2),
@@ -57,7 +57,7 @@ C = {
     //console.log("plane")
     t.n||(t.n=`p${C.plane_count++}`),
     C.init(t),
-    C.$(t.g).insertAdjacentHTML(t.i,`<div id="${t.n}"class="plane ${t.css}"style="position:absolute;width:${t.w}px;height:${t.h}px;transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`)//,
+    C.$(t.g).insertAdjacentHTML(t.i,`<div id="${t.n}"class="plane ${t.css}"style="position:absolute;width:${t.w}px;height:${t.h}px;transform-origin:${t.o};transform:${C.tr(t)}">${t.H}`)//,
     //C.c()
   },
 
@@ -65,7 +65,7 @@ C = {
   sprite: t => {
     t.n||(t.n=`s${C.sprite_count++}`),
     C.init(t),
-    C.$(t.g).insertAdjacentHTML(t.i,`<div id="${t.n}"class="sprite ${t.css}"style="position:absolute;width:${t.w}px;height:${t.h}px;transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`),
+    C.$(t.g).insertAdjacentHTML(t.i,`<div id="${t.n}"class="sprite ${t.css}"style="position:absolute;width:${t.w}px;height:${t.h}px;transform-origin:${t.o};transform:${C.tr(t)}">${t.H}`),
     C.sprites.push(t.n),
     C.c()
   },
@@ -76,19 +76,12 @@ C = {
     C.init(t),
     //console.log(t);
     C.group(t),
-    C.plane({g:t.n,y:t.d/2,w:t.d,h:t.h,b:t.b1||t.b,rx:-90,ry:-90,o:"bottom",css:"cubeleft",html:t.htmlside}),
-    C.plane({g:t.n,x:t.w,y:t.d/2,w:t.d,h:t.h,b:t.b2||t.b,rx:-90,ry:90,o:"bottom",css:"cuberight",html:t.htmlside}),
-    C.plane({g:t.n,x:t.w/2,y:t.d,w:t.w,h:t.h,b:t.b1||t.b,rx:-90,o:"bottom",css:"cubefront",html:t.html}),
-    C.plane({g:t.n,x:t.w/2,y:0,w:t.w,h:t.h,b:t.b2||t.b,rx:-90,o:"bottom",css:"cubeback",html:t.html}),
-    C.plane({g:t.n,x:t.w/2,y:t.d/2,z:t.h,w:t.w,h:t.d,b:t.b,css:"cubetop",html:t.html})
+    C.plane({g:t.n,y:t.d/2,w:t.d,h:t.h,b:t.b1||t.b,rx:-90,ry:-90,o:"bottom",css:"cubeleft",H:t.Hside}),
+    C.plane({g:t.n,x:t.w,y:t.d/2,w:t.d,h:t.h,b:t.b2||t.b,rx:-90,ry:90,o:"bottom",css:"cuberight",H:t.Hside}),
+    C.plane({g:t.n,x:t.w/2,y:t.d,w:t.w,h:t.h,b:t.b1||t.b,rx:-90,o:"bottom",css:"cubefront",H:t.H}),
+    C.plane({g:t.n,x:t.w/2,y:0,w:t.w,h:t.h,b:t.b2||t.b,rx:-90,o:"bottom",css:"cubeback",H:t.H}),
+    C.plane({g:t.n,x:t.w/2,y:t.d/2,z:t.h,w:t.w,h:t.d,b:t.b,css:"cubetop",H:t.H})
   },
-
-  // Pyramid
-  /*pyramid: t => {
-    t.n||(t.n=`py${C.pyramid_count++}`),
-    C.init(t),
-    C.group({n:t.n,g:t.g,x:t.x,y:t.y,z:t.z,w:100,d:100,rx:t.rx,ry:t.ry,rz:t.rz,css:t.css,html:"<div class=pyleft></div><div class=pyright></div><div class=pyfront>"})
-  },*/
 
   // Move the camera
   c: t => {
@@ -96,17 +89,17 @@ C = {
     t&&(t.x||0===t.x)&&(C.camX=t.x),
     t&&(t.y||0===t.y)&&(C.camY=t.y),
     t&&(t.z||0===t.z)&&(C.camZ=t.z),
-    t&&(t.rx||0===t.rx)&&(C.camRX=t.rx),
+    t&&(t.rx||0===t.rx)&&(C.rx=t.rx),
     t&&(t.ry||0===t.ry)&&(C.camRY=t.ry),
-    t&&(t.rz||0===t.rz)&&(C.camRZ=t.rz),
+    t&&(t.rz||0===t.rz)&&(C.rz=t.rz),
     C.camX+=(Math.random()-.5)/1e3,
-    scene.style.transform=`translateX(${-C.camX}px)translateY(${-C.camY}px)translateZ(${-C.camZ}px)rotateX(${C.camRX}deg)rotateY(${C.camRY}deg)rotateZ(${C.camRZ}deg)`;
+    s.style.transform=`translateX(${-C.camX}px)translateY(${-C.camY}px)translateZ(${-C.camZ}px)rotateX(${C.rx}deg)rotateY(${C.camRY}deg)rotateZ(${C.rz}deg)`;
     for(var r in C.sprites){
       var n=C.$(C.sprites[r]);
       if(n){
         o=n.style.transform.replace(/ *rotate.*\(.*?deg\)/g,"");
-        rz = -C.camRZ;
-        rx = -C.camRX;
+        rz = -C.rz;
+        rx = -C.rx;
         if(rx > -15) rx = -15;
         n.style.transform=o+`rotateZ(${rz}deg)rotateX(${rx}deg)`
       }
@@ -133,6 +126,6 @@ C = {
   },
 
   // CSS3D transform string
-  tr: t => `translateX(-50%)translateY(-50%) translateX(${t.x}px)translateY(${t.y}px)translateZ(${t.z}px) rotateX(${t.rx}deg)rotateY(${t.ry}deg)rotateZ(${t.rz}deg) scaleX(${t.sx})scaleY(${t.sy})scaleZ(${t.sz})`
+  tr: t => `translateX(-50%)translateY(-50%) translateX(${t.x}px)translateY(${t.y}px)translateZ(${t.z}px)rotateX(${t.rx}deg)rotateY(${t.ry}deg)rotateZ(${t.rz}deg)scaleX(${t.sx})scaleY(${t.sy})scaleZ(${t.sz})`
 
 }

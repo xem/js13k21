@@ -5,80 +5,80 @@ draw_screen = () => {
   if(location.hash && location.hash.length > 1){
     W = 1;
     p = 99;
-    scene.innerHTML = "";
+    s.innerHTML = "";
     custom = eval(decodeURI(location.hash.slice(1)));
     if(custom) b.className = "p w" + (W= custom[10]);
     draw_p();
     return;
   }
   
-  if(coins && !custom) t.innerHTML = "<span class=emoji>🪙</span> x " + coins;
+  if(coins && !custom) t.innerHTML = "<span class=e>🪙</span> x " + coins;
   else t.innerHTML = "";
   
   // HTML string
-  var i, j, html = "";
+  var i, j, H = "";
   
   // UI
-  C.reset();
+  C.R();
   pn.innerHTML = "";
   e.innerHTML = "";
   
   // Add "menu" and current world to body's class
   b.className = "";
-  b.classList.add("menu");
+  b.classList.add("z");
   b.classList.add("w" + W);
-  if(mobile) b.classList.add("m");
+  if(O) b.classList.add("x");
   
   // Fade in
   fade.style.display = "block";
   if(p == 0) {
-    setTimeout(()=>{b.classList.add("fadein");},(W== -3 ? 2000 : 500) );
+    setTimeout(()=>{b.classList.add("f");},(W== -3 ? 2000 : 500) );
     setTimeout(()=>{fade.style.display = "none";},(W== -3 ? 1500 : 1000) );
   }
   
-  html = "";
-  scene.innerHTML = "";
+  H = "";
+  s.innerHTML = "";
   
   // World 0: main menu
   if(W == 0){
     p = 0;
-    html = "<div class=main><h1>LOSSST</h1><b>A Snake in Space</b><p><a onclick='cont();fadeout()'><h2>"+(save[1][1]?coins>164?"":"Continue":"PLAY")+"</h2></a><p><a onclick=W=-1;fadeout()>Select puzzle</a><p><a onclick=W=-2;fadeout()>Bonus</a><p class='emoji hide'>🌼";
-    scene.innerHTML = html;
+    H = "<div class=m><h1>LOSSST</h1><b>A Snake in Space</b><p><a onclick='cont();fadeout()'><h2>"+(save[1][1]?coins>164?"":"Continue":"PLAY")+"</h2></a><p><a onclick=W=-1;fadeout()>Select puzzle</a><p><a onclick=W=-2;fadeout()>Bonus</a><p class='emoji hide'>🌼";
+    s.innerHTML = H;
   }
   
   // World -1: levels
   else if(W == -1){
-    html = "<div class='main levels'><h1>PUZZLES</h1>";
+    H = "<div class='m l'><h1>PUZZLES</h1>";
     for(var i in data){
       if(i != 0){
-        if(i == 4) html += "<h2>The Moon!</h2>";
-        else html += "<h2>World " + i + "</h2>";
+        if(i == 4) H += "<h2>The Moon!</h2>";
+        else H += "<h2>World " + i + "</h2>";
         if(i==1){
-          html += "<span style='width:61vh' onclick='W=-3;p=0;fadeout()'>Intro</span><br>";
+          H += "<span style='width:61vh' onclick='W=-3;p=0;fadeout()'>Intro</span><br>";
         }
         if(coins < [0,0,25,50,100][i]){
-          html += [0,0,25,50,100][i] + " coins to unlock";
+          H += [0,0,25,50,100][i] + " coins to unlock";
         }
         else {
           if(i==4){
-          html += "<span style='width:61vh' onclick='W=-4;fadeout()'>Take off!</span><br>";
+          H += "<span style='width:61vh' onclick='W=-4;fadeout()'>Take off!</span><br>";
         }
           for(j in data[i]){
             //if(i==1)console.log(save[i][j], data[i][j]);
             if(j != 0){
-              html += "<span class='"+ (save[i][j] ? "won" : "") + (save[i][j] && save[i][j] <= data[i][j][5] ? " par" : "") + "' onclick='W="+i+";p="+j+";lW=9;fadeout()'>" + j + "</span>";
+              H += "<span class='"+ (save[i][j] ? "won" : "") + (save[i][j] && save[i][j] <= data[i][j][5] ? " par" : "") + "' onclick='W="+i+";p="+j+";lW=9;fadeout()'>" + j + "</span>";
             }
           }
         }
       }
     }
-    scene.innerHTML = html;
+    s.innerHTML = H;
   }
   
   // World -2: Bonus
   else if(W == -2){
-    html = `<div class='main bonus'><h1>BONUS</h1><p><a onclick='document.monetization&&document.monetization.state=="started"?open("//xem.github.io/js13k21/editor"):(confirm("Log on Coil?")&&open("//coil.com/login"))'>Puzzle editor</a><span>(WebMonetization bonus)<p><a href=//xem.github.io/js13k21/FLUX>Snake editor</a><span>(FLUX bonus)<p><a href=//xem.github.io/js13k21/IPFS>Leaderboards</a><span>(IPFS bonus)<p><a onclick='open("//xem.github.io/js13k21/NEAR")'>Shop</a><span>(NEAR bonus)<p><a onclick='if(confirm("Sure?"))delete localStorage.lossst,location=location'>Delete save</a><p><a onclick='location="//xem.github.io/js13k21/share#"+JSON.stringify(save)'>Share</a><p><a href=//xem.github.io/articles/js13k21.html>Making-of`;
-    scene.innerHTML = html;
+    H = `<div class='m o'><h1>BONUS</h1><p><a onclick='document.monetization&&document.monetization.state=="started"?open("//xem.github.io/js13k21/editor"):(confirm("Log on Coil?")&&open("//coil.com/login"))'>Puzzle editor</a><span>(WebMonetization bonus)<p><a href=//xem.github.io/js13k21/FLUX>Snake editor</a><span>(FLUX bonus)<p><a href=//xem.github.io/js13k21/IPFS>Leaderboards</a><span>(IPFS bonus)<p><a onclick='open("//xem.github.io/js13k21/NEAR")'>Shop</a><span>(NEAR bonus)<p><a onclick='if(confirm("Sure?"))delete localStorage.lossst,location=location'>Delete save</a><p><a onclick='location="//xem.github.io/js13k21/share#"+JSON.stringify(save)'>Share</a><p><a href=//xem.github.io/articles/js13k21.H>Making-of`;
+    s.innerHTML = H;
   }
   
   // World -3/-4: Intro
@@ -86,9 +86,9 @@ draw_screen = () => {
     intro();
   }
   
-  // Else: no menu, draw current p scene
+  // Else: no menu, draw current p s
   else {
-    b.classList.remove("menu");
+    b.classList.remove("z");
     b.classList.add("p");
     b.classList.add("p" + p);
     draw_p();
@@ -184,7 +184,7 @@ fadeout = (text) => {
       }
     }
   }
-  setTimeout(()=>{b.classList.remove("fadein")},100);
+  setTimeout(()=>{b.classList.remove("f")},100);
   if(text){
     if(!secret) e.innerHTML = text;
     else if(lW== 3){
@@ -218,39 +218,41 @@ intro = () => {
   //console.log(world, p);
   
   // UI
-  C.reset();
-  if(W== -3) song = 0;
-  e.innerHTML = "js13kGames<br>e";
+  C.R();
+  
+  if(W == -3) song = 0;
+  e.innerHTML = "js13kGames<br>presents";
   
   play_note(1);
   play_note(1);
   play_note(1);
   clearInterval(I);
   
-  if(W== -3)
+  if(W == -3)
     C.c({x:-200,y:50,z:-200,rx:50,rz:30});
   else 
     C.c({x:-200,y:50,z:200,rx:50,rz:0});
   
-  // Scene
-  camrx = 30;
-  camrz = 0;
+  // s
+  rx = 30;
+  rz = 0;
   C.plane({n:"fd",w:1500,h:1500,css:"floor circle"});
   
   setTimeout(()=>{
     b.classList.add("intro") // Hide back button, enable 5s transitions
     setTimeout(()=>{fd.style.height = '1450px'},100); // Fx fix
+    clearInterval(I);
     I = setInterval(play_next_note,210);
   }, 100);
   
   snake_length = 2; // without head  
   S = [[-12,2,0]];
   hp = [];
-  head_angles = [270];
-  head_angles_modulo = [270];
-  head_angle = 270;
-  head_angle_modulo = 270;
-  head_portal = [0];
+  B_angles = [270];
+  B_angles_modulo = [270];
+  B_angle = 270;
+  B_angle_modulo = 270;
+  B_portal = [0];
   body_moves = 0;
   on_wall = 0;
   high = 0;
@@ -259,7 +261,7 @@ intro = () => {
   trees = [];
   flowers = [];
   animals = [];
-  halt = 0;
+  a = 0;
   win = 0;
   w = 9;
   h = 9;
@@ -269,13 +271,13 @@ intro = () => {
   C.group({n:"pf"});
   
   // Snake's head
-  C.group({g:"pf",n:"head",x:S[0][0]*50+25,y:S[0][1]*50+25,z:4});
-  C.group({g:"head",n:"h2"})
-  C.sprite({g:"h2",n:"h3",x:0,y:0,w:50,h:50,z:25,css:"head circle"});
+  C.group({g:"pf",n:"y",x:S[0][0]*50+25,y:S[0][1]*50+25,z:4});
+  C.group({g:"y",n:"h2"})
+  C.sprite({g:"h2",n:"h3",x:0,y:0,w:50,h:50,z:25,css:"y circle"});
   C.group({g:"h2",n:"h4",w:50,h:50,z:25});
-  C.group({g:"h4",n:"h5",w:50,h:50,x:25,y:25,rz:head_angle});
-  C.plane({g:"h5",x:25,y:15,z:27,w:30,h:15,rx:-20,css:"eyes emoji",html:"👀"});
-  C.plane({g:"h5",x:25,y:53,z:3,w:13,h:20,rx:180,css:"tongue",html:"Y"});
+  C.group({g:"h4",n:"h5",w:50,h:50,x:25,y:25,rz:B_angle});
+  C.plane({g:"h5",x:25,y:15,z:27,w:30,h:15,rx:-20,css:"eyes e",H:"👀"});
+  C.plane({g:"h5",x:25,y:53,z:3,w:13,h:20,rx:180,css:"tongue",H:"Y"});
   
   // Snake's body
   hp = S[0];
@@ -286,46 +288,48 @@ intro = () => {
   }
   
   // Flowers
-  if(W== -3){
+  if(W == -3){
     for(i = 0; i < 15; i++){
       x = ~~(Math.random() * 15) - 6;
-      y = ~~(Math.random() * 15) - 6;
-      if(!flowers.find(a => a[0] > x-2 && a[0] < x+2 && a[1] > y-2 && a[1] < y+2) && (y < -3 || y > 3)){
-        flowers.push([x,y]);
+      Y = ~~(Math.random() * 15) - 6;
+      if(!flowers.find(a => a[0] > x-2 && a[0] < x+2 && a[1] > y-2 && a[1] < Y+2) && (Y < -3 || Y > 3)){
+        flowers.push([x,Y]);
         //console.log(x, y);
-        C.plane({g:"pf",w:40,h:34,z:5,x:x*50,y:y*50,z:1,rx:0,o:"bottom",css:"emoji flower",html:"🌼"});
+        C.plane({g:"pf",w:40,h:34,z:5,x:x*50,y:Y*50,z:1,rx:0,o:"bottom",css:"e flower",H:"🌼"});
       }
     }
   }
   
   // Stars
-  C.plane({w:5000,h:3000,x:-1000,z:1000,rx:45,css:"stars",html:svg[0]});
-  C.plane({x:-100,y:W<-3?500:0,z:W<-3?2000:900,rx:45,rz:-70,sx:2,sy:2,sz:2,css:"emoji moon",html:"🌙"});
+  C.plane({w:5000,h:3000,x:-1000,z:1000,rx:45,css:"stars",H:svg[0]});
+  C.plane({x:-100,y:W<-3?500:0,z:W<-3?2000:900,rx:45,rz:-70,sx:2,sy:2,sz:2,css:"e moon",H:"🌙"});
 
+  console.log(y);
+  
   // Move right 7 times (world 1) / 10 times (world 4)
-  for(i = 0; i < (7 + ((W== -3) ? 0 : 3)); i++){
-    setTimeout(()=>{r=1;halt=0;move_snake(b);r=0;}, 300 + i * 250);
+  for(i = 0; i < (7 + ((W == -3) ? 0 : 3)); i++){
+    setTimeout(()=>{r=1;a=0;move_snake(b);r=0;}, 300 + i * 250);
   }
     
   // Animation (world 1):
-  if(W== -3){
+  if(W == -3){
     
     // Sign
     C.plane({x:300,y:220,w:5,h:105,z:55,rx:-90,ry:-35,css:"sign"});
-    C.plane({x:300,y:221,w:100,h:60,z:72,rx:-90,ry:-35,css:"sign",html:"SALE<p><span class=emoji>🪙</span> x 100"});
+    C.plane({x:300,y:221,w:100,h:60,z:72,rx:-90,ry:-35,css:"sign",H:"SALE<p><span class=e>🪙</span> x 100"});
     
     // Look up
     setTimeout(()=>C.move({n:"h4",z:28,ry:-45}), 3000);
     setTimeout(()=>C.c({rx:120, z:-100,y:-300}),3500);
     
-    // js13k e
+    // js13k presents
     setTimeout(()=>e.style.opacity = 1, 6000);
     setTimeout(()=>e.style.opacity = 0, 9000);
     
     // Look down
     setTimeout(()=>{
       C.c({x:-200,y:50,z:-200,rx:50,rz:30});
-      C.plane({w:100,h:100,x:397,y:145,z:72,html:svg[1],rx:-90,ry:-22,sx:4,sy:4.5,sz:4,css:"rocket"});
+      C.plane({w:100,h:100,x:397,y:145,z:72,H:svg[1],rx:-90,ry:-22,sx:4,sy:4.5,sz:4,css:"rocket"});
     }, 10200);
     
     setTimeout(()=>{
@@ -333,8 +337,8 @@ intro = () => {
     }, 14000);
     
     // Move right
-    setTimeout(()=>{r=1;halt=0;move_snake(b);r=0}, 15500);
-    setTimeout(()=>{r=1;halt=0;move_snake(b);r=0}, 15700);
+    setTimeout(()=>{r=1;a=0;move_snake(b);r=0}, 15500);
+    setTimeout(()=>{r=1;a=0;move_snake(b);r=0}, 15700);
     
     // Blink
     setTimeout(()=>{
@@ -376,7 +380,7 @@ intro = () => {
   
   // World 4
   else {
-    C.plane({n:"rocket",w:100,h:100,x:-150,y:200,z:72,html:svg[1],rx:-90,sx:4,sy:4.5,sz:4,css:"rocket"});
+    C.plane({n:"rocket",w:100,h:100,x:-150,y:200,z:72,H:svg[1],rx:-90,sx:4,sy:4.5,sz:4,css:"rocket"});
     
     // Remove snake
     // Play sound

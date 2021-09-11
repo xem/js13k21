@@ -1,33 +1,33 @@
-@font-face { font-family: emoji; src: url(//xem.github.io/unicode13/Twemoji.ttf) }
+@font-face { font-family: e; src: url(//xem.github.io/unicode13/Twemoji.ttf) }
 * { margin: 0; padding: 0; box-sizing: border-box; transform-style: preserve-3d; cursor: pointer; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; pointer-events: none; -webkit-tap-highlight-color: transparent; }
 html, body { height: 100vh; overflow: hidden; position: relative; }
 body { background: #000; overscroll-behavior: contain; font: 14px calibri,arial,sans-serif; scrollbar-width: thin; }
 ::-webkit-scrollbar { width: 8px; height: 8px; background: #000; }
 ::-webkit-scrollbar-thumb { background: #666; }
-#scene svg { position: relative; top: -1px; }
+#s svg { position: relative; top: -1px; }
 a { text-decoration: none; color: #fff }
 #b { max-width: 800px; margin: auto; }
 #v { width: 100%; height: 100vh; overflow: hidden; position: relative; perspective: 600px; }
 #v * { transform-style: preserve-3d; box-sizing: border-box }
 #c { width: 0; height: 0; position: absolute; top: 60%; left: 50% }
-.p #scene { transition: transform .5s }
-.instant #scene { transition: none }
+.p #s { transition: transform .5s }
+.i #s { transition: none }
 .circle { border-radius: 50% }
-.emoji { font-family: emoji; }
-#reset { position: absolute; right: 20px; bottom: 0; display: block; }
+.e { font-family: e; }
+#R { position: absolute; right: 20px; bottom: 0; display: block; }
 .dpad { position: fixed; width: 100%; bottom: 45px; left: 10px; z-index: 2; }
 .dpad div { display: none; font-size: 35px; pointer-events: all; margin: 10px; text-align: center; width: 50px; height: 50px; border-radius: 5px; background: linear-gradient(45deg, #ddd, #888); box-shadow: 2px 2px 5px #000; font-weight: bold; padding: 4px 0 0; vertical-align: bottom; }
-.m .dpad div { display: inline-block }
-.up, .dn { visibility: hidden; }
+.x .dpad div { display: inline-block }
+.u, .n { visibility: hidden; }
 @media(hover:hover){
-  .up:hover:before { content: "X"; background: linear-gradient(45deg, #e84, #b51); position: absolute; top: -50px; left: 0; width: 50px; border-radius: 5px; }
-  .dn:hover:before { content: "C"; background: linear-gradient(45deg, #e84, #b51); position: absolute; top: -50px; left: 0; width: 50px; border-radius: 5px; }
-  #reset:hover:before { content: "R"; background: linear-gradient(45deg, #e84, #b51); position: absolute; top: -50px; left: 0; width: 50px; border-radius: 5px; }
+  .u:hover:before { content: "X"; background: linear-gradient(45deg, #e84, #b51); position: absolute; top: -50px; left: 0; width: 50px; border-radius: 5px; }
+  .n:hover:before { content: "C"; background: linear-gradient(45deg, #e84, #b51); position: absolute; top: -50px; left: 0; width: 50px; border-radius: 5px; }
+  #R:hover:before { content: "R"; background: linear-gradient(45deg, #e84, #b51); position: absolute; top: -50px; left: 0; width: 50px; border-radius: 5px; }
 }
-.w4 .up, .w4 .dn { visibility: visible; display: inline-block; }
+.w4 .u, .w4 .n { visibility: visible; display: inline-block; }
 #fade { position: fixed; top: 0; left: 0; width: 105%; height: 105%; z-index: 3; background: #000; transition: opacity .5s, background 5s; }
-.fadein #fade { opacity: 0 }
-#pn, #t, .back { color: #fff; text-shadow: 0 0 10px #000; pointer-events: all; position: absolute; font-size: 30px; width: 50px; height: 50px; z-index: 2; top: 10px; }
-.back { left: 20px; }
+.f #fade { opacity: 0 }
+#pn, #t, .b { color: #fff; text-shadow: 0 0 10px #000; pointer-events: all; position: absolute; font-size: 30px; width: 50px; height: 50px; z-index: 2; top: 10px; }
+.b { left: 20px; }
 #pn { width: 200px; left: 50%; transform: translateX(-50%); text-align: center; }
 #t { width: 150px; right: 20px; text-align: right; }

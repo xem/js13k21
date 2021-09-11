@@ -91,7 +91,7 @@ piano = e => {
 }
 
 play_note = n => {
-  piano(440*1.06**(n - 80));
+  if(n > 32) piano(440*1.06**(n - 80));
 }
 
 play_next_note = () => {

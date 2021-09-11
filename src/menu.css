@@ -1,14 +1,14 @@
-.menu #b { max-width: 500px; border: none; box-shadow: none; height: auto; }
-.menu, .menu * { pointer-events: all }
-.menu .dpad { display: none }
-.w0 .back, .intro .back { display: none }
-.menu { color: #fff; }
-.main { width: 70vh; text-align: center; transform: translateX(-50%)translateY(-50%)rotateX(-40deg); font-size: 40px; text-shadow: 0 -.5vh #888; line-height: 1.8; }
-.w-2 .main { transform: translateX(-50%)translateY(-50%)rotateX(-30deg); }
-.main h1 { font-size: 80px; line-height: 1.4; letter-spacing:-7px;}
-.levels { font-size: 5vh; max-height: 150vh; margin: 10vh 0 0; overflow: auto; padding: 0 0 50vh; transform: translateX(-50%)translateY(-50%)translateY(5vh)translateZ(-30vh)rotateX(-30deg); }
-.levels span { display: inline-block; border: 5px solid #fff; width: 9vh; height: 9vh; margin: 2vh; box-shadow: 0px -4px #888; cursor: pointer; }
-.bonus span { font-size: 20px; line-height: .6; display: block; text-shadow: none; margin: -2vh 0 2vh; }
+.z #b { max-width: 500px; border: none; box-shadow: none; height: auto; }
+.z, .z * { pointer-events: all }
+.z .dpad { display: none }
+.w0 .b, .intro .b { display: none }
+.z { color: #fff; }
+.m { width: 70vh; text-align: center; transform: translateX(-50%)translateY(-50%)rotateX(-40deg); font-size: 40px; text-shadow: 0 -.5vh #888; line-height: 1.8; }
+.w-2 .m { transform: translateX(-50%)translateY(-50%)rotateX(-30deg); }
+.m h1 { font-size: 80px; line-height: 1.4; letter-spacing:-7px;}
+.l { font-size: 5vh; max-height: 150vh; margin: 5vh 0 0; overflow: auto; padding: 0 0 50vh; transform: translateX(-50%)translateY(-50%)translateY(5vh)translateZ(-30vh)rotateX(-30deg); }
+.l span { display: inline-block; border: 5px solid #fff; width: 9vh; height: 9vh; margin: 2vh; box-shadow: 0px -4px #888; cursor: pointer; }
+.o span { font-size: 20px; line-height: .6; display: block; text-shadow: none; margin: -2vh 0 2vh; }
 .w0 h1 { color: #ddd }
 .w0 b { font-size: 30px; line-height: .6; display: block; text-shadow: 2px -2px 2px #000; margin: -35px 0 4vh; color: #ddd; }
 .hide { opacity: .01 }
@@ -16,8 +16,8 @@
 .par { background: #db0 }
 
 /* Intro */
-.intro #scene,.intro .sprite { transition: 5s }
-.intro2 #scene { transition: .5s; }
+.intro #s,.intro .sprite { transition: 5s }
+.intro2 #s { transition: .5s; }
 .moon { font-size: 50px }
 .rocket { font-size: 75px; transition: 10s; }
 .stars svg { width: 100%; height: 100%; }

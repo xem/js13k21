@@ -51,7 +51,7 @@ draw_p = () => {
   lp = p;
   
   if(p && !custom) pn.innerHTML = W + " - " + p;
-  if(coins && !custom) t.innerHTML = "<span class=emoji>🪙</span> x " + coins;
+  if(coins && !custom) t.innerHTML = "<span class=e>🪙</span> x " + coins;
   
   // Puzzle
   current_p = custom || data[W][p];
@@ -72,15 +72,15 @@ draw_p = () => {
   //console.log(mirror);
 
   // Snake globals
-  snake_length = current_p[4]-1; // without head  
+  snake_length = current_p[4]-1; // without B  
   par = current_p[5];
   S = [[-3,2,0]];
   hp = [];
-  head_angles = [270];
-  head_angles_modulo = [270];
-  head_portal = [0];
-  head_angle = 270;
-  head_angle_modulo = 270;
+  B_angles = [270];
+  B_angles_modulo = [270];
+  B_portal = [0];
+  B_angle = 270;
+  B_angle_modulo = 270;
   body_moves = 0;
   on_wall = 0;
   high = 0;
@@ -88,7 +88,7 @@ draw_p = () => {
   trees = [];
   flowers = [];
   animals = [];
-  halt = 0;
+  a = 0;
   win = 0;
   steps = 0;
   mirroring = 0;
@@ -96,18 +96,18 @@ draw_p = () => {
   var i, j, x, y, hp, scale;
 
   // UI
-  C.reset();
+  C.R();
   
-  // Scene
-  camrx = ((W==2&&p==30)||(W==3&&p==25))?50:30;
-  camrz = 0;
-  b.classList.remove("menu");
-  b.classList.remove("win");
+  // s
+  rx = ((W==2&&p==30)||(W==3&&p==25))?50:30;
+  rz = 0;
+  b.classList.remove("z");
+  b.classList.remove("w");
   
-  C.c({z:-100+w*50+mirror*100-(mobile?0:200),x:-150,y:h*10,rx:camrx,rz:camrz});
+  C.c({z:-100+w*50+mirror*100-(O?0:200),x:-150,y:h*10,rx:rx,rz:rz});
   
   // Fade in
-  setTimeout(()=>{b.classList.add("fadein");},1500);
+  setTimeout(()=>{b.classList.add("f");},1500);
   setTimeout(()=>{fade.style.display = "none";},2000);
   
   // Puzzle
@@ -121,12 +121,12 @@ draw_p = () => {
   if(W == 4){
     
     // Stars
-    C.plane({w:5000,h:3000,x:500,y:-500,z:500,rx:45,css:"stars",html:svg[0]});
+    C.plane({w:5000,h:3000,x:500,y:-500,z:500,rx:45,css:"stars",H:svg[0]});
     
     // Rocket
     if(p == 1){
-      C.plane({w:100,h:100,x:-200,y:-350,z:72,html:svg[1],rx:-90,sx:3,sy:3,sz:3,css:"rocket"});
-      C.plane({w:100,h:100,x:-237,y:-395,z:3,html:svg[1],rx:356,ry:0,rz:319,sx:3,sy:3.5,sz:3,css:"rocket shadow"});
+      C.plane({w:100,h:100,x:-200,y:-350,z:72,H:svg[1],rx:-90,sx:3,sy:3,sz:3,css:"rocket"});
+      C.plane({w:100,h:100,x:-237,y:-395,z:3,H:svg[1],rx:356,ry:0,rz:319,sx:3,sy:3.5,sz:3,css:"rocket shadow"});
     }
     
     // Craters
@@ -159,14 +159,14 @@ draw_p = () => {
   }
   
   // Snake's head
-  C.group({g:"pf",n:"head",x:S[0][0]*50+25,y:S[0][1]*50+25,z:4});
-  C.group({g:"head",n:"h2"})
-  C.sprite({g:"h2",n:"h3",x:0,y:0,w:50,h:50,z:25,css:"head circle"});
+  C.group({g:"pf",n:"y",x:S[0][0]*50+25,y:S[0][1]*50+25,z:4});
+  C.group({g:"y",n:"h2"})
+  C.sprite({g:"h2",n:"h3",x:0,y:0,w:50,h:50,z:25,css:"y circle"});
   C.group({g:"h2",n:"h4",w:50,h:50,z:25});
-  C.group({g:"h4",n:"h5",w:50,h:50,x:25,y:25,rz:head_angle});
+  C.group({g:"h4",n:"h5",w:50,h:50,x:25,y:25,rz:B_angle});
   C.group({g:"h5",n:"h6",w:50,h:50,x:25,y:25});
-  C.plane({g:"h6",x:25,y:15,z:27,w:30,h:15,rx:-20,css:"eyes emoji",html:[,"👀","🕶️","🥽","👀"][W]});
-  C.plane({g:"h6",x:25,y:53,z:3,w:13,h:20,rx:180,css:"tongue",html:"Y"});
+  C.plane({g:"h6",x:25,y:15,z:27,w:30,h:15,rx:-20,css:"eyes e",H:[,"👀","🕶️","🥽","👀"][W]});
+  C.plane({g:"h6",x:25,y:53,z:3,w:13,h:20,rx:180,css:"tongue",H:"Y"});
   
   // Snake's body
   hp = S[0];
@@ -184,8 +184,8 @@ draw_p = () => {
       if((y < -3 || y > h+2) && (x < w || x > w + 3)){
         if(!trees.find(a => a[0] > (~~x)-4 && a[0] < (~~x)+4 && a[1] > (~~y)-3 && a[1] < (~~y)+2)){
           trees.push([~~x,~~y]);
-          C.sprite({g:"pf",x:x*50-20,y:y*50,z:5,w:65,h:75,sx:1.8,sy:1.8,sz:1.8,css:"tree emoji",html:[,"🌳","🌵","🌲",""][W],o:"bottom center"});
-          C.plane({g:"pf",x:x*50-20,y:y*50,z:2,rz:(W==1?280:311),w:65,h:75,sx:1.8,sy:2.5,sz:1.8,css:"tree shadow emoji",html:[,"🌳","🌵","🌲",""][W],o:"bottom center"});
+          C.sprite({g:"pf",x:x*50-20,y:y*50,z:5,w:65,h:75,sx:1.8,sy:1.8,sz:1.8,css:"tree e",H:[,"🌳","🌵","🌲",""][W],o:"bottom center"});
+          C.plane({g:"pf",x:x*50-20,y:y*50,z:2,rz:(W==1?280:311),w:65,h:75,sx:1.8,sy:2.5,sz:1.8,css:"tree shadow e",H:[,"🌳","🌵","🌲",""][W],o:"bottom center"});
         }
       }
     }
@@ -197,7 +197,7 @@ draw_p = () => {
       if(!(x > -9 && x < w+1 && y > -2 && y < h+1)){
         if(!flowers.find(a => a[0] > (~~x)-2 && a[0] < (~~x)+2 && a[1] > (~~y)-2 && a[1] < (~~y)+2) && (y < 2 || y > 4) && !trees.find(a => a[0] > (~~x)-2 && a[0] < (~~x)+2 && a[1] > (~~y)-2 && a[1] < (~~y)+2)){
           flowers.push([~~x,~~y]);
-          C.plane({g:"pf",w:45,h:W==1?34:42,z:5,x:x*50,y:y*50,z:1,rx:0,o:"bottom",css:"emoji flower",html:[,"🌼","🪨","❄️",""][W]});
+          C.plane({g:"pf",w:45,h:W==1?34:42,z:5,x:x*50,y:y*50,z:1,rx:0,o:"bottom",css:"e flower",H:[,"🌼","🪨","❄️",""][W]});
         }
       }
     }
@@ -225,15 +225,15 @@ draw_p = () => {
           
         ][W]];
         scale = [,1.5,1.8,1.8][W];
-        C.plane({g:"pf",w:50,h:55,z:8,x:x*50+20,y:y*50+15,z:3,rx:-50,sx:scale,sy:scale,sz:scale,o:"bottom",css:"emoji animal",html:"<div>"+animals[0][2]});
-        C.plane({g:"pf",x:x*50+20,y:y*50-10,z:1,rz:350,w:50,h:55,css:"emoji animal shadow",html:animals[0][2],sx:scale,sy:scale,sz:scale,o:"bottom center"});
+        C.plane({g:"pf",w:50,h:55,z:8,x:x*50+20,y:y*50+15,z:3,rx:-50,sx:scale,sy:scale,sz:scale,o:"bottom",css:"e animal",H:"<div>"+animals[0][2]});
+        C.plane({g:"pf",x:x*50+20,y:y*50-10,z:1,rz:350,w:50,h:55,css:"e animal shadow",H:animals[0][2],sx:scale,sy:scale,sz:scale,o:"bottom center"});
       }
     }
   }
   
   // Bricks
   for(i of bricks){
-    C.cube({g:"pf",x:i[0]*50+25,y:i[1]*50+24,z:(i[2]||0)*50-(W<4 ? 17 : 0),w:50,h:50,d:50,css:"cube bricks",html:(i[1]%2)?(svg[2]+svg[3]+svg[2]):(svg[3]+svg[2]+svg[3]),htmlside:((i[1]+i[2])%2)?(svg[3]+svg[2]+svg[3]):(svg[2]+svg[3]+svg[2])});
+    C.cube({g:"pf",x:i[0]*50+25,y:i[1]*50+24,z:(i[2]||0)*50-(W<4 ? 17 : 0),w:50,h:50,d:50,css:"cube bricks",H:(i[1]%2)?(svg[2]+svg[3]+svg[2]):(svg[3]+svg[2]+svg[3]),Hside:((i[1]+i[2])%2)?(svg[3]+svg[2]+svg[3]):(svg[2]+svg[3]+svg[2])});
   }
   
   // Portals 1
@@ -267,7 +267,7 @@ draw_p = () => {
   // PAR sign
   C.plane({g:"pf",x:w*50+105-55,y:-50+60,w:5,h:105,z:55,rx:-65,ry:-35,css:"sign"});
   C.plane({g:"pf",x:w*50+100-55,y:17,w:5,h:30,z:2,rx:0,ry:0,rz:-30,css:"sign shadow"});
-  C.plane({g:"pf",x:w*50+105-55,y:-47+60,w:105,h:60,z:72,rx:-65,ry:-35,css:"sign",html:"Steps: <span id=st>0</span><br>Par: "+[par||"?"]});
+  C.plane({g:"pf",x:w*50+105-55,y:-47+60,w:105,h:60,z:72,rx:-65,ry:-35,css:"sign",H:"Steps: <span id=st>0</span><br>Par: "+[par||"?"]});
   C.plane({g:"pf",x:w*50+78-55,y:-112+90,w:60,h:60,z:2,rx:0,ry:0,rz:-20,css:"sign shadow"});
 };
 
@@ -342,7 +342,7 @@ check_p = () => {
       }
     }
   }
-  if(win && !haltwin){
+  if(win && !awin){
     if(custom){
       W = 0;
       p = 0;
@@ -364,22 +364,22 @@ check_p = () => {
           W = -1;
           p = 0;
         }
-        t.innerHTML = "<span class=emoji>🪙</span> x " + coins;
+        t.innerHTML = "<span class=e>🪙</span> x " + coins;
       }
     }
-    haltwin = 1;
+    awin = 1;
     b.classList.add("win");
     setTimeout(()=>{
-      C.plane({g:"pf",n:"coin",x:(n||hp)[0]*50+25,y:y=(n||hp)[1]*50+25,z:(n||hp)[2]*50+45,w:50,h:50,rx:high?-90:-45,html:"🪙",css:"emoji coin",sx:.5,sy:.5,sz:.5});
+      C.plane({g:"pf",n:"coin",x:(n||hp)[0]*50+25,y:y=(n||hp)[1]*50+25,z:(n||hp)[2]*50+45,w:50,h:50,rx:high?-90:-45,H:"🪙",css:"e coin",sx:.5,sy:.5,sz:.5});
     },200);
     setTimeout(()=>{
       C.move({n:"coin",y:y+50, z:hp[2]*50+200,sx:1.5,sy:1.5,sz:1.5,ry:1080});
     },300);
     setTimeout(()=>{
       play_sound(coin_sound);
-      haltwin = 0;
+      awin = 0;
     },600);
-    setTimeout(()=>{I = setInterval(play_next_note,300)},300);
+    setTimeout(()=>{clearInterval(I); I = setInterval(play_next_note,300)},300);
     setTimeout((custom ? () => {coin.style.opacity = 0} : fadeout),2000);
   }
   

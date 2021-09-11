@@ -2,7 +2,7 @@
 pd = 0;
 px = 0;
 py = 0;
-halt = 0;
+a = 0;
 pointer_mode = 0;
 
 // Pointer down (mouse or finger)
@@ -27,7 +27,7 @@ onmousedown = ontouchstart = e => {
   pointer_mode = "cam";
 
   // Else: prepare to rotate the c
-  b.classList.add("instant");
+  b.classList.add("i");
 }
 
 // Pointer up
@@ -41,7 +41,7 @@ ontouchend = onmouseup = e => {
   // Stop moving snake/rotating c
   pointer_mode = null;
   
-  b.classList.remove("instant");
+  b.classList.remove("i");
 }
 
 // Pointer move
@@ -64,38 +64,38 @@ onmousemove = ontouchmove = e => {
     dy = py - e.pageY;
     
     // Rotate around X axis according to delta Y
-    camrx += dy / 10;
+    rx += dy / 10;
     
     // Clamp X angle between 10 and 40
-    if(camrx < (behind ? -10 : 30)) camrx = (behind ? -10 : 30);
-    if(camrx > (high ? 70 : 45)) camrx = (high ? 70 : 45);
+    if(rx < (behind ? -10 : 30)) rx = (behind ? -10 : 30);
+    if(rx > (high ? 70 : 45)) rx = (high ? 70 : 45);
     
     // Rotate around Z axis according to delta X
-    camrz += dx / 10;
+    rz += dx / 10;
     
     // Clamp Z angle batween -45 and 45
-    if(camrz < -45) camrz = -45;
-    if(camrz > 45) camrz = 45;
+    if(rz < -45) rz = -45;
+    if(rz > 45) rz = 45;
     
     // Re-set last pointer position to the current ones
     px = e.pageX;
     py = e.pageY;
     
     // Rotate c
-    C.c({rx:camrx,rz:camrz}) 
+    C.c({rx:rx,rz:rz}) 
   }
 }
 
 oncontextmenu = () => { return false; }
 
 // Keyboard (arrows / WASD / ZQSD) to move the snake
-// From https://xem.github.io/articles/jsgamesinputs.html
-canskip = 1;
+// From https://xem.github.io/articles/jsgamesinputs.H
+cs = 1;
 u = r = d = l = U = D = 0;
 onkeydown = onkeyup = e => {
-  if(canskip && e.key == "n") { p++; fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }
-  if(canskip && e.key == "p") { p--; fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }
-  if(canskip && e.key == "r") { fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }
+  if(cs && e.key == "n") { p++; fadeout(); cs = 0; setTimeout(()=> cs=1,500) }
+  if(cs && e.key == "p") { p--; fadeout(); cs = 0; setTimeout(()=> cs=1,500) }
+  if(cs && e.key == "r") { fadeout(); cs = 0; setTimeout(()=> cs=1,500) }
   this['lurd************************l*Dr************l*d***uU*u'[e.which - 37]] = e.type[5];
   if(S) move_snake();
 }
