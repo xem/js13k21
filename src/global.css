@@ -15,7 +15,7 @@ a { text-decoration: none; color: #fff }
 .circle { border-radius: 50% }
 .emoji { font-family: emoji; }
 #reset { position: absolute; right: 20px; bottom: 0; display: block; }
-.dpad { position: absolute; width: 100%; bottom: 40px; left: 10px; z-index: 2; }
+.dpad { position: fixed; width: 100%; bottom: 20px; left: 10px; z-index: 2; }
 .dpad div { display: none; font-size: 35px; pointer-events: all; margin: 10px; text-align: center; width: 50px; height: 50px; border-radius: 5px; background: linear-gradient(45deg, #ddd, #888); box-shadow: 2px 2px 5px #000; font-weight: bold; padding: 4px 0 0; }
 .m .dpad div { display: inline-block }
 .up, .dn { visibility: hidden; }
