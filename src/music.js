@@ -109,7 +109,7 @@ songs = [
 
 note = 0;
 
-A = new (AudioContext||webkitAudioContext),
+A = new (self.AudioContext||self.webkitAudioContext),
 m = A.createBuffer(1,1e6,44100);
 
 // Play a piano note
