@@ -145,7 +145,7 @@ fadeout = (text) => {
         
         for(j = h; j--;){
           for(i = w; i--;){
-            C.plane({g:"pu"+k,o:"top left",x:i*85/w,y:j*85/h,w:85/w+2,h:85/h+2,css:"tile "+(((floor[j]>>i)&1) ? "black" : "")});
+            C.plane({g:"pu"+k,o:"top left",x:i*85/w,y:j*85/h,w:85/w+2,h:85/h+2,css:"v "+(((floor[j]>>i)&1) ? "k" : "")});
           }
         }
       }
@@ -170,7 +170,7 @@ fadeout = (text) => {
         
         for(j = h; j--;){
           for(i = w; i--;){
-            C.plane({g:"pu"+k,o:"top left",x:i*70/w,y:80+j*70/h,w:70/w+2,h:70/h+2,css:"tile "+(((floor[j]>>i)&1) ? "black" : "")});
+            C.plane({g:"pu"+k,o:"top left",x:i*70/w,y:80+j*70/h,w:70/w+2,h:70/h+2,css:"v "+(((floor[j]>>i)&1) ? "k" : "")});
           }
         }
         
@@ -178,7 +178,7 @@ fadeout = (text) => {
         
         for(j = h; j--;){
           for(i = w; i--;){
-            C.plane({g:"pu"+k,o:"top left",x:i*70/w,y:j*70/h,w:70/w+2,h:70/h+2,css:"tile "+(((floor[j]>>i)&1) ? "black" : "")});
+            C.plane({g:"pu"+k,o:"top left",x:i*70/w,y:j*70/h,w:70/w+2,h:70/h+2,css:"v "+(((floor[j]>>i)&1) ? "k" : "")});
           }
         }
       }
@@ -236,7 +236,7 @@ intro = () => {
   // s
   rx = 30;
   rz = 0;
-  C.plane({n:"fd",w:1500,h:1500,css:"floor circle"});
+  C.plane({n:"fd",w:1500,h:1500,css:"r c"});
   
   setTimeout(()=>{
     b.classList.add("intro") // Hide back button, enable 5s transitions
@@ -273,7 +273,7 @@ intro = () => {
   // Snake's head
   C.group({g:"pf",n:"y",x:S[0][0]*50+25,y:S[0][1]*50+25,z:4});
   C.group({g:"y",n:"h2"})
-  C.sprite({g:"h2",n:"h3",x:0,y:0,w:50,h:50,z:25,css:"y circle"});
+  C.sprite({g:"h2",n:"h3",x:0,y:0,w:50,h:50,z:25,css:"y c"});
   C.group({g:"h2",n:"h4",w:50,h:50,z:25});
   C.group({g:"h4",n:"h5",w:50,h:50,x:25,y:25,rz:B_angle});
   C.plane({g:"h5",x:25,y:15,z:27,w:30,h:15,rx:-20,css:"eyes e",H:"👀"});
@@ -283,7 +283,7 @@ intro = () => {
   hp = S[0];
   C.group({g:"pf",n:"sb"});
   for(i = 1; i < snake_length * 5 + 1; i++){
-    C.plane({g:"sb",n:"body" + (snake_length * 5 - i),x:(hp[0] - i/5)*50+25,y:hp[1]*50+25,w:30,h:30,z:25,rx:-45,ry:5,css:"body circle " + (i%2 ? "odd" : ""),i:"afterBegin"});
+    C.plane({g:"sb",n:"body" + (snake_length * 5 - i),x:(hp[0] - i/5)*50+25,y:hp[1]*50+25,w:30,h:30,z:25,rx:-45,ry:5,css:"body c " + (i%2 ? "odd" : ""),i:"afterBegin"});
     S.unshift([hp[0]-i/5, hp[1], 0]);
   }
   
@@ -301,7 +301,7 @@ intro = () => {
   }
   
   // Stars
-  C.plane({w:5000,h:3000,x:-1000,z:1000,rx:45,css:"stars",H:svg[0]});
+  C.plane({w:5000,h:3000,x:-1000,z:1000,rx:45,css:"s",H:svg[0]});
   C.plane({x:-100,y:W<-3?500:0,z:W<-3?2000:900,rx:45,rz:-70,sx:2,sy:2,sz:2,css:"e moon",H:"🌙"});
 
   console.log(y);
@@ -329,7 +329,7 @@ intro = () => {
     // Look down
     setTimeout(()=>{
       C.c({x:-200,y:50,z:-200,rx:50,rz:30});
-      C.plane({w:100,h:100,x:397,y:145,z:72,H:svg[1],rx:-90,ry:-22,sx:4,sy:4.5,sz:4,css:"rocket"});
+      C.plane({w:100,h:100,x:397,y:145,z:72,H:svg[1],rx:-90,ry:-22,sx:4,sy:4.5,sz:4,css:"t"});
     }, 10200);
     
     setTimeout(()=>{
@@ -347,7 +347,7 @@ intro = () => {
     
     // Eye stars
     setTimeout(()=>{
-      p0.classList.add("eyestars");
+      p0.classList.add("eyes");
       C.move({n:"p0",sx:1,sy:1,sz:1});
       p0.innerHTML = "⭐⭐";
       b.classList.remove("intro2");
@@ -380,7 +380,7 @@ intro = () => {
   
   // World 4
   else {
-    C.plane({n:"rocket",w:100,h:100,x:-150,y:200,z:72,H:svg[1],rx:-90,sx:4,sy:4.5,sz:4,css:"rocket"});
+    C.plane({n:"rocket",w:100,h:100,x:-150,y:200,z:72,H:svg[1],rx:-90,sx:4,sy:4.5,sz:4,css:"t"});
     
     // Remove snake
     // Play sound

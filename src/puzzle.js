@@ -111,7 +111,7 @@ draw_p = () => {
   setTimeout(()=>{fade.style.display = "none";},2000);
   
   // Puzzle
-  C.plane({n:"fd",w:1500,h:1500,css:"floor circle"});
+  C.plane({n:"fd",w:1500,h:1500,css:"r c"});
   setTimeout(()=>{fd.style.height = '1450px'},500); // Fx fix
   
   C.group({n:"pf",w:w*50,h:((floor || W > 3) ? h : 1)*50,z:2});
@@ -121,18 +121,18 @@ draw_p = () => {
   if(W == 4){
     
     // Stars
-    C.plane({w:5000,h:3000,x:500,y:-500,z:500,rx:45,css:"stars",H:svg[0]});
+    C.plane({w:5000,h:3000,x:500,y:-500,z:500,rx:45,css:"s",H:svg[0]});
     
     // Rocket
     if(p == 1){
-      C.plane({w:100,h:100,x:-200,y:-350,z:72,H:svg[1],rx:-90,sx:3,sy:3,sz:3,css:"rocket"});
-      C.plane({w:100,h:100,x:-237,y:-395,z:3,H:svg[1],rx:356,ry:0,rz:319,sx:3,sy:3.5,sz:3,css:"rocket shadow"});
+      C.plane({w:100,h:100,x:-200,y:-350,z:72,H:svg[1],rx:-90,sx:3,sy:3,sz:3,css:"t"});
+      C.plane({w:100,h:100,x:-237,y:-395,z:3,H:svg[1],rx:356,ry:0,rz:319,sx:3,sy:3.5,sz:3,css:"t w"});
     }
     
     // Craters
     for(i = 0; i < (p == 1 ? 2: 3); i++){
-      C.plane({g:"pf",x:(1.5-i)*300+Math.random()*50,y:-300+Math.random()*200,w:scale=100+Math.random()*100,h:scale,css:"crater"});
-      C.plane({g:"pf",x:(1.5-i)*300+Math.random()*50,y:400+Math.random()*200,w:scale=100+Math.random()*100,h:scale,css:"crater"});
+      C.plane({g:"pf",x:(1.5-i)*300+Math.random()*50,y:-300+Math.random()*200,w:scale=100+Math.random()*100,h:scale,css:"a"});
+      C.plane({g:"pf",x:(1.5-i)*300+Math.random()*50,y:400+Math.random()*200,w:scale=100+Math.random()*100,h:scale,css:"a"});
     }
   }
   
@@ -144,7 +144,7 @@ draw_p = () => {
   if(floor){
     for(j = h; j--;){
       for(i = w; i--;){
-        C.plane({g:"pf",n:"tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:52,h:52,css:"tile "+(((floor[j]>>i)&1) ? "black" : "")});
+        C.plane({g:"pf",n:"tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:52,h:52,css:"v "+(((floor[j]>>i)&1) ? "k" : "")});
       }
     }
   }
@@ -153,7 +153,7 @@ draw_p = () => {
     C.cube({g:"pf",w:w*50+4,h:h*50+2,d:4,x:w*50/2,y:-2.1,z:2,css:"wall"});
     for(j = h; j--;){
       for(i = w; i--;){
-        C.plane({g:"pw",n:"wall_tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:52,h:52,css:"tile wall_tile "+(((wall[j]>>i)&1) ? "black" : "")});
+        C.plane({g:"pw",n:"wall_tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:52,h:52,css:"v wt "+(((wall[j]>>i)&1) ? "k" : "")});
       }
     }
   }
@@ -161,7 +161,7 @@ draw_p = () => {
   // Snake's head
   C.group({g:"pf",n:"y",x:S[0][0]*50+25,y:S[0][1]*50+25,z:4});
   C.group({g:"y",n:"h2"})
-  C.sprite({g:"h2",n:"h3",x:0,y:0,w:50,h:50,z:25,css:"y circle"});
+  C.sprite({g:"h2",n:"h3",x:0,y:0,w:50,h:50,z:25,css:"y c"});
   C.group({g:"h2",n:"h4",w:50,h:50,z:25});
   C.group({g:"h4",n:"h5",w:50,h:50,x:25,y:25,rz:B_angle});
   C.group({g:"h5",n:"h6",w:50,h:50,x:25,y:25});
@@ -172,7 +172,7 @@ draw_p = () => {
   hp = S[0];
   C.group({g:"pf",n:"sb"});
   for(i = 1; i < snake_length * 5 + 1; i++){
-    C.plane({g:"sb",n:"body" + (snake_length * 5 - i),x:(hp[0] - i/5)*50+25,y:hp[1]*50+25,w:30,h:30,z:25,rx:-45,ry:5,css:"body circle " + (i%2 ? "odd" : ""),i:"afterBegin"});
+    C.plane({g:"sb",n:"body" + (snake_length * 5 - i),x:(hp[0] - i/5)*50+25,y:hp[1]*50+25,w:30,h:30,z:25,rx:-45,ry:5,css:"body c " + (i%2 ? "odd" : ""),i:"afterBegin"});
     S.unshift([hp[0]-i/5, hp[1], 0]);
   }
   
@@ -185,7 +185,7 @@ draw_p = () => {
         if(!trees.find(a => a[0] > (~~x)-4 && a[0] < (~~x)+4 && a[1] > (~~y)-3 && a[1] < (~~y)+2)){
           trees.push([~~x,~~y]);
           C.sprite({g:"pf",x:x*50-20,y:y*50,z:5,w:65,h:75,sx:1.8,sy:1.8,sz:1.8,css:"tree e",H:[,"🌳","🌵","🌲",""][W],o:"bottom center"});
-          C.plane({g:"pf",x:x*50-20,y:y*50,z:2,rz:(W==1?280:311),w:65,h:75,sx:1.8,sy:2.5,sz:1.8,css:"tree shadow e",H:[,"🌳","🌵","🌲",""][W],o:"bottom center"});
+          C.plane({g:"pf",x:x*50-20,y:y*50,z:2,rz:(W==1?280:311),w:65,h:75,sx:1.8,sy:2.5,sz:1.8,css:"tree w e",H:[,"🌳","🌵","🌲",""][W],o:"bottom center"});
         }
       }
     }
@@ -226,7 +226,7 @@ draw_p = () => {
         ][W]];
         scale = [,1.5,1.8,1.8][W];
         C.plane({g:"pf",w:50,h:55,z:8,x:x*50+20,y:y*50+15,z:3,rx:-50,sx:scale,sy:scale,sz:scale,o:"bottom",css:"e animal",H:"<div>"+animals[0][2]});
-        C.plane({g:"pf",x:x*50+20,y:y*50-10,z:1,rz:350,w:50,h:55,css:"e animal shadow",H:animals[0][2],sx:scale,sy:scale,sz:scale,o:"bottom center"});
+        C.plane({g:"pf",x:x*50+20,y:y*50-10,z:1,rz:350,w:50,h:55,css:"e animal w",H:animals[0][2],sx:scale,sy:scale,sz:scale,o:"bottom center"});
       }
     }
   }
@@ -241,11 +241,11 @@ draw_p = () => {
     for(i of portals1){
       // Ground
       if(i[2] == 0 && floor){
-        C.plane({g:"pf",n:"tile_"+i+"_"+j,x:25+i[0]*50,y:25+i[1]*50,z:1,w:52,h:52,css:"tile portal1"});
+        C.plane({g:"pf",n:"tile_"+i+"_"+j,x:25+i[0]*50,y:25+i[1]*50,z:1,w:52,h:52,css:"v portal1"});
       }
       // Wall
       else {
-        C.plane({g:"pf",n:"tile_"+i+"_"+j,x:25+i[0]*50,y:1,z:25+i[2]*50,w:52,h:52,rx:90,css:"tile portal1"});
+        C.plane({g:"pf",n:"tile_"+i+"_"+j,x:25+i[0]*50,y:1,z:25+i[2]*50,w:52,h:52,rx:90,css:"v portal1"});
       }
     }
   }
@@ -255,20 +255,20 @@ draw_p = () => {
     for(i of portals2){
       // Ground
       if(i[2] == 0 && floor){
-        C.plane({g:"pf",n:"tile_"+i+"_"+j,x:25+i[0]*50,y:25+i[1]*50,z:1,w:52,h:52,css:"tile portal2"});
+        C.plane({g:"pf",n:"tile_"+i+"_"+j,x:25+i[0]*50,y:25+i[1]*50,z:1,w:52,h:52,css:"v portal2"});
       }
       // Wall
       else {
-        C.plane({g:"pf",n:"tile_"+i+"_"+j,x:25+i[0]*50,y:1,z:25+i[2]*50,w:52,h:52,rx:90,css:"tile portal2"});
+        C.plane({g:"pf",n:"tile_"+i+"_"+j,x:25+i[0]*50,y:1,z:25+i[2]*50,w:52,h:52,rx:90,css:"v portal2"});
       }
     }
   }
   
   // PAR sign
   C.plane({g:"pf",x:w*50+105-55,y:-50+60,w:5,h:105,z:55,rx:-65,ry:-35,css:"sign"});
-  C.plane({g:"pf",x:w*50+100-55,y:17,w:5,h:30,z:2,rx:0,ry:0,rz:-30,css:"sign shadow"});
+  C.plane({g:"pf",x:w*50+100-55,y:17,w:5,h:30,z:2,rx:0,ry:0,rz:-30,css:"sign w"});
   C.plane({g:"pf",x:w*50+105-55,y:-47+60,w:105,h:60,z:72,rx:-65,ry:-35,css:"sign",H:"Steps: <span id=st>0</span><br>Par: "+[par||"?"]});
-  C.plane({g:"pf",x:w*50+78-55,y:-112+90,w:60,h:60,z:2,rx:0,ry:0,rz:-20,css:"sign shadow"});
+  C.plane({g:"pf",x:w*50+78-55,y:-112+90,w:60,h:60,z:2,rx:0,ry:0,rz:-20,css:"sign w"});
 };
 
 check_p = () => {

@@ -12,7 +12,7 @@ a { text-decoration: none; color: #fff }
 #c { width: 0; height: 0; position: absolute; top: 60%; left: 50% }
 .p #s { transition: transform .5s }
 .i #s { transition: none }
-.circle { border-radius: 50% }
+.c { border-radius: 50% }
 .e { font-family: e; }
 #R { position: absolute; right: 20px; bottom: 0; display: block; }
 .dpad { position: fixed; width: 100%; bottom: 45px; left: 10px; z-index: 2; }

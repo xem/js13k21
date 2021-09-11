@@ -1,28 +1,28 @@
 .p #v { background: radial-gradient(circle at 50% 50%, #fff, #07e); }
-.w-3 #s .floor, .w-4 #s .floor { background: radial-gradient(#000a,#000e 80%),url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg'%3e%3cpattern id='a' width='.1' height='.1'%3e%3crect width='5%25' height='10%25'/%3e%3c/pattern%3e%3cfilter id='b'%3e%3cfeTurbulence type='fractalNoise' baseFrequency='.8'/%3e%3cfeMorphology operator='dilate' radius='1'/%3e%3cfeConvolveMatrix kernelMatrix='1 1 1 -8 1 1 1 1 1' preserveAlpha='true'/%3e%3cfeBlend in2='SourceGraphic'/%3e%3cfeMorphology operator='dilate' radius='.1 2'/%3e%3cfeColorMatrix values='.05 0 0 0 0 .3 0 .1 -.1 .1 0 0 0 0 0 0 0 0 0 1'/%3e%3c/filter%3e%3crect width='100%25' height='100%25' fill='url(%23a)' filter='url(%23b)'/%3e%3c/svg%3e"); }
-.w1 #s .floor { background: radial-gradient(#0000,#000e 80%),url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg'%3e%3cpattern id='a' width='.1' height='.1'%3e%3crect width='5%25' height='10%25'/%3e%3c/pattern%3e%3cfilter id='b'%3e%3cfeTurbulence type='fractalNoise' baseFrequency='.8'/%3e%3cfeMorphology operator='dilate' radius='1'/%3e%3cfeConvolveMatrix kernelMatrix='1 1 1 -8 1 1 1 1 1' preserveAlpha='true'/%3e%3cfeBlend in2='SourceGraphic'/%3e%3cfeMorphology operator='dilate' radius='.1 2'/%3e%3cfeColorMatrix values='.05 0 0 0 0 .3 0 .1 -.1 .1 0 0 0 0 0 0 0 0 0 1'/%3e%3c/filter%3e%3crect width='100%25' height='100%25' fill='url(%23a)' filter='url(%23b)'/%3e%3c/svg%3e"); }
-.w2 #s .floor { background: radial-gradient(#fff8,#fff0 80%),url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg'%3e%3clinearGradient id='a' x2='45' y2='80' spreadMethod='repeat' gradientUnits='userSpaceOnUse'%3e%3cstop stop-color='%23c85'/%3e%3cstop offset='59%25' stop-color='%23b74'/%3e%3cstop offset='100%25' stop-color='%23863'/%3e%3c/linearGradient%3e%3cfilter id='b'%3e%3cfeTurbulence type='fractalNoise' baseFrequency='.01' numOctaves='3'/%3e%3cfeDisplacementMap in='SourceGraphic' scale='32'/%3e%3cfeGaussianBlur stdDeviation='1'/%3e%3c/filter%3e%3crect x='-10%25' y='-10%25' width='120%25' height='120%25' fill='url(%23a)' filter='url(%23b)'/%3e%3c/svg%3e"); border-radius: 150px; }
-.w3 #s .floor { background: radial-gradient(#fffd,#adfd 80%); border-radius: 50%; }
+.w-3 #s .r, .w-4 #s .r { background: radial-gradient(#000a,#000e 80%),url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg'%3e%3cpattern id='a' width='.1' height='.1'%3e%3crect width='5%25' height='10%25'/%3e%3c/pattern%3e%3cfilter id='b'%3e%3cfeTurbulence type='fractalNoise' baseFrequency='.8'/%3e%3cfeMorphology operator='dilate' radius='1'/%3e%3cfeConvolveMatrix kernelMatrix='1 1 1 -8 1 1 1 1 1' preserveAlpha='true'/%3e%3cfeBlend in2='SourceGraphic'/%3e%3cfeMorphology operator='dilate' radius='.1 2'/%3e%3cfeColorMatrix values='.05 0 0 0 0 .3 0 .1 -.1 .1 0 0 0 0 0 0 0 0 0 1'/%3e%3c/filter%3e%3crect width='100%25' height='100%25' fill='url(%23a)' filter='url(%23b)'/%3e%3c/svg%3e"); }
+.w1 #s .r { background: radial-gradient(#0000,#000e 80%),url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg'%3e%3cpattern id='a' width='.1' height='.1'%3e%3crect width='5%25' height='10%25'/%3e%3c/pattern%3e%3cfilter id='b'%3e%3cfeTurbulence type='fractalNoise' baseFrequency='.8'/%3e%3cfeMorphology operator='dilate' radius='1'/%3e%3cfeConvolveMatrix kernelMatrix='1 1 1 -8 1 1 1 1 1' preserveAlpha='true'/%3e%3cfeBlend in2='SourceGraphic'/%3e%3cfeMorphology operator='dilate' radius='.1 2'/%3e%3cfeColorMatrix values='.05 0 0 0 0 .3 0 .1 -.1 .1 0 0 0 0 0 0 0 0 0 1'/%3e%3c/filter%3e%3crect width='100%25' height='100%25' fill='url(%23a)' filter='url(%23b)'/%3e%3c/svg%3e"); }
+.w2 #s .r { background: radial-gradient(#fff8,#fff0 80%),url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg'%3e%3clinearGradient id='a' x2='45' y2='80' spreadMethod='repeat' gradientUnits='userSpaceOnUse'%3e%3cstop stop-color='%23c85'/%3e%3cstop offset='59%25' stop-color='%23b74'/%3e%3cstop offset='100%25' stop-color='%23863'/%3e%3c/linearGradient%3e%3cfilter id='b'%3e%3cfeTurbulence type='fractalNoise' baseFrequency='.01' numOctaves='3'/%3e%3cfeDisplacementMap in='SourceGraphic' scale='32'/%3e%3cfeGaussianBlur stdDeviation='1'/%3e%3c/filter%3e%3crect x='-10%25' y='-10%25' width='120%25' height='120%25' fill='url(%23a)' filter='url(%23b)'/%3e%3c/svg%3e"); border-radius: 150px; }
+.w3 #s .r { background: radial-gradient(#fffd,#adfd 80%); border-radius: 50%; }
 .w4 #v { background: #000 }
-.w4 #s .floor { background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg'%3e%3cfilter id='a'%3e%3cfeTurbulence type='fractalNoise' baseFrequency='.02' numOctaves='5'/%3e%3cfeComponentTransfer%3e%3cfeFuncA type='table' tableValues='1 .7 .38 .24 .14 .06 0'/%3e%3c/feComponentTransfer%3e%3cfeDiffuseLighting diffuseConstant='1.5' surfaceScale='-2'%3e%3cfeDistantLight elevation='9'/%3e%3c/feDiffuseLighting%3e%3c/filter%3e%3crect width='100%25' height='100%25' filter='url(%23a)'/%3e%3c/svg%3e"); box-shadow: 0 0 150px #fff, -300px 0 200px 200px #000 inset; }
+.w4 #s .r { background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg'%3e%3cfilter id='a'%3e%3cfeTurbulence type='fractalNoise' baseFrequency='.02' numOctaves='5'/%3e%3cfeComponentTransfer%3e%3cfeFuncA type='table' tableValues='1 .7 .38 .24 .14 .06 0'/%3e%3c/feComponentTransfer%3e%3cfeDiffuseLighting diffuseConstant='1.5' surfaceScale='-2'%3e%3cfeDistantLight elevation='9'/%3e%3c/feDiffuseLighting%3e%3c/filter%3e%3crect width='100%25' height='100%25' filter='url(%23a)'/%3e%3c/svg%3e"); box-shadow: 0 0 150px #fff, -300px 0 200px 200px #000 inset; }
 #pf { background: #0005; }
-.tile { background: #fff; border: 3px solid #777; }
-table .tile { top: 0; left: 0; border: 1px solid #777; transition: 5s; }
+.v { background: #fff; border: 3px solid #777; }
+table .v { top: 0; left: 0; border: 1px solid #777; transition: 5s; }
 table { margin: auto; transition: 5s; }
 td { transition: .5s; padding: 45px }
-.wall_tile { background: #bbb }
-.tile.black { background: #000 }
-.tile.red { background: #F00 }
-.tile.blue { background: #00F }
-.w .tile.blue { background: #4e2 }
-.tile.portal1 { background: radial-gradient(#e0e, #505 70%, #0000 75%) }
-.tile.portal2 { background: radial-gradient(#fc0, #c60 70%, #0000 75%) }
+.wt { background: #bbb }
+.v.k { background: #000 }
+.v.red { background: #F00 }
+.v.blue { background: #00F }
+.w .v.blue { background: #4e2 }
+.v.portal1 { background: radial-gradient(#e0e, #505 70%, #0000 75%) }
+.v.portal2 { background: radial-gradient(#fc0, #c60 70%, #0000 75%) }
 .wall * { background: linear-gradient(45deg, #000, #333); }
 .tree { font-size: 75px; filter: brightness(0.7); transition: transform .5s; }
 .flower { font-size: 45px; overflow: hidden; }
 .animal { font-size: 55px; }
 .i .tree { transition: none; }
-.shadow { filter: contrast(0)brightness(0); opacity: .4 }
+.w { filter: contrast(0)brightness(0); opacity: .4 }
 #wrap .cubefront, #wrap .cubeback, #wrap .cubeleft, #wrap .cuberight { background: linear-gradient(#0000 50%,#02d8); }
 .p7 #wrap .cubefront, .p7 #wrap .cubeback, .p7 #wrap .cubeleft, .p7 #wrap .cuberight { background: linear-gradient(#0000 30%,#02d); }
 #b.w4 #wrap div { background: none; box-shadow: 0 0 75px #02D inset; }
@@ -35,9 +35,9 @@ td { transition: .5s; padding: 45px }
 .bricks .cubefront.bricks .cubeback { filter: brightness(.7) }
 .bricks .cuberight { filter: brightness(.9) }
 .coin { font-size: 50px; text-shadow: 0 0 15px #fff; transition: 1.7s }
-.crater { border-radius: 50%; box-shadow: 10px 0 20px #000a, inset 20px 0 10px #000a, inset -20px 0 10px #fff2; background: #0004;}
+.a { border-radius: 50%; box-shadow: 10px 0 20px #000a, inset 20px 0 10px #000a, inset -20px 0 10px #fff2; background: #0004;}
 .egg3 #ta { transform: rotate(180deg) }
 .egg4 #ta { transform: rotate(90deg) scale(.5) }
 .egg3 #fade, .egg4 #fade { background: #fa0 }
-.egg3 .tile, .egg4 .tile { opacity: 0; }
-.egg3 .tile.black, .egg4 .tile.black { opacity: 1; border-color: #000 }
+.egg3 .v, .egg4 .v { opacity: 0; }
+.egg3 .v.k, .egg4 .v.k { opacity: 1; border-color: #000 }

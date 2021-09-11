@@ -75,11 +75,11 @@ snakebody = sb ok
 
 CSS classes (warning: case insensitive)
 
-mobile = x
+mobile = x ok
 back = b OK
 dpad = d ok
 up = u ok
-dn = d ok
+dn = n ok
 main = m ok
 menu = z ok
 levels = l ok
@@ -89,17 +89,17 @@ instant = i ok
 fadein = f ok
 win = w ok
 emoji = e ok
-floor: r
-circle = c
-stars = s
-shadow = w
-rocket = t
-crater = a
+floor: r ok
+circle = c ok
+stars = s ok
+shadow = w ok
+rocket = t ok
+crater = a ok
 wall = wa
-black = k
-tile = ti
-wall_tile = wt
-body = y
+black = k ok
+tile = v ok
+wall_tile = wt ok
+body = 
 tree = 
 flower =
 animal =
@@ -122,4 +122,3 @@ cubeleft =
 cuberight =
 cubefront =
 cubetop =
-stars =

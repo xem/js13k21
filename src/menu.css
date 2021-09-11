@@ -19,8 +19,8 @@
 .intro #s,.intro .sprite { transition: 5s }
 .intro2 #s { transition: .5s; }
 .moon { font-size: 50px }
-.rocket { font-size: 75px; transition: 10s; }
-.stars svg { width: 100%; height: 100%; }
+.t { font-size: 75px; transition: 10s; }
+.s svg { width: 100%; height: 100%; }
 .eyestars { width: 65px !important }
 .intro2 .eyes { transition: transform .05s }
 .sign { background: linear-gradient(45deg, #e84, #b51); text-align: center; padding: 5px; font-size: 22px; line-height: 1.1; }

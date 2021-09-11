@@ -239,7 +239,7 @@ move_body = () => {
   var pos = S[snake_length * 5 + body_moves];
   
   // Create a new body part close to the B
-  if(pos)C.plane({g:"sb",n:"body"+(snake_length*5+body_moves),x:pos[0]*50+25,y:pos[1]*50+25,w:30,h:30,z:pos[2]*50+25,rx:-45,ry:5,css:"body circle " + (body_moves%2 ? "odd" : "")});
+  if(pos)C.plane({g:"sb",n:"body"+(snake_length*5+body_moves),x:pos[0]*50+25,y:pos[1]*50+25,w:30,h:30,z:pos[2]*50+25,rx:-45,ry:5,css:"body c " + (body_moves%2 ? "odd" : "")});
   
   // Remove older part after the tail
   C.$("body" + body_moves).remove();
@@ -259,7 +259,7 @@ move_body_back = () => {
   
   // Create new body part after the tail
   C.plane({g:"sb",n:"body"+body_moves,x:pos[0]*50+25,y:pos[1]*50+25,w:30,h:30,z:pos[2]*50+25,rx:-
-  45,ry:5,css:"body circle " + (body_moves%2 ? "odd" : ""),i:"afterBegin"});
+  45,ry:5,css:"body c " + (body_moves%2 ? "odd" : ""),i:"afterBegin"});
   
   // Remove old body part close to the B
   C.$("body" + (snake_length * 5 + body_moves)).remove();
