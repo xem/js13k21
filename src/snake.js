@@ -1,6 +1,7 @@
 move_snake = () => {
 
   if(!halt && (puzzle || world<=-3) && !win){
+    //halt=1;
     
     var i, target_position, x, y, z, match;
     
@@ -37,6 +38,8 @@ move_snake = () => {
 
     // Move on floor + wall (worlds 1-3) / in the air (world 4)
     else {
+      
+        console.log("move", halt);
       
       // Right
       if(r){
