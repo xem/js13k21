@@ -1,16 +1,16 @@
 JS global vars (except functions)
 
-w =
-h = 
-world = W
-puzzle = p
-lastworld = lw
-lastpuzzle = lp
+w 
+h  
+world = W OK
+puzzle = p OK
+lastworld = lW OK
+lastpuzzle = lp OK
 coins = C
 win =
 haltwin = h
-snake_position = S
-next_target = n
+snake_position = S OK
+next_target = n OK
 portaling = P
 portals1 = p1
 portals2 = p2
@@ -18,21 +18,20 @@ mirror = m
 custom = M
 html = H
 mobile = B
-song_interval = I
+song_interval = I OK
 time = T
-head_position = hp
-previous_position = pp
+head_position = hp OK
+previous_position = pp OK
 save = v
 extracoins = E
 song = g
-song_interval = si
 svg = 
 camrx =
 camrz = 
 data = 
-pointer_down = pd
-pointer_start_x = px
-pointer_start_y = py
+pointer_down = pd OK
+pointer_start_x = px OK
+pointer_start_y = py OK
 halt = 
 canskip = 
 u = 
@@ -45,30 +44,33 @@ songs =
 note =
 A =
 m =
+custom =
+current_puzzle = z OK
+coin =
 
 
 
 CSS IDs
 
-viewport = v
+viewport = v OK
 camera = c
 scene = s
-puzzlename = P
-coincount = t
+puzzlename = pn OK
+coincount = t OK
 reset = R
 fade = f
-presents = e
-floordiv = fd
-puzzlefloor = pf
-puzzlewall = pw
+presents = e OK
+floordiv = fd OK
+puzzlefloor = pf OK
+puzzlewall = pw OK
 wrap = wr
 head = h1
-head_scale = h2
-head_circle = h3
-head_decoration = h4
-head_decoration_inner = h5
-head_decoration_tilt = h6
-snakebody = 
+head_scale = h2 ok
+head_circle = h3 ok
+head_decoration = h4 ok
+head_decoration_inner = h5 ok
+head_decoration_tilt = h6 ok
+snakebody = sb ok
 
 CSS classes (warning: case insensitive)
 

@@ -152,7 +152,7 @@ play_sound = (f) => {
 }
 
 set_song = n => {
-  //console.log(puzzle, lastpuzzle);
-  if(song!=n) note = (W== lastW+1 || puzzle == lastpuzzle+1 || lastW== -4) ? -3 : 0;
+  //console.log(p, lp);
+  if(song!=n) note = (W== lW+1 || p == lp+1 || lW== -4) ? -3 : 0;
   song = n;
 }

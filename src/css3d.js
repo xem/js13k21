@@ -18,7 +18,7 @@ C = {
     C.sprites = [];
     C.planes = [];
     C.cubes = [];
-    C.camera();
+    C.c();
   },
 
   // Initialize an object's properties
@@ -58,7 +58,7 @@ C = {
     t.n||(t.n=`p${C.plane_count++}`),
     C.init(t),
     C.$(t.g).insertAdjacentHTML(t.i,`<div id="${t.n}"class="plane ${t.css}"style="position:absolute;width:${t.w}px;height:${t.h}px;transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`)//,
-    //C.camera()
+    //C.c()
   },
 
   // Sprite
@@ -67,7 +67,7 @@ C = {
     C.init(t),
     C.$(t.g).insertAdjacentHTML(t.i,`<div id="${t.n}"class="sprite ${t.css}"style="position:absolute;width:${t.w}px;height:${t.h}px;transform-origin:${t.o};transform:${C.tr(t)}">${t.html}`),
     C.sprites.push(t.n),
-    C.camera()
+    C.c()
   },
 
   // Cube
@@ -91,7 +91,7 @@ C = {
   },*/
 
   // Move the camera
-  camera: t => {
+  c: t => {
     //console.log("cam");
     t&&(t.x||0===t.x)&&(C.camX=t.x),
     t&&(t.y||0===t.y)&&(C.camY=t.y),

@@ -1,13 +1,13 @@
 // Global vars
-W= 0; // 0: main menu; 1-5: current world; -1; levels -3/-4: cutscenes
-puzzle = 0; // 0: level menu; 1-n: current puzzle
-lastW= 0;
-lastpuzzle = 0;
+W = 0; // 0: main menu; 1-5: current world; -1; levels -3/-4: cutscenes
+p = 0; // 0: level menu; 1-n: current puzzle
+lW = 0;
+lp = 0;
 coins = 0;
 win = 0;
 haltwin = 0;
-snake_position = 0;
-next_target = 0;
+S = 0;
+n = 0;
 portaling = 0;
 portals1 = 0;
 portals2 = 0;
@@ -15,15 +15,15 @@ mirror = 0;
 custom = 0;
 html = "";
 for(i=500;i--;)html += `<text x=${Math.random()*5000} y=${Math.random()*5000}>.</text>`;
-mobile = navigator.userAgent.match("Mobile");
-song_interval = 0;
+mobile = navigator.userAgent.match("Mobi");
+I = 0;
 time = 0;
-head_position = [];
-previous_position = [];
+hp = [];
+pp = [];
 save = eval(localStorage.lossst)||[[0],[0],[0],[0],[0]];
 extracoins = eval(localStorage.lossst_e)||0;
 song = 0;
-song_interval = 0;
+I = 0;
 
 for(i of save){
   for(j of i){

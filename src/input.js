@@ -1,41 +1,44 @@
 // Inputs globals
-pointer_down = 0;
-pointer_start_x = 0;
-pointer_start_y = 0;
+pd = 0;
+px = 0;
+py = 0;
 halt = 0;
+pointer_mode = 0;
 
 // Pointer down (mouse or finger)
 onmousedown = ontouchstart = e => {
   
-  if(puzzle == 0) return;
+  if(p == 0) return;
   
   // Tactile devices: consider the first finger only
   if(e.touches) e = e.touches[0];
   
   // Set down flag
-  pointer_down = 1;
+  pd = 1;
   
   // Save snake position
-  pointer_start_x = e.pageX;
-  pointer_start_y = e.pageY;
+  px = e.pageX;
+  py = e.pageY;
 
   // Ignore the D-pad
   if(e.target.tagName == "svg") return;
   if(e.target.id == "back") return;
+  
+  pointer_mode = "cam";
 
-  // Else: prepare to rotate the camera
+  // Else: prepare to rotate the c
   b.classList.add("instant");
 }
 
 // Pointer up
 ontouchend = onmouseup = e => {
   
-  if(puzzle == 0) return;
+  if(p == 0) return;
   
   // Clear down flag
-  pointer_down = 0;
+  pd = 0;
   
-  // Stop moving snake/rotating camera
+  // Stop moving snake/rotating c
   pointer_mode = null;
   
   b.classList.remove("instant");
@@ -46,19 +49,19 @@ onmousemove = ontouchmove = e => {
   
   e.preventDefault();
   
-  if(puzzle == 0) return;
+  if(p == 0) return;
   
   var real_target, dx, dy;
   
   // Tactile device: consider the first finger only
   if(e.touches) e = e.touches[0];
 
-  // Mode "camera rotation"
-  //if(pointer_mode == "cam"){
+  // Mode "c rotation"
+  if(pointer_mode == "cam"){
     
     // Find cursor delta X/Y since pointer down or last pointer move
-    dx = pointer_start_x - e.pageX;
-    dy = pointer_start_y - e.pageY;
+    dx = px - e.pageX;
+    dy = py - e.pageY;
     
     // Rotate around X axis according to delta Y
     camrx += dy / 10;
@@ -75,12 +78,12 @@ onmousemove = ontouchmove = e => {
     if(camrz > 45) camrz = 45;
     
     // Re-set last pointer position to the current ones
-    pointer_start_x = e.pageX;
-    pointer_start_y = e.pageY;
+    px = e.pageX;
+    py = e.pageY;
     
-    // Rotate camera
-    C.camera({rx:camrx,rz:camrz}) 
-  //}
+    // Rotate c
+    C.c({rx:camrx,rz:camrz}) 
+  }
 }
 
 oncontextmenu = () => { return false; }
@@ -90,15 +93,15 @@ oncontextmenu = () => { return false; }
 canskip = 1;
 u = r = d = l = U = D = 0;
 onkeydown = onkeyup = e => {
-  if(canskip && e.key == "n") { puzzle++; fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }
-  if(canskip && e.key == "p") { puzzle--; fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }
+  if(canskip && e.key == "n") { p++; fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }
+  if(canskip && e.key == "p") { p--; fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }
   if(canskip && e.key == "r") { fadeout(); canskip = 0; setTimeout(()=> canskip=1,500) }
   this['lurd************************l*Dr************l*d***uU*u'[e.which - 37]] = e.type[5];
-  if(snake_position) move_snake();
+  if(S) move_snake();
 }
 
 setInterval(() => {
-  if(W > 0 && snake_position) move_snake();
+  if(W > 0 && S) move_snake();
 },33);
 
 onscroll = e => e.preventDefault();

@@ -1,12 +1,12 @@
 // Draw current puzzle
-draw_puzzle = () => {
+draw_p = () => {
   
   if(W== 1){
-    if(puzzle > 30){
+    if(p > 30){
       set_song(3)
     }
     
-    else if(puzzle > 15){
+    else if(p > 15){
       set_song(2)
     }
     
@@ -15,7 +15,7 @@ draw_puzzle = () => {
     }
   }
   else if(W== 2){
-    if(puzzle > 15){
+    if(p > 15){
       set_song(5)
     }
     
@@ -24,11 +24,11 @@ draw_puzzle = () => {
     }
   }
   else if(W== 3){
-    if(puzzle > 30){
+    if(p > 30){
       set_song(8)
     }
     
-    else if(puzzle > 15){
+    else if(p > 15){
       set_song(7)
     }
     
@@ -37,7 +37,7 @@ draw_puzzle = () => {
     }
   }
   else if(W== 4){
-    if(puzzle > 15){
+    if(p > 15){
       set_song(10)
     }
     
@@ -47,35 +47,35 @@ draw_puzzle = () => {
   }
   //console.log(custom);
   // Keep track of current world/puzzle for easter-eggs
-  lastW= W;
-  lastpuzzle = puzzle;
+  lW = W;
+  lp = p;
   
-  if(puzzle && !custom) puzzlename.innerHTML = W + " - " + puzzle;
-  if(coins && !custom) coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
+  if(p && !custom) pn.innerHTML = W + " - " + p;
+  if(coins && !custom) t.innerHTML = "<span class=emoji>🪙</span> x " + coins;
   
   // Puzzle
-  current_puzzle = custom || data[W][puzzle];
-  //console.log(current_puzzle);
+  current_p = custom || data[W][p];
+  //console.log(current_p);
   
-  if(puzzle > 5 && !(location.host.includes("s13k") || location.host.includes("calh")  || location.host.includes("xem.github.io"))){
+  if(p > 5 && !(location.host.includes("s13k") || location.host.includes("calh")  || location.host.includes("xem.github.io"))){
     location = "//xem.github.io/js13k21";
   }
   
-  w = current_puzzle[2];
-  h = current_puzzle[3] || w;
-  floor = current_puzzle[0];
-  wall = current_puzzle[1];
-  bricks = current_puzzle[6] || [];
-  portals1 = current_puzzle[7] || 0;
-  portals2 = current_puzzle[8] || 0;
-  mirror = current_puzzle[9] || 0;
+  w = current_p[2];
+  h = current_p[3] || w;
+  floor = current_p[0];
+  wall = current_p[1];
+  bricks = current_p[6] || [];
+  portals1 = current_p[7] || 0;
+  portals2 = current_p[8] || 0;
+  mirror = current_p[9] || 0;
   //console.log(mirror);
 
   // Snake globals
-  snake_length = current_puzzle[4]-1; // without head  
-  par = current_puzzle[5];
-  snake_position = [[-3,2,0]];
-  head_position = [];
+  snake_length = current_p[4]-1; // without head  
+  par = current_p[5];
+  S = [[-3,2,0]];
+  hp = [];
   head_angles = [270];
   head_angles_modulo = [270];
   head_portal = [0];
@@ -93,29 +93,29 @@ draw_puzzle = () => {
   steps = 0;
   mirroring = 0;
   
-  var i, j, x, y, head_position, scale;
+  var i, j, x, y, hp, scale;
 
   // UI
   C.reset();
   
   // Scene
-  camrx = ((W==2&&puzzle==30)||(W==3&&puzzle==25))?50:30;
+  camrx = ((W==2&&p==30)||(W==3&&p==25))?50:30;
   camrz = 0;
   b.classList.remove("menu");
   b.classList.remove("win");
   
-  C.camera({z:-100+w*50+mirror*100-(mobile?0:200),x:-150,y:h*10,rx:camrx,rz:camrz});
+  C.c({z:-100+w*50+mirror*100-(mobile?0:200),x:-150,y:h*10,rx:camrx,rz:camrz});
   
   // Fade in
   setTimeout(()=>{b.classList.add("fadein");},1500);
   setTimeout(()=>{fade.style.display = "none";},2000);
   
   // Puzzle
-  C.plane({n:"floordiv",w:1500,h:1500,css:"floor circle"});
-  setTimeout(()=>{floordiv.style.height = '1450px'},500); // Fx fix
+  C.plane({n:"fd",w:1500,h:1500,css:"floor circle"});
+  setTimeout(()=>{fd.style.height = '1450px'},500); // Fx fix
   
-  C.group({n:"puzzlefloor",w:w*50,h:((floor || W > 3) ? h : 1)*50,z:2});
-  C.group({n:"puzzlewall",w:w*50,h:h*50,y:-((floor || W > 3) ? h : 1)*50/2,z:2,rx:-90,o:"bottom"});
+  C.group({n:"pf",w:w*50,h:((floor || W > 3) ? h : 1)*50,z:2});
+  C.group({n:"pw",w:w*50,h:h*50,y:-((floor || W > 3) ? h : 1)*50/2,z:2,rx:-90,o:"bottom"});
   
   // World 4
   if(W == 4){
@@ -124,56 +124,56 @@ draw_puzzle = () => {
     C.plane({w:5000,h:3000,x:500,y:-500,z:500,rx:45,css:"stars",html:svg[0]});
     
     // Rocket
-    if(puzzle == 1){
+    if(p == 1){
       C.plane({w:100,h:100,x:-200,y:-350,z:72,html:svg[1],rx:-90,sx:3,sy:3,sz:3,css:"rocket"});
       C.plane({w:100,h:100,x:-237,y:-395,z:3,html:svg[1],rx:356,ry:0,rz:319,sx:3,sy:3.5,sz:3,css:"rocket shadow"});
     }
     
     // Craters
-    for(i = 0; i < (puzzle == 1 ? 2: 3); i++){
-      C.plane({g:"puzzlefloor",x:(1.5-i)*300+Math.random()*50,y:-300+Math.random()*200,w:scale=100+Math.random()*100,h:scale,css:"crater"});
-      C.plane({g:"puzzlefloor",x:(1.5-i)*300+Math.random()*50,y:400+Math.random()*200,w:scale=100+Math.random()*100,h:scale,css:"crater"});
+    for(i = 0; i < (p == 1 ? 2: 3); i++){
+      C.plane({g:"pf",x:(1.5-i)*300+Math.random()*50,y:-300+Math.random()*200,w:scale=100+Math.random()*100,h:scale,css:"crater"});
+      C.plane({g:"pf",x:(1.5-i)*300+Math.random()*50,y:400+Math.random()*200,w:scale=100+Math.random()*100,h:scale,css:"crater"});
     }
   }
   
   
   if(mirror){
-    C.cube({g:"puzzlefloor",n:"wrap",w:w*50,h:h*50,d:h*50,x:w*50/2,y:h*50/2 + (W > 3 ? 2 : 0)});
+    C.cube({g:"pf",n:"wrap",w:w*50,h:h*50,d:h*50,x:w*50/2,y:h*50/2 + (W > 3 ? 2 : 0)});
   }
   
   if(floor){
     for(j = h; j--;){
       for(i = w; i--;){
-        C.plane({g:"puzzlefloor",n:"tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:52,h:52,css:"tile "+(((floor[j]>>i)&1) ? "black" : "")});
+        C.plane({g:"pf",n:"tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:52,h:52,css:"tile "+(((floor[j]>>i)&1) ? "black" : "")});
       }
     }
   }
   
   if(wall){
-    C.cube({g:"puzzlefloor",w:w*50+4,h:h*50+2,d:4,x:w*50/2,y:-2.1,z:2,css:"wall"});
+    C.cube({g:"pf",w:w*50+4,h:h*50+2,d:4,x:w*50/2,y:-2.1,z:2,css:"wall"});
     for(j = h; j--;){
       for(i = w; i--;){
-        C.plane({g:"puzzlewall",n:"wall_tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:52,h:52,css:"tile wall_tile "+(((wall[j]>>i)&1) ? "black" : "")});
+        C.plane({g:"pw",n:"wall_tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:52,h:52,css:"tile wall_tile "+(((wall[j]>>i)&1) ? "black" : "")});
       }
     }
   }
   
   // Snake's head
-  C.group({g:"puzzlefloor",n:"head",x:snake_position[0][0]*50+25,y:snake_position[0][1]*50+25,z:4});
-  C.group({g:"head",n:"head_scale"})
-  C.sprite({g:"head_scale",n:"head_circle",x:0,y:0,w:50,h:50,z:25,css:"head circle"});
-  C.group({g:"head_scale",n:"head_decoration",w:50,h:50,z:25});
-  C.group({g:"head_decoration",n:"head_decoration_inner",w:50,h:50,x:25,y:25,rz:head_angle});
-  C.group({g:"head_decoration_inner",n:"head_decoration_tilt",w:50,h:50,x:25,y:25});
-  C.plane({g:"head_decoration_tilt",x:25,y:15,z:27,w:30,h:15,rx:-20,css:"eyes emoji",html:[,"👀","🕶️","🥽","👀"][W]});
-  C.plane({g:"head_decoration_tilt",x:25,y:53,z:3,w:13,h:20,rx:180,css:"tongue",html:"Y"});
+  C.group({g:"pf",n:"head",x:S[0][0]*50+25,y:S[0][1]*50+25,z:4});
+  C.group({g:"head",n:"h2"})
+  C.sprite({g:"h2",n:"h3",x:0,y:0,w:50,h:50,z:25,css:"head circle"});
+  C.group({g:"h2",n:"h4",w:50,h:50,z:25});
+  C.group({g:"h4",n:"h5",w:50,h:50,x:25,y:25,rz:head_angle});
+  C.group({g:"h5",n:"h6",w:50,h:50,x:25,y:25});
+  C.plane({g:"h6",x:25,y:15,z:27,w:30,h:15,rx:-20,css:"eyes emoji",html:[,"👀","🕶️","🥽","👀"][W]});
+  C.plane({g:"h6",x:25,y:53,z:3,w:13,h:20,rx:180,css:"tongue",html:"Y"});
   
   // Snake's body
-  head_position = snake_position[0];
-  C.group({g:"puzzlefloor",n:"snakebody"});
+  hp = S[0];
+  C.group({g:"pf",n:"sb"});
   for(i = 1; i < snake_length * 5 + 1; i++){
-    C.plane({g:"snakebody",n:"body" + (snake_length * 5 - i),x:(head_position[0] - i/5)*50+25,y:head_position[1]*50+25,w:30,h:30,z:25,rx:-45,ry:5,css:"body circle " + (i%2 ? "odd" : ""),i:"afterBegin"});
-    snake_position.unshift([head_position[0]-i/5, head_position[1], 0]);
+    C.plane({g:"sb",n:"body" + (snake_length * 5 - i),x:(hp[0] - i/5)*50+25,y:hp[1]*50+25,w:30,h:30,z:25,rx:-45,ry:5,css:"body circle " + (i%2 ? "odd" : ""),i:"afterBegin"});
+    S.unshift([hp[0]-i/5, hp[1], 0]);
   }
   
   // Trees
@@ -184,8 +184,8 @@ draw_puzzle = () => {
       if((y < -3 || y > h+2) && (x < w || x > w + 3)){
         if(!trees.find(a => a[0] > (~~x)-4 && a[0] < (~~x)+4 && a[1] > (~~y)-3 && a[1] < (~~y)+2)){
           trees.push([~~x,~~y]);
-          C.sprite({g:"puzzlefloor",x:x*50-20,y:y*50,z:5,w:65,h:75,sx:1.8,sy:1.8,sz:1.8,css:"tree emoji",html:[,"🌳","🌵","🌲",""][W],o:"bottom center"});
-          C.plane({g:"puzzlefloor",x:x*50-20,y:y*50,z:2,rz:(W==1?280:311),w:65,h:75,sx:1.8,sy:2.5,sz:1.8,css:"tree shadow emoji",html:[,"🌳","🌵","🌲",""][W],o:"bottom center"});
+          C.sprite({g:"pf",x:x*50-20,y:y*50,z:5,w:65,h:75,sx:1.8,sy:1.8,sz:1.8,css:"tree emoji",html:[,"🌳","🌵","🌲",""][W],o:"bottom center"});
+          C.plane({g:"pf",x:x*50-20,y:y*50,z:2,rz:(W==1?280:311),w:65,h:75,sx:1.8,sy:2.5,sz:1.8,css:"tree shadow emoji",html:[,"🌳","🌵","🌲",""][W],o:"bottom center"});
         }
       }
     }
@@ -197,7 +197,7 @@ draw_puzzle = () => {
       if(!(x > -9 && x < w+1 && y > -2 && y < h+1)){
         if(!flowers.find(a => a[0] > (~~x)-2 && a[0] < (~~x)+2 && a[1] > (~~y)-2 && a[1] < (~~y)+2) && (y < 2 || y > 4) && !trees.find(a => a[0] > (~~x)-2 && a[0] < (~~x)+2 && a[1] > (~~y)-2 && a[1] < (~~y)+2)){
           flowers.push([~~x,~~y]);
-          C.plane({g:"puzzlefloor",w:45,h:W==1?34:42,z:5,x:x*50,y:y*50,z:1,rx:0,o:"bottom",css:"emoji flower",html:[,"🌼","🪨","❄️",""][W]});
+          C.plane({g:"pf",w:45,h:W==1?34:42,z:5,x:x*50,y:y*50,z:1,rx:0,o:"bottom",css:"emoji flower",html:[,"🌼","🪨","❄️",""][W]});
         }
       }
     }
@@ -225,15 +225,15 @@ draw_puzzle = () => {
           
         ][W]];
         scale = [,1.5,1.8,1.8][W];
-        C.plane({g:"puzzlefloor",w:50,h:55,z:8,x:x*50+20,y:y*50+15,z:3,rx:-50,sx:scale,sy:scale,sz:scale,o:"bottom",css:"emoji animal",html:"<div>"+animals[0][2]});
-        C.plane({g:"puzzlefloor",x:x*50+20,y:y*50-10,z:1,rz:350,w:50,h:55,css:"emoji animal shadow",html:animals[0][2],sx:scale,sy:scale,sz:scale,o:"bottom center"});
+        C.plane({g:"pf",w:50,h:55,z:8,x:x*50+20,y:y*50+15,z:3,rx:-50,sx:scale,sy:scale,sz:scale,o:"bottom",css:"emoji animal",html:"<div>"+animals[0][2]});
+        C.plane({g:"pf",x:x*50+20,y:y*50-10,z:1,rz:350,w:50,h:55,css:"emoji animal shadow",html:animals[0][2],sx:scale,sy:scale,sz:scale,o:"bottom center"});
       }
     }
   }
   
   // Bricks
   for(i of bricks){
-    C.cube({g:"puzzlefloor",x:i[0]*50+25,y:i[1]*50+24,z:(i[2]||0)*50-(W<4 ? 17 : 0),w:50,h:50,d:50,css:"cube bricks",html:(i[1]%2)?(svg[2]+svg[3]+svg[2]):(svg[3]+svg[2]+svg[3]),htmlside:((i[1]+i[2])%2)?(svg[3]+svg[2]+svg[3]):(svg[2]+svg[3]+svg[2])});
+    C.cube({g:"pf",x:i[0]*50+25,y:i[1]*50+24,z:(i[2]||0)*50-(W<4 ? 17 : 0),w:50,h:50,d:50,css:"cube bricks",html:(i[1]%2)?(svg[2]+svg[3]+svg[2]):(svg[3]+svg[2]+svg[3]),htmlside:((i[1]+i[2])%2)?(svg[3]+svg[2]+svg[3]):(svg[2]+svg[3]+svg[2])});
   }
   
   // Portals 1
@@ -241,11 +241,11 @@ draw_puzzle = () => {
     for(i of portals1){
       // Ground
       if(i[2] == 0 && floor){
-        C.plane({g:"puzzlefloor",n:"tile_"+i+"_"+j,x:25+i[0]*50,y:25+i[1]*50,z:1,w:52,h:52,css:"tile portal1"});
+        C.plane({g:"pf",n:"tile_"+i+"_"+j,x:25+i[0]*50,y:25+i[1]*50,z:1,w:52,h:52,css:"tile portal1"});
       }
       // Wall
       else {
-        C.plane({g:"puzzlefloor",n:"tile_"+i+"_"+j,x:25+i[0]*50,y:1,z:25+i[2]*50,w:52,h:52,rx:90,css:"tile portal1"});
+        C.plane({g:"pf",n:"tile_"+i+"_"+j,x:25+i[0]*50,y:1,z:25+i[2]*50,w:52,h:52,rx:90,css:"tile portal1"});
       }
     }
   }
@@ -255,27 +255,27 @@ draw_puzzle = () => {
     for(i of portals2){
       // Ground
       if(i[2] == 0 && floor){
-        C.plane({g:"puzzlefloor",n:"tile_"+i+"_"+j,x:25+i[0]*50,y:25+i[1]*50,z:1,w:52,h:52,css:"tile portal2"});
+        C.plane({g:"pf",n:"tile_"+i+"_"+j,x:25+i[0]*50,y:25+i[1]*50,z:1,w:52,h:52,css:"tile portal2"});
       }
       // Wall
       else {
-        C.plane({g:"puzzlefloor",n:"tile_"+i+"_"+j,x:25+i[0]*50,y:1,z:25+i[2]*50,w:52,h:52,rx:90,css:"tile portal2"});
+        C.plane({g:"pf",n:"tile_"+i+"_"+j,x:25+i[0]*50,y:1,z:25+i[2]*50,w:52,h:52,rx:90,css:"tile portal2"});
       }
     }
   }
   
   // PAR sign
-  C.plane({g:"puzzlefloor",x:w*50+105-55,y:-50+60,w:5,h:105,z:55,rx:-65,ry:-35,css:"sign"});
-  C.plane({g:"puzzlefloor",x:w*50+100-55,y:17,w:5,h:30,z:2,rx:0,ry:0,rz:-30,css:"sign shadow"});
-  C.plane({g:"puzzlefloor",x:w*50+105-55,y:-47+60,w:105,h:60,z:72,rx:-65,ry:-35,css:"sign",html:"Steps: <span id=st>0</span><br>Par: "+[par||"?"]});
-  C.plane({g:"puzzlefloor",x:w*50+78-55,y:-112+90,w:60,h:60,z:2,rx:0,ry:0,rz:-20,css:"sign shadow"});
+  C.plane({g:"pf",x:w*50+105-55,y:-50+60,w:5,h:105,z:55,rx:-65,ry:-35,css:"sign"});
+  C.plane({g:"pf",x:w*50+100-55,y:17,w:5,h:30,z:2,rx:0,ry:0,rz:-30,css:"sign shadow"});
+  C.plane({g:"pf",x:w*50+105-55,y:-47+60,w:105,h:60,z:72,rx:-65,ry:-35,css:"sign",html:"Steps: <span id=st>0</span><br>Par: "+[par||"?"]});
+  C.plane({g:"pf",x:w*50+78-55,y:-112+90,w:60,h:60,z:2,rx:0,ry:0,rz:-20,css:"sign shadow"});
 };
 
-check_puzzle = () => {
+check_p = () => {
   if(W < 1) return;
   var x, y, val, snake_on_current_cell;
   win = 1;
-  var current_positions = snake_position.slice(-(snake_length + 1) * 5);
+  var current_positions = S.slice(-(snake_length + 1) * 5);
   if(W == 4){
     if(!current_positions.every(a => a[0] > -1 && a[0] < w && a[1] > -1 && a[1] < h && a[2] < h)){
       win = 0;
@@ -345,41 +345,41 @@ check_puzzle = () => {
   if(win && !haltwin){
     if(custom){
       W = 0;
-      puzzle = 0;
+      p = 0;
     }
     else {
-      if(!save[W][puzzle] && !custom) { save[W][puzzle] = steps; coins++ }
-      else if(save[W][puzzle] > steps) { save[W][puzzle] = steps }
+      if(!save[W][p] && !custom) { save[W][p] = steps; coins++ }
+      else if(save[W][p] > steps) { save[W][p] = steps }
       localStorage["lossst"]=JSON.stringify(save);
-      puzzle++;
-      if(puzzle >= data[W].length){
+      p++;
+      if(p >= data[W].length){
         W++;
-        puzzle = 1;
-        if(lastW== 3 && W == 4){
+        p = 1;
+        if(lW== 3 && W == 4){
           if(coins > 99) W = -4; 
           else W = -1;
-          puzzle = 0
+          p = 0
         }
         if(W == 5){
           W = -1;
-          puzzle = 0;
+          p = 0;
         }
-        coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
+        t.innerHTML = "<span class=emoji>🪙</span> x " + coins;
       }
     }
     haltwin = 1;
     b.classList.add("win");
     setTimeout(()=>{
-      C.plane({g:"puzzlefloor",n:"coin",x:(next_target||head_position)[0]*50+25,y:y=(next_target||head_position)[1]*50+25,z:(next_target||head_position)[2]*50+45,w:50,h:50,rx:high?-90:-45,html:"🪙",css:"emoji coin",sx:.5,sy:.5,sz:.5});
+      C.plane({g:"pf",n:"coin",x:(n||hp)[0]*50+25,y:y=(n||hp)[1]*50+25,z:(n||hp)[2]*50+45,w:50,h:50,rx:high?-90:-45,html:"🪙",css:"emoji coin",sx:.5,sy:.5,sz:.5});
     },200);
     setTimeout(()=>{
-      C.move({n:"coin",y:y+50, z:head_position[2]*50+200,sx:1.5,sy:1.5,sz:1.5,ry:1080});
+      C.move({n:"coin",y:y+50, z:hp[2]*50+200,sx:1.5,sy:1.5,sz:1.5,ry:1080});
     },300);
     setTimeout(()=>{
       play_sound(coin_sound);
       haltwin = 0;
     },600);
-    setTimeout(()=>{song_interval = setInterval(play_next_note,300)},300);
+    setTimeout(()=>{I = setInterval(play_next_note,300)},300);
     setTimeout((custom ? () => {coin.style.opacity = 0} : fadeout),2000);
   }
   

@@ -7,10 +7,10 @@ body { background: #000; overscroll-behavior: contain; font: 14px calibri,arial,
 #scene svg { position: relative; top: -1px; }
 a { text-decoration: none; color: #fff }
 #b { max-width: 800px; margin: auto; }
-#viewport { width: 100%; height: 100vh; overflow: hidden; position: relative; perspective: 600px; }
-#viewport * { transform-style: preserve-3d; box-sizing: border-box }
-#camera { width: 0; height: 0; position: absolute; top: 60%; left: 50% }
-.puzzle #scene { transition: transform .5s }
+#v { width: 100%; height: 100vh; overflow: hidden; position: relative; perspective: 600px; }
+#v * { transform-style: preserve-3d; box-sizing: border-box }
+#c { width: 0; height: 0; position: absolute; top: 60%; left: 50% }
+.p #scene { transition: transform .5s }
 .instant #scene { transition: none }
 .circle { border-radius: 50% }
 .emoji { font-family: emoji; }
@@ -24,10 +24,10 @@ a { text-decoration: none; color: #fff }
   .dn:hover:before { content: "C"; background: linear-gradient(45deg, #e84, #b51); position: absolute; top: -50px; left: 0; width: 50px; border-radius: 5px; }
   #reset:hover:before { content: "R"; background: linear-gradient(45deg, #e84, #b51); position: absolute; top: -50px; left: 0; width: 50px; border-radius: 5px; }
 }
-.world4 .up, .world4 .dn { visibility: visible; display: inline-block; }
+.w4 .up, .w4 .dn { visibility: visible; display: inline-block; }
 #fade { position: fixed; top: 0; left: 0; width: 105%; height: 105%; z-index: 3; background: #000; transition: opacity .5s, background 5s; }
 .fadein #fade { opacity: 0 }
-#puzzlename, #coincount, .back { color: #fff; text-shadow: 0 0 10px #000; pointer-events: all; position: absolute; font-size: 30px; width: 50px; height: 50px; z-index: 2; top: 10px; }
+#pn, #t, .back { color: #fff; text-shadow: 0 0 10px #000; pointer-events: all; position: absolute; font-size: 30px; width: 50px; height: 50px; z-index: 2; top: 10px; }
 .back { left: 20px; }
-#puzzlename { width: 200px; left: 50%; transform: translateX(-50%); text-align: center; }
-#coincount { width: 150px; right: 20px; text-align: right; }
+#pn { width: 200px; left: 50%; transform: translateX(-50%); text-align: center; }
+#t { width: 150px; right: 20px; text-align: right; }

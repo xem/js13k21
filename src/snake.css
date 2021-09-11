@@ -1,5 +1,5 @@
 .head { background: radial-gradient(circle at 77%,#fa0,#a50); box-shadow: 0 0 5px #000; }
-#head, #head_decoration, #head_decoration_inner, #head_decoration_tilt { transition: transform .2s }
+#head, #h4, #h5, #h6 { transition: transform .2s }
 .body { background: linear-gradient(-90deg,#fa0,#a50); transition: transform .2s; }
 .body.odd { background: linear-gradient(-90deg,#c70,#720); }
 .eyes { font-size: 30px }
@@ -7,16 +7,16 @@
 .body:last-of-type { display: none }
 .body:nth-last-of-type(2) { display: none }
 .mirroring #head { transition: none }
-.world2 .head { background: radial-gradient(circle at 77%,#07f,#048); box-shadow: 0 0 5px #000; }
-.world2 .body.odd { background: linear-gradient(-90deg,#29f,#26a); }
-.world2 .body { background: linear-gradient(-90deg,#07f,#048); }
-.world3 .head { background: radial-gradient(circle at 77%,#e40,#930); box-shadow: 0 0 5px #000; }
-.world3 .body.odd { background: linear-gradient(#e40,#930); }
-.world3 .body { background: linear-gradient(#b30,#620); }
-.world4 .head { background: radial-gradient(circle at 77%,#fe4,#776); box-shadow: 0 0 5px #000; }
-.world4 .body.odd { background: linear-gradient(#cb3,#555); }
-.world4 .body { background: linear-gradient(#fe4,#776); }
-.world2 .tongue { color: #740 }
-.world3 .tongue { color: #24e }
-.world4 .tongue { color: #888 }
-.world2 .eyes, .world3 .eyes { width: 40px !important; height: 30px !important; font-size: 50px; }
+.w2 .head { background: radial-gradient(circle at 77%,#07f,#048); box-shadow: 0 0 5px #000; }
+.w2 .body.odd { background: linear-gradient(-90deg,#29f,#26a); }
+.w2 .body { background: linear-gradient(-90deg,#07f,#048); }
+.w3 .head { background: radial-gradient(circle at 77%,#e40,#930); box-shadow: 0 0 5px #000; }
+.w3 .body.odd { background: linear-gradient(#e40,#930); }
+.w3 .body { background: linear-gradient(#b30,#620); }
+.w4 .head { background: radial-gradient(circle at 77%,#fe4,#776); box-shadow: 0 0 5px #000; }
+.w4 .body.odd { background: linear-gradient(#cb3,#555); }
+.w4 .body { background: linear-gradient(#fe4,#776); }
+.w2 .tongue { color: #740 }
+.w3 .tongue { color: #24e }
+.w4 .tongue { color: #888 }
+.w2 .eyes, .w3 .eyes { width: 40px !important; height: 30px !important; font-size: 50px; }

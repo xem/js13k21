@@ -1,20 +1,19 @@
 .menu #b { max-width: 500px; border: none; box-shadow: none; height: auto; }
 .menu, .menu * { pointer-events: all }
 .menu .dpad { display: none }
-.world0 .back, .intro .back { display: none }
+.w0 .back, .intro .back { display: none }
 .menu { color: #fff; }
 .main { width: 70vh; text-align: center; transform: translateX(-50%)translateY(-50%)rotateX(-40deg); font-size: 40px; text-shadow: 0 -.5vh #888; line-height: 1.8; }
-.world-2 .main { transform: translateX(-50%)translateY(-50%)rotateX(-30deg); }
+.w-2 .main { transform: translateX(-50%)translateY(-50%)rotateX(-30deg); }
 .main h1 { font-size: 80px; line-height: 1.4; letter-spacing:-7px;}
 .levels { font-size: 5vh; max-height: 150vh; margin: 10vh 0 0; overflow: auto; padding: 0 0 50vh; transform: translateX(-50%)translateY(-50%)translateY(5vh)translateZ(-30vh)rotateX(-30deg); }
 .levels span { display: inline-block; border: 5px solid #fff; width: 9vh; height: 9vh; margin: 2vh; box-shadow: 0px -4px #888; cursor: pointer; }
 .bonus span { font-size: 20px; line-height: .6; display: block; text-shadow: none; margin: -2vh 0 2vh; }
-.world0 h1 { color: #ddd }
-.world0 b { font-size: 30px; line-height: .6; display: block; text-shadow: 2px -2px 2px #000; margin: -35px 0 4vh; color: #ddd; }
+.w0 h1 { color: #ddd }
+.w0 b { font-size: 30px; line-height: .6; display: block; text-shadow: 2px -2px 2px #000; margin: -35px 0 4vh; color: #ddd; }
 .hide { opacity: .01 }
 .won { background: #090 }
 .par { background: #db0 }
-/*.par:before { content: "🥇"; position: absolute; font-family: emoji; top: -20px; right: -10px;}*/
 
 /* Intro */
 .intro #scene,.intro .sprite { transition: 5s }
@@ -26,4 +25,4 @@
 .intro2 .eyes { transition: transform .05s }
 .sign { background: linear-gradient(45deg, #e84, #b51); text-align: center; padding: 5px; font-size: 22px; line-height: 1.1; }
 text { font-size: 20px }
-#presents { opacity: 0; z-index: 3; font-size: 50px; width: 100%; text-align: center; color: #fff; position: fixed; left: 50%; top: 50%; transform: translateX(-50%)translateY(-50%); transition: opacity .5s; }
+#e { opacity: 0; z-index: 3; font-size: 50px; width: 100%; text-align: center; color: #fff; position: fixed; left: 50%; top: 50%; transform: translateX(-50%)translateY(-50%); transition: opacity .5s; }
