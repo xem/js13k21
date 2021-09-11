@@ -56,6 +56,8 @@ ontouchend = onmouseup = e => {
 // Pointer move
 onmousemove = ontouchmove = e => {
   
+  e.preventDefault();
+  
   if(puzzle == 0) return;
   
   var real_target, dx, dy;
