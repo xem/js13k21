@@ -104,7 +104,7 @@ draw_puzzle = () => {
   b.classList.remove("menu");
   b.classList.remove("win");
   
-  C.camera({z:-100+w*50+mirror*100,x:-150,y:h*10,rx:camrx,rz:camrz});
+  C.camera({z:-100+w*50+mirror*100-(mobile?0:200),x:-150,y:h*10,rx:camrx,rz:camrz});
   
   // Fade in
   setTimeout(()=>{b.classList.add("fadein");},1500);
@@ -265,10 +265,10 @@ draw_puzzle = () => {
   }
   
   // PAR sign
-  C.plane({g:"puzzlefloor",x:w*50+105-50,y:-50+60,w:5,h:105,z:55,rx:-95,ry:-35,css:"sign"});
-  C.plane({g:"puzzlefloor",x:w*50+100-50,y:-73+60,w:5,h:30,z:2,rx:0,ry:0,rz:-30,css:"sign shadow"});
-  C.plane({g:"puzzlefloor",x:w*50+105-50,y:-47+60,w:105,h:60,z:72,rx:-95,ry:-35,css:"sign",html:"Steps: <span id=st>0</span><br>Par: "+[par||"?"]});
-  C.plane({g:"puzzlefloor",x:w*50+78-50,y:-112+60,w:105,h:60,z:2,rx:0,ry:0,rz:-30,css:"sign shadow"});
+  C.plane({g:"puzzlefloor",x:w*50+105-55,y:-50+60,w:5,h:105,z:55,rx:-65,ry:-35,css:"sign"});
+  C.plane({g:"puzzlefloor",x:w*50+100-55,y:17,w:5,h:30,z:2,rx:0,ry:0,rz:-30,css:"sign shadow"});
+  C.plane({g:"puzzlefloor",x:w*50+105-55,y:-47+60,w:105,h:60,z:72,rx:-65,ry:-35,css:"sign",html:"Steps: <span id=st>0</span><br>Par: "+[par||"?"]});
+  C.plane({g:"puzzlefloor",x:w*50+78-55,y:-112+90,w:60,h:60,z:2,rx:0,ry:0,rz:-20,css:"sign shadow"});
 };
 
 check_puzzle = () => {
