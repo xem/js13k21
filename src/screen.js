@@ -3,11 +3,11 @@ draw_screen = () => {
 
   // Custom puzzle
   if(location.hash && location.hash.length > 1){
-    world = 1;
+    W = 1;
     puzzle = 99;
     scene.innerHTML = "";
     custom = eval(decodeURI(location.hash.slice(1)));
-    if(custom) b.className = "puzzle world" + (world = custom[10]);
+    if(custom) b.className = "puzzle world" + (W= custom[10]);
     draw_puzzle();
     return;
   }
@@ -26,47 +26,47 @@ draw_screen = () => {
   // Add "menu" and current world to body's class
   b.className = "";
   b.classList.add("menu");
-  b.classList.add("world" + world);
+  b.classList.add("world" + W);
   if(mobile) b.classList.add("m");
   
   // Fade in
   fade.style.display = "block";
   if(puzzle == 0) {
-    setTimeout(()=>{b.classList.add("fadein");},(world == -3 ? 2000 : 500) );
-    setTimeout(()=>{fade.style.display = "none";},(world == -3 ? 1500 : 1000) );
+    setTimeout(()=>{b.classList.add("fadein");},(W== -3 ? 2000 : 500) );
+    setTimeout(()=>{fade.style.display = "none";},(W== -3 ? 1500 : 1000) );
   }
   
   html = "";
   scene.innerHTML = "";
   
   // World 0: main menu
-  if(world == 0){
+  if(W== 0){
     puzzle = 0;
-    html = "<div class=main><h1>LOSSST</h1><b>A Snake in Space</b><p><a onclick='cont();fadeout()'><h2>"+(save[1][1]?coins>164?"":"Continue":"PLAY")+"</h2></a><p><a onclick=world=-1;fadeout()>Select puzzle</a><p><a onclick=world=-2;fadeout()>Bonus</a><p class='emoji hide'>🌼";
+    html = "<div class=main><h1>LOSSST</h1><b>A Snake in Space</b><p><a onclick='cont();fadeout()'><h2>"+(save[1][1]?coins>164?"":"Continue":"PLAY")+"</h2></a><p><a onclick=W=-1;fadeout()>Select puzzle</a><p><a onclick=W=-2;fadeout()>Bonus</a><p class='emoji hide'>🌼";
     scene.innerHTML = html;
   }
   
   // World -1: levels
-  else if(world == -1){
+  else if(W == -1){
     html = "<div class='main levels'><h1>PUZZLES</h1>";
     for(var i in data){
       if(i != 0){
-        if(i == 4) html += "<h2 id='world_"+i+"'>The Moon!</h2>";
-        else html += "<h2 id='world_"+i+"'>World " + i + "</h2>";
+        if(i == 4) html += "<h2>The Moon!</h2>";
+        else html += "<h2>World " + i + "</h2>";
         if(i==1){
-          html += "<span style='width:61vh' onclick='world=-3;puzzle=0;fadeout()'>Intro</span><br>";
+          html += "<span style='width:61vh' onclick='W=-3;puzzle=0;fadeout()'>Intro</span><br>";
         }
         if(coins < [0,0,25,50,100][i]){
           html += [0,0,25,50,100][i] + " coins to unlock";
         }
         else {
           if(i==4){
-          html += "<span style='width:61vh' onclick='world=-4;fadeout()'>Take off!</span><br>";
+          html += "<span style='width:61vh' onclick='W=-4;fadeout()'>Take off!</span><br>";
         }
           for(j in data[i]){
             //if(i==1)console.log(save[i][j], data[i][j]);
             if(j != 0){
-              html += "<span class='"+ (save[i][j] ? "won" : "") + (save[i][j] && save[i][j] <= data[i][j][5] ? " par" : "") + "' onclick='world="+i+";puzzle="+j+";lastworld=9;fadeout()'>" + j + "</span>";
+              html += "<span class='"+ (save[i][j] ? "won" : "") + (save[i][j] && save[i][j] <= data[i][j][5] ? " par" : "") + "' onclick='W="+i+";puzzle="+j+";lastW=9;fadeout()'>" + j + "</span>";
             }
           }
         }
@@ -76,13 +76,13 @@ draw_screen = () => {
   }
   
   // World -2: Bonus
-  else if(world == -2){
-    html = `<div class='main bonus'><h1>BONUS</h1><p><a onclick='document.monetization&&document.monetization.state=="started"?open("//xem.github.io/js13k21/editor"):(confirm("Log on Coil?")&&open("//coil.com/login"))'>Puzzle editor</a><span>(WebMonetization bonus)<p><a href=//xem.github.io/js13k21/FLUX>Snake editor</a><span>(FLUX bonus)<p><a href=//xem.github.io/js13k21/IPFS>Leaderboards</a><span>(IPFS bonus)<p><a onclick='open("//xem.github.io/js13k21/NEAR")'>Shop</a><span>(NEAR bonus)<p><a onclick='if(confirm("Sure?"))delete localStorage.lossst,coins=0,fadeout()'>Delete save</a><p><a onclick='location="//xem.github.io/js13k21/share#"+JSON.stringify(save)'>Share</a><p><a href=//xem.github.io/articles/js13k21.html>Making-of`;
+  else if(W == -2){
+    html = `<div class='main bonus'><h1>BONUS</h1><p><a onclick='document.monetization&&document.monetization.state=="started"?open("//xem.github.io/js13k21/editor"):(confirm("Log on Coil?")&&open("//coil.com/login"))'>Puzzle editor</a><span>(WebMonetization bonus)<p><a href=//xem.github.io/js13k21/FLUX>Snake editor</a><span>(FLUX bonus)<p><a href=//xem.github.io/js13k21/IPFS>Leaderboards</a><span>(IPFS bonus)<p><a onclick='open("//xem.github.io/js13k21/NEAR")'>Shop</a><span>(NEAR bonus)<p><a onclick='if(confirm("Sure?"))delete localStorage.lossst,location=location'>Delete save</a><p><a onclick='location="//xem.github.io/js13k21/share#"+JSON.stringify(save)'>Share</a><p><a href=//xem.github.io/articles/js13k21.html>Making-of`;
     scene.innerHTML = html;
   }
   
-  // World -3: Intro
-  else if(world <= -3){
+  // World -3/-4: Intro
+  else if(W <= -3){
     intro();
   }
   
@@ -106,11 +106,11 @@ nav_back = () => {
     note = 0;
   }
   else if(puzzle){
-    world = -1;
+    W= -1;
     puzzle = 0;
   }
   else {
-    world = 0;
+    W= 0;
   }
   fadeout();
 }
@@ -124,7 +124,7 @@ fadeout = (text) => {
   fade.style.display = "block";
   presents.innerHTML = "";
   
-  if(lastworld == 3 && lastpuzzle > 35 && win){ // 3 - 36 to 45
+  if(lastW== 3 && lastpuzzle > 35 && win){ // 3 - 36 to 45
     setTimeout(()=>presents.style.opacity=1, 800);
     text = "<p><table id=ta width=450 height=180>";
     for(k = 1; k < 11; k++){
@@ -152,7 +152,7 @@ fadeout = (text) => {
     }
   }
   
-  if(lastworld == 4 && lastpuzzle > 36 && win){ // 3 - 37 to 40
+  if(lastW== 4 && lastpuzzle > 36 && win){ // 3 - 37 to 40
     setTimeout(()=>presents.style.opacity=1, 800);
     text = "<p><table id=ta width=70 height=620>";
     for(k = 1; k < 5; k++){
@@ -187,28 +187,28 @@ fadeout = (text) => {
   setTimeout(()=>{b.classList.remove("fadein")},100);
   if(text){
     if(!secret) presents.innerHTML = text;
-    else if(lastworld == 3){
+    else if(lastW== 3){
       setTimeout(()=>{C.$("pu"+ (46 - lastpuzzle)).style.transform="";},1000);
     }
-    else if(lastworld == 4){
+    else if(lastW== 4){
       //console.log(lastpuzzle - 36, C.$("pu"+ (lastpuzzle - 36)), C.$("pu"+ (lastpuzzle - 36)).style.transform)
       
       setTimeout(()=>{C.$("pu"+ (lastpuzzle - 36)).style.transform="";},1000);
     }
     setTimeout(()=>presents.style.opacity=1, 800);
-    setTimeout(()=>presents.style.opacity=0, ((lastworld == 3 && secret == 10) || (lastworld == 4 && secret == 4)) ? 11500 : 3500);
-    if(lastworld == 3 && secret == 10){
-      setTimeout(()=>{b.classList.add("egg3");lastpuzzle = lastworld = 0;}, 2500);
+    setTimeout(()=>presents.style.opacity=0, ((lastW== 3 && secret == 10) || (lastW== 4 && secret == 4)) ? 11500 : 3500);
+    if(lastW== 3 && secret == 10){
+      setTimeout(()=>{b.classList.add("egg3");lastpuzzle = lastW= 0;}, 2500);
     }
-    if(lastworld == 4 && secret == 4){
-      setTimeout(()=>{b.classList.add("egg4");lastpuzzle = lastworld = 0;}, 2500);
+    if(lastW== 4 && secret == 4){
+      setTimeout(()=>{b.classList.add("egg4");lastpuzzle = lastW= 0;}, 2500);
       setTimeout(()=>{open("//xem.github.io/js13k21/share#"+JSON.stringify(save))}, 11500);
     }
-    setTimeout(draw_screen, ((lastworld == 3 && secret == 10) || (lastworld == 4 && secret == 4)) ? 12000 : 4000);
+    setTimeout(draw_screen, ((lastW== 3 && secret == 10) || (lastW== 4 && secret == 4)) ? 12000 : 4000);
     
   }
   else {
-    //lastpuzzle = lastworld = 0;
+    //lastpuzzle = lastW= 0;
     setTimeout(draw_screen, 600);
   }
   
@@ -219,7 +219,7 @@ intro = () => {
   
   // UI
   C.reset();
-  if(world == -3) song = 0;
+  if(W== -3) song = 0;
   presents.innerHTML = "js13kGames<br>presents";
   
   play_note(1);
@@ -227,7 +227,7 @@ intro = () => {
   play_note(1);
   clearInterval(song_interval);
   
-  if(world == -3)
+  if(W== -3)
     C.camera({x:-200,y:50,z:-200,rx:50,rz:30});
   else 
     C.camera({x:-200,y:50,z:200,rx:50,rz:0});
@@ -286,7 +286,7 @@ intro = () => {
   }
   
   // Flowers
-  if(world == -3){
+  if(W== -3){
     for(i = 0; i < 15; i++){
       x = ~~(Math.random() * 15) - 6;
       y = ~~(Math.random() * 15) - 6;
@@ -300,15 +300,15 @@ intro = () => {
   
   // Stars
   C.plane({w:5000,h:3000,x:-1000,z:1000,rx:45,css:"stars",html:svg[0]});
-  C.plane({x:-100,y:world==-4?500:0,z:world==-4?2000:900,rx:45,rz:-70,sx:2,sy:2,sz:2,css:"emoji moon",html:"🌙"});
+  C.plane({x:-100,y:W<-3?500:0,z:W<-3?2000:900,rx:45,rz:-70,sx:2,sy:2,sz:2,css:"emoji moon",html:"🌙"});
 
   // Move right 7 times (world 1) / 10 times (world 4)
-  for(i = 0; i < (7 + ((world == -3) ? 0 : 3)); i++){
+  for(i = 0; i < (7 + ((W== -3) ? 0 : 3)); i++){
     setTimeout(()=>{r=1;halt=0;move_snake(b);r=0;}, 300 + i * 250);
   }
     
   // Animation (world 1):
-  if(world == -3){
+  if(W== -3){
     
     // Sign
     C.plane({x:300,y:220,w:5,h:105,z:55,rx:-90,ry:-35,css:"sign"});
@@ -362,7 +362,7 @@ intro = () => {
     
     // Fade out
     setTimeout(()=>{
-      world = 1;
+      W= 1;
       puzzle = 1;
       fadeout("<h1>LOSSST</h1>");
     }, 30000);
@@ -391,7 +391,7 @@ intro = () => {
     }, 4000);
     
     setTimeout(()=>{
-      world = 4;
+      W= 4;
       puzzle = 1;
       fadeout();
     }, 10000);
@@ -406,22 +406,22 @@ intro = () => {
 };
 
 cont = () => {
-  //world = puzzle = 1;
+  //W= puzzle = 1;
   var i,j;
   if(save[1][1]){
     for(i = 1; i < 5; i++){
       for(j = 1; j < data[i].length; j++){
         if(!save[i][j]) {
-          world=i;
+          W=i;
           puzzle=j;
-          lastworld=9;
+          lastW=9;
           return;
         }
       }
     }
   }
   else{
-    world = -3;
+    W= -3;
     puzzle = 0;
   }
 }

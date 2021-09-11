@@ -1,7 +1,7 @@
 // Draw current puzzle
 draw_puzzle = () => {
   
-  if(world == 1){
+  if(W== 1){
     if(puzzle > 30){
       set_song(3)
     }
@@ -14,7 +14,7 @@ draw_puzzle = () => {
       set_song(1)
     }
   }
-  else if(world == 2){
+  else if(W== 2){
     if(puzzle > 15){
       set_song(5)
     }
@@ -23,7 +23,7 @@ draw_puzzle = () => {
       set_song(4);
     }
   }
-  else if(world == 3){
+  else if(W== 3){
     if(puzzle > 30){
       set_song(8)
     }
@@ -36,7 +36,7 @@ draw_puzzle = () => {
       set_song(6)
     }
   }
-  else if(world == 4){
+  else if(W== 4){
     if(puzzle > 15){
       set_song(10)
     }
@@ -47,18 +47,18 @@ draw_puzzle = () => {
   }
   //console.log(custom);
   // Keep track of current world/puzzle for easter-eggs
-  lastworld = world;
+  lastW= W;
   lastpuzzle = puzzle;
   
-  if(puzzle && !custom) puzzlename.innerHTML = world + " - " + puzzle;
+  if(puzzle && !custom) puzzlename.innerHTML = W + " - " + puzzle;
   if(coins && !custom) coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;
   
   // Puzzle
-  current_puzzle = custom || data[world][puzzle];
+  current_puzzle = custom || data[W][puzzle];
   //console.log(current_puzzle);
   
   if(puzzle > 5 && !(location.host.includes("s13k") || location.host.includes("calh")  || location.host.includes("xem.github.io"))){
-    location = "//js13kgames.com/entries/lossst-a-snake-in-space";
+    location = "//xem.github.io/js13k21";
   }
   
   w = current_puzzle[2];
@@ -99,7 +99,7 @@ draw_puzzle = () => {
   C.reset();
   
   // Scene
-  camrx = ((world==2&&puzzle==30)||(world==3&&puzzle==25))?50:30;
+  camrx = ((W==2&&puzzle==30)||(W==3&&puzzle==25))?50:30;
   camrz = 0;
   b.classList.remove("menu");
   b.classList.remove("win");
@@ -114,11 +114,11 @@ draw_puzzle = () => {
   C.plane({n:"floordiv",w:1500,h:1500,css:"floor circle"});
   setTimeout(()=>{floordiv.style.height = '1450px'},500); // Fx fix
   
-  C.group({n:"puzzlefloor",w:w*50,h:((floor || world > 3) ? h : 1)*50,z:2});
-  C.group({n:"puzzlewall",w:w*50,h:h*50,y:-((floor || world > 3) ? h : 1)*50/2,z:2,rx:-90,o:"bottom"});
+  C.group({n:"puzzlefloor",w:w*50,h:((floor || W > 3) ? h : 1)*50,z:2});
+  C.group({n:"puzzlewall",w:w*50,h:h*50,y:-((floor || W > 3) ? h : 1)*50/2,z:2,rx:-90,o:"bottom"});
   
   // World 4
-  if(world == 4){
+  if(W == 4){
     
     // Stars
     C.plane({w:5000,h:3000,x:500,y:-500,z:500,rx:45,css:"stars",html:svg[0]});
@@ -138,7 +138,7 @@ draw_puzzle = () => {
   
   
   if(mirror){
-    C.cube({g:"puzzlefloor",n:"wrap",w:w*50,h:h*50,d:h*50,x:w*50/2,y:h*50/2 + (world > 3 ? 2 : 0)});
+    C.cube({g:"puzzlefloor",n:"wrap",w:w*50,h:h*50,d:h*50,x:w*50/2,y:h*50/2 + (W > 3 ? 2 : 0)});
   }
   
   if(floor){
@@ -165,7 +165,7 @@ draw_puzzle = () => {
   C.group({g:"head_scale",n:"head_decoration",w:50,h:50,z:25});
   C.group({g:"head_decoration",n:"head_decoration_inner",w:50,h:50,x:25,y:25,rz:head_angle});
   C.group({g:"head_decoration_inner",n:"head_decoration_tilt",w:50,h:50,x:25,y:25});
-  C.plane({g:"head_decoration_tilt",x:25,y:15,z:27,w:30,h:15,rx:-20,css:"eyes emoji",html:[,"👀","🕶️","🥽","👀"][world]});
+  C.plane({g:"head_decoration_tilt",x:25,y:15,z:27,w:30,h:15,rx:-20,css:"eyes emoji",html:[,"👀","🕶️","🥽","👀"][W]});
   C.plane({g:"head_decoration_tilt",x:25,y:53,z:3,w:13,h:20,rx:180,css:"tongue",html:"Y"});
   
   // Snake's body
@@ -177,27 +177,27 @@ draw_puzzle = () => {
   }
   
   // Trees
-  if(world < 4) {
+  if(W < 4) {
     for(i = 0; i < 10; i++){
       x = (Math.random() * 14).toFixed(1) - 5;
       y = (Math.random() * 18).toFixed(1) - 6;
       if((y < -3 || y > h+2) && (x < w || x > w + 3)){
-        if(!trees.find(a => a[0] > (~~x)-4 && a[0] < (~~x)+4 && a[1] > (~~y)-2 && a[1] < (~~y)+2)){
+        if(!trees.find(a => a[0] > (~~x)-4 && a[0] < (~~x)+4 && a[1] > (~~y)-3 && a[1] < (~~y)+2)){
           trees.push([~~x,~~y]);
-          C.sprite({g:"puzzlefloor",x:x*50-20,y:y*50,z:5,w:65,h:75,sx:1.8,sy:1.8,sz:1.8,css:"tree emoji",html:[,"🌳","🌵","🌲",""][world],o:"bottom center"});
-          C.plane({g:"puzzlefloor",x:x*50-20,y:y*50,z:2,rz:(world==1?280:311),w:65,h:75,sx:1.8,sy:2.5,sz:1.8,css:"tree shadow emoji",html:[,"🌳","🌵","🌲",""][world],o:"bottom center"});
+          C.sprite({g:"puzzlefloor",x:x*50-20,y:y*50,z:5,w:65,h:75,sx:1.8,sy:1.8,sz:1.8,css:"tree emoji",html:[,"🌳","🌵","🌲",""][W],o:"bottom center"});
+          C.plane({g:"puzzlefloor",x:x*50-20,y:y*50,z:2,rz:(W==1?280:311),w:65,h:75,sx:1.8,sy:2.5,sz:1.8,css:"tree shadow emoji",html:[,"🌳","🌵","🌲",""][W],o:"bottom center"});
         }
       }
     }
     
     // Flowers / Rocks / ice
-    for(i = 0; i < (world == 3 ? 30 : 10); i++){
+    for(i = 0; i < (W == 3 ? 30 : 10); i++){
       x = (Math.random() * 14).toFixed(1) - 5;
       y = (Math.random() * 10).toFixed(1) - 5;
       if(!(x > -9 && x < w+1 && y > -2 && y < h+1)){
         if(!flowers.find(a => a[0] > (~~x)-2 && a[0] < (~~x)+2 && a[1] > (~~y)-2 && a[1] < (~~y)+2) && (y < 2 || y > 4) && !trees.find(a => a[0] > (~~x)-2 && a[0] < (~~x)+2 && a[1] > (~~y)-2 && a[1] < (~~y)+2)){
           flowers.push([~~x,~~y]);
-          C.plane({g:"puzzlefloor",w:45,h:world==1?34:42,z:5,x:x*50,y:y*50,z:1,rx:0,o:"bottom",css:"emoji flower",html:[,"🌼","🪨","❄️",""][world]});
+          C.plane({g:"puzzlefloor",w:45,h:W==1?34:42,z:5,x:x*50,y:y*50,z:1,rx:0,o:"bottom",css:"emoji flower",html:[,"🌼","🪨","❄️",""][W]});
         }
       }
     }
@@ -223,8 +223,8 @@ draw_puzzle = () => {
           // World 4
           [x,y,""],
           
-        ][world]];
-        scale = [,1.5,1.8,1.8][world];
+        ][W]];
+        scale = [,1.5,1.8,1.8][W];
         C.plane({g:"puzzlefloor",w:50,h:55,z:8,x:x*50+20,y:y*50+15,z:3,rx:-50,sx:scale,sy:scale,sz:scale,o:"bottom",css:"emoji animal",html:"<div>"+animals[0][2]});
         C.plane({g:"puzzlefloor",x:x*50+20,y:y*50-10,z:1,rz:350,w:50,h:55,css:"emoji animal shadow",html:animals[0][2],sx:scale,sy:scale,sz:scale,o:"bottom center"});
       }
@@ -233,7 +233,7 @@ draw_puzzle = () => {
   
   // Bricks
   for(i of bricks){
-    C.cube({g:"puzzlefloor",x:i[0]*50+25,y:i[1]*50+24,z:(i[2]||0)*50-(world<4 ? 17 : 0),w:50,h:50,d:50,css:"cube bricks",html:(i[1]%2)?(svg[9]+svg[10]+svg[9]):(svg[10]+svg[9]+svg[10]),htmlside:((i[1]+i[2])%2)?(svg[10]+svg[9]+svg[10]):(svg[9]+svg[10]+svg[9])});
+    C.cube({g:"puzzlefloor",x:i[0]*50+25,y:i[1]*50+24,z:(i[2]||0)*50-(W<4 ? 17 : 0),w:50,h:50,d:50,css:"cube bricks",html:(i[1]%2)?(svg[2]+svg[3]+svg[2]):(svg[3]+svg[2]+svg[3]),htmlside:((i[1]+i[2])%2)?(svg[3]+svg[2]+svg[3]):(svg[2]+svg[3]+svg[2])});
   }
   
   // Portals 1
@@ -272,11 +272,11 @@ draw_puzzle = () => {
 };
 
 check_puzzle = () => {
-  if(world < 1) return;
+  if(W < 1) return;
   var x, y, val, snake_on_current_cell;
   win = 1;
   var current_positions = snake_position.slice(-(snake_length + 1) * 5);
-  if(world == 4){
+  if(W == 4){
     if(!current_positions.every(a => a[0] > -1 && a[0] < w && a[1] > -1 && a[1] < h && a[2] < h)){
       win = 0;
     }
@@ -316,7 +316,7 @@ check_puzzle = () => {
     for(y = 0; y < h; y++){
       for(x = 0; x < w; x++){
         val = (wall[y]>>x)&1
-        snake_on_current_cell = current_positions.find(a => a[0] == x && a[1] >= 0 && a[1] < ((world > 3 || floor) ? h : 1) && a[2] == h - y - 1);
+        snake_on_current_cell = current_positions.find(a => a[0] == x && a[1] >= 0 && a[1] < ((W > 3 || floor) ? h : 1) && a[2] == h - y - 1);
         
         // Not ok if there's a snake body part on a white cell
         if(val == 0){
@@ -344,24 +344,24 @@ check_puzzle = () => {
   }
   if(win && !haltwin){
     if(custom){
-      world = 0;
+      W = 0;
       puzzle = 0;
     }
     else {
-      if(!save[world][puzzle] && !custom) { save[world][puzzle] = steps; coins++ }
-      else if(save[world][puzzle] > steps) { save[world][puzzle] = steps }
+      if(!save[W][puzzle] && !custom) { save[W][puzzle] = steps; coins++ }
+      else if(save[W][puzzle] > steps) { save[W][puzzle] = steps }
       localStorage["lossst"]=JSON.stringify(save);
       puzzle++;
-      if(puzzle >= data[world].length){
-        world++;
+      if(puzzle >= data[W].length){
+        W++;
         puzzle = 1;
-        if(lastworld == 3 && world == 4){
-          if(coins > 99) world = -4; 
-          else world = -1;
+        if(lastW== 3 && W == 4){
+          if(coins > 99) W = -4; 
+          else W = -1;
           puzzle = 0
         }
-        if(world == 5){
-          world = -1;
+        if(W == 5){
+          W = -1;
           puzzle = 0;
         }
         coincount.innerHTML = "<span class=emoji>🪙</span> x " + coins;

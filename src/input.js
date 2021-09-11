@@ -2,7 +2,6 @@
 pointer_down = 0;
 pointer_start_x = 0;
 pointer_start_y = 0;
-pointer_mode = null;
 halt = 0;
 
 // Pointer down (mouse or finger)
@@ -23,20 +22,9 @@ onmousedown = ontouchstart = e => {
   // Ignore the D-pad
   if(e.target.tagName == "svg") return;
   if(e.target.id == "back") return;
-  
-  // If the snake's head is pointed: prepare to move it
-  /*if(e.target.id == "head_circle"){
-    pointer_mode = "move";
-    
-    // Save head coordinates
-    head_position = snake_position[snake_position.length - 1];
-  }*/
-  
+
   // Else: prepare to rotate the camera
-  //else {
-    pointer_mode = "cam";
-    b.classList.add("instant");
-  //}
+  b.classList.add("instant");
 }
 
 // Pointer up
@@ -66,7 +54,7 @@ onmousemove = ontouchmove = e => {
   if(e.touches) e = e.touches[0];
 
   // Mode "camera rotation"
-  if(pointer_mode == "cam"){
+  //if(pointer_mode == "cam"){
     
     // Find cursor delta X/Y since pointer down or last pointer move
     dx = pointer_start_x - e.pageX;
@@ -92,7 +80,7 @@ onmousemove = ontouchmove = e => {
     
     // Rotate camera
     C.camera({rx:camrx,rz:camrz}) 
-  }
+  //}
 }
 
 oncontextmenu = () => { return false; }
@@ -110,7 +98,7 @@ onkeydown = onkeyup = e => {
 }
 
 setInterval(() => {
-  if(world > 0 && snake_position) move_snake();
+  if(W > 0 && snake_position) move_snake();
 },33);
 
 onscroll = e => e.preventDefault();

@@ -1,0 +1,109 @@
+JS global vars (except functions)
+
+w =
+h = 
+world = W
+puzzle = p
+lastworld = lw
+lastpuzzle = lp
+coins = C
+win =
+haltwin = h
+snake_position = S
+next_target = n
+portaling = P
+portals1 = p1
+portals2 = p2
+mirror = m
+custom = M
+html = H
+mobile = B
+song_interval = I
+time = T
+head_position = hp
+previous_position = pp
+save = v
+extracoins = E
+song = g
+song_interval = si
+svg = 
+camrx =
+camrz = 
+data = 
+pointer_down = pd
+pointer_start_x = px
+pointer_start_y = py
+halt = 
+canskip = 
+u = 
+r = 
+d = 
+l = 
+U = 
+D =
+songs =
+note =
+A =
+m =
+
+
+
+CSS IDs
+
+viewport = v
+camera = c
+scene = s
+puzzlename = P
+coincount = t
+reset = R
+fade = f
+presents = e
+floordiv = fd
+puzzlefloor = pf
+puzzlewall = pw
+wrap = wr
+head = h1
+head_scale = h2
+head_circle = h3
+head_decoration = h4
+head_decoration_inner = h5
+head_decoration_tilt = h6
+snakebody = 
+
+CSS classes (warning: case insensitive)
+
+back = b
+dpad = d
+up = u
+down = d
+main = m
+menu = n
+levels = l
+bonus = o
+puzzle = p
+instant = i
+fadein = f
+win = w
+emoji = e
+floor: r
+circle = c
+stars = s
+whadow = w
+rocket = t
+crater = a
+wall = wa
+black = k
+tile = ti
+wall_tile = wt
+body = y
+tree = 
+flower =
+animal =
+cube =
+bricks = 
+portal1 = 
+portal2 = 
+sign = 
+red = 
+blue =
+behind =
