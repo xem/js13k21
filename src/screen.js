@@ -42,7 +42,7 @@ draw_screen = () => {
   // World 0: main menu
   if(W == 0){
     p = 0;
-    H = "<div class=m><h1>LOSSST</h1><b>A Snake in Space</b><p><a onclick='cont();fadeout()'><h2>"+(save[1][1]?coins>164?"":"Continue":"PLAY")+"</h2></a><p><a onclick=W=-1;fadeout()>Select puzzle</a><p><a onclick=W=-2;fadeout()>Bonus</a><p class='emoji hide'>🌼";
+    H = "<div class=m><h1>LOSSST</h1><b>A Snake in Space</b><p><a onclick='cont();fadeout()'><h2>"+(save[1][1]?coins>164?"HARD MODE":"Continue":"PLAY")+"</h2></a><p><a onclick=W=-1;fadeout()>Select puzzle</a><p><a onclick=W=-2;fadeout()>Bonus</a><p class='emoji hide'>🌼";
     s.innerHTML = H;
   }
   
@@ -66,7 +66,7 @@ draw_screen = () => {
           for(j in data[i]){
             //if(i==1)console.log(save[i][j], data[i][j]);
             if(j != 0){
-              H += "<span class='"+ (save[i][j] ? "won" : "") + (save[i][j] && save[i][j] <= data[i][j][5] ? " par" : "") + "' onclick='W="+i+";p="+j+";lW=9;fadeout()'>" + j + "</span>";
+              H += "<span class='"+ (save[i][j] ? "won" : "") + (save[i][j] && save[i][j] <= data[i][j][5] ? " par" : "") + "' onclick='W="+i+";p="+j+";lW=lp=99;fadeout()'>" + j + "</span>";
             }
           }
         }
@@ -77,7 +77,7 @@ draw_screen = () => {
   
   // World -2: Bonus
   else if(W == -2){
-    H = `<div class='m o'><h1>BONUS</h1><p><a onclick='document.monetization&&document.monetization.state=="started"?open("//xem.github.io/js13k21/editor"):(confirm("Log on Coil?")&&open("//coil.com/login"))'>Puzzle editor</a><span>(WebMonetization bonus)<p><a href=//xem.github.io/js13k21/FLUX>Snake editor</a><span>(FLUX bonus)<p><a href=//xem.github.io/js13k21/IPFS>Leaderboards</a><span>(IPFS bonus)<p><a onclick='open("//xem.github.io/js13k21/NEAR")'>Shop</a><span>(NEAR bonus)<p><a onclick='if(confirm("Sure?"))delete localStorage.lossst,location=location'>Delete save</a><p><a onclick='location="//xem.github.io/js13k21/share#"+JSON.stringify(save)'>Share</a><p><a href=//xem.github.io/articles/js13k21.H>Making-of`;
+    H = `<div class='m o'><h1>BONUS</h1><p><a href="${document.monetization&&document.monetization.state=="started"?"//xem.github.io/js13k21/editor":"//coil.com/login"}" target=_blank>Puzzle editor</a><span>(WebMonetization bonus)<p><a href="//xem.github.io/js13k21/FLUX" target=_blank>Snake editor</a><span>(FLUX bonus)<p><a href="//xem.github.io/js13k21/IPFS" target=_blank>Leaderboards</a><span>(IPFS bonus)<p><a href="//xem.github.io/js13k21/NEAR"  target=_blank>Shop</a><span>(NEAR bonus)<p><a onclick='if(confirm("Sure?"))delete localStorage.lossst,location=location'>Delete save</a><p><a href="//xem.github.io/js13k21/share#${JSON.stringify(save)}">Share</a><p><a href="//xem.github.io/articles/js13k21.html">Making-of`;
     s.innerHTML = H;
   }
   
@@ -118,13 +118,24 @@ nav_back = () => {
 // Transition to the next p, with optional text.
 // Also, easter-eggs at the end of worlds 3 and 4
 fadeout = (text) => {
+  
+  if(W == 1 && lp == 1){
+    text = "Your progress is saved automatically";
+  }
+  if(W == 1 && lp == 2){
+    text = "Rotate the camera with your " + (O ? "finger" : "mouse");
+  }
+  if(W == 4 && lp == 1){
+    text = "The gravity is lower<br>You can move up and down";
+  }
+  
   //console.log(p);
   var i, j, k, secret = 0;
   l = u = r = d = 0;
   fade.style.display = "block";
   e.innerHTML = "";
   
-  if(lW== 3 && lp > 35 && win){ // 3 - 36 to 45
+  if(lW == 3 && lp > 35 && win){ // 3 - 36 to 45
     setTimeout(()=>e.style.opacity=1, 800);
     text = "<p><table id=ta width=450 height=180>";
     for(k = 1; k < 11; k++){
@@ -200,8 +211,8 @@ fadeout = (text) => {
     if(lW== 3 && secret == 10){
       setTimeout(()=>{b.classList.add("egg3");lp = lW= 0;}, 2500);
     }
-    if(lW== 4 && secret == 4){
-      setTimeout(()=>{b.classList.add("egg4");lp = lW= 0;}, 2500);
+    if(lW == 4 && secret == 4){
+      setTimeout(()=>{b.classList.add("egg4");lp = lW = 0;}, 2500);
       setTimeout(()=>{open("//xem.github.io/js13k21/share#"+JSON.stringify(save))}, 11500);
     }
     setTimeout(draw_screen, ((lW== 3 && secret == 10) || (lW== 4 && secret == 4)) ? 12000 : 4000);
@@ -304,7 +315,7 @@ intro = () => {
   C.plane({w:5000,h:3000,x:-1000,z:1000,rx:45,css:"s",H:svg[0]});
   C.plane({x:-100,y:W<-3?500:0,z:W<-3?2000:900,rx:45,rz:-70,sx:2,sy:2,sz:2,css:"e moon",H:"🌙"});
 
-  console.log(y);
+  //console.log(y);
   
   // Move right 7 times (world 1) / 10 times (world 4)
   for(i = 0; i < (7 + ((W == -3) ? 0 : 3)); i++){
@@ -347,7 +358,7 @@ intro = () => {
     
     // Eye stars
     setTimeout(()=>{
-      p0.classList.add("eyes");
+      p0.classList.add("eyestars");
       C.move({n:"p0",sx:1,sy:1,sz:1});
       p0.innerHTML = "⭐⭐";
       b.classList.remove("intro2");
@@ -410,6 +421,8 @@ intro = () => {
 };
 
 cont = () => {
+  
+  if(coins > 164) location = "//xem.github.io/js13k21/HARD";
   //W= p = 1;
   var i,j;
   if(save[1][1]){

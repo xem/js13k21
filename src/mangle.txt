@@ -87,7 +87,7 @@ bonus = o ok
 puzzle = p ok
 instant = i ok
 fadein = f ok
-win = w ok
+win = win ok
 emoji = e ok
 floor: r ok
 circle = c ok

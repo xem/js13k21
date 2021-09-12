@@ -31,3 +31,4 @@ a { text-decoration: none; color: #fff }
 .b { left: 20px; }
 #pn { width: 200px; left: 50%; transform: translateX(-50%); text-align: center; }
 #t { width: 150px; right: 20px; text-align: right; }
+.w0 #e,.w-1 #e,.w-2 #e{display:none}

@@ -1,6 +1,6 @@
 // Global vars
-W = 1; // 0: main menu; 1-5: current world; -1; levels -3/-4: cutss
-p = 1; // 0: level menu; 1-n: current puzzle
+W = 0; // 0: main menu; 1-5: current world; -1; levels -3/-4: cutss
+p = 0; // 0: level menu; 1-n: current puzzle
 lW = 0;
 lp = 0;
 coins = 0;

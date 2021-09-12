@@ -28,6 +28,7 @@ onmousedown = ontouchstart = e => {
 
   // Else: prepare to rotate the c
   b.classList.add("i");
+  //console.log(px,py);
 }
 
 // Pointer up
@@ -47,8 +48,6 @@ ontouchend = onmouseup = e => {
 // Pointer move
 onmousemove = ontouchmove = e => {
   
-  e.preventDefault();
-  
   if(p == 0) return;
   
   var real_target, dx, dy;
@@ -63,8 +62,12 @@ onmousemove = ontouchmove = e => {
     dx = px - e.pageX;
     dy = py - e.pageY;
     
+    //console.log(px, e.pageX, py, e.pageY, dx, dy);
+    
     // Rotate around X axis according to delta Y
     rx += dy / 10;
+    
+    //console.log(dx, dy);
     
     // Clamp X angle between 10 and 40
     if(rx < (behind ? -10 : 30)) rx = (behind ? -10 : 30);
@@ -77,13 +80,17 @@ onmousemove = ontouchmove = e => {
     if(rz < -45) rz = -45;
     if(rz > 45) rz = 45;
     
+    //console.log(dx, dy, rx, rz);
+    
     // Re-set last pointer position to the current ones
     px = e.pageX;
     py = e.pageY;
     
     // Rotate c
-    C.c({rx:rx,rz:rz}) 
+    C.c({rx,rz}) 
   }
+  
+  try{e.preventDefault()}catch(e){}
 }
 
 oncontextmenu = () => { return false; }

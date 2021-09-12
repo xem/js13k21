@@ -99,10 +99,10 @@ draw_p = () => {
   C.R();
   
   // s
-  rx = ((W==2&&p==30)||(W==3&&p==25))?50:30;
+  rx = (W==2&&p==30)?50:30;
   rz = 0;
   b.classList.remove("z");
-  b.classList.remove("w");
+  b.classList.remove("win");
   
   C.c({z:-100+w*50+mirror*100-(O?0:200),x:-150,y:h*10,rx:rx,rz:rz});
   
@@ -265,10 +265,10 @@ draw_p = () => {
   }
   
   // PAR sign
-  C.plane({g:"pf",x:w*50+105-55,y:-50+60,w:5,h:105,z:55,rx:-65,ry:-35,css:"sign"});
-  C.plane({g:"pf",x:w*50+100-55,y:17,w:5,h:30,z:2,rx:0,ry:0,rz:-30,css:"sign w"});
-  C.plane({g:"pf",x:w*50+105-55,y:-47+60,w:105,h:60,z:72,rx:-65,ry:-35,css:"sign",H:"Steps: <span id=st>0</span><br>Par: "+[par||"?"]});
-  C.plane({g:"pf",x:w*50+78-55,y:-112+90,w:60,h:60,z:2,rx:0,ry:0,rz:-20,css:"sign w"});
+  C.plane({g:"pf",x:w*50+105-55,y:-50+60,w:5,h:105,z:50,rx:-65,ry:-35,css:"sign"});
+  C.plane({g:"pf",x:w*50+100-55,y:17,w:5,h:30,z:2,rx:0,ry:0,rz:-23,css:"sign w"});
+  C.plane({g:"pf",x:w*50+105-55,y:-47+60,w:90,h:57,z:84,rx:-65,ry:-15,css:"sign",H:"Steps: <span id=st>0</span><br>Par: "+[par||"?"]});
+  C.plane({g:"pf",x:w*50+78-54,y:-112+89,w:60,h:60,z:2,rx:0,ry:0,rz:-20,css:"sign w"});
 };
 
 check_p = () => {

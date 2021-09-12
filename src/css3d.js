@@ -98,10 +98,10 @@ C = {
       var n=C.$(C.sprites[r]);
       if(n){
         o=n.style.transform.replace(/ *rotate.*\(.*?deg\)/g,"");
-        rz = -C.rz;
-        rx = -C.rx;
-        if(rx > -15) rx = -15;
-        n.style.transform=o+`rotateZ(${rz}deg)rotateX(${rx}deg)`
+        trz = -C.rz;
+        trx = -C.rx;
+        if(trx > -15) trx = -15;
+        n.style.transform=o+`rotateZ(${trz}deg)rotateX(${trx}deg)`
       }
     }
   },

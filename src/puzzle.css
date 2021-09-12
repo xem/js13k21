@@ -14,7 +14,7 @@ td { transition: .5s; padding: 45px }
 .v.k { background: #000 }
 .v.red { background: #F00 }
 .v.blue { background: #00F }
-.w .v.blue { background: #4e2 }
+.win .v.blue { background: #4e2 }
 .v.portal1 { background: radial-gradient(#e0e, #505 70%, #0000 75%) }
 .v.portal2 { background: radial-gradient(#fc0, #c60 70%, #0000 75%) }
 .wall * { background: linear-gradient(45deg, #000, #333); }

@@ -330,11 +330,11 @@ check_wall = () => {
     if(pos[2] > 0 && W < 4){
       high = 1;
       b.classList.add("high");
-      C.c({rx:rx=(W==1&&p==33)?30:((W==2&&p==30)||(W==3&&p==25))?50:70,y:0});
+      C.c({rx:rx=(W==1&&p==33)?30:(W==2&&p==30)?50:70,y:0});
     }
     else {
       b.classList.remove("high");
-      C.c({rx:rx=((W==2&&p==30)||(W==3&&p==25))?50:30,y:h*10});
+      C.c({rx:rx=(W==2&&p==30)?50:30,y:h*10});
     }
   }
   
@@ -349,7 +349,7 @@ check_wall = () => {
     b.classList.remove("on_wall");
     b.classList.remove("behind");
     C.move({n:"h4",rx:0});
-    if(W > 0) C.c({rx:rx=((W==2&&p==30)||(W==3&&p==25))?50:30,y:h*10});
+    if(W > 0) C.c({rx:rx=(W==2&&p==30)?50:30,y:h*10});
   }
 }
 
