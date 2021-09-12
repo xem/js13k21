@@ -1,7 +1,35 @@
 <h1>Ssshare the word!</h1>
-<p>Send a link to LOSSST (plus your score) on social networks or by instant messaging!
-<p>(coming soon)
+<p>
+<textarea id=t></textarea>
+<p>
+<button id=tweet>TWEET</button>
+
+<script>
+save = eval(location.hash.slice(1))||[[0],[0],[0],[0],[0]];
+
+coins = 0;
+moves = 0;
+for(i of save){
+  for(j of i){
+    if(j) { coins++, moves+=j };
+  }
+}
+
+if(coins)
+html = "I'm playing LOSSST by @MaximeEuziere. My score: " + coins + " coins / " + moves + " moves. Can you do better? http://js13kgames.com/entries/lossst-a-snake-in-space";
+
+else
+html = "I'm playing LOSSST by @MaximeEuziere. Try it here! http://js13kgames.com/entries/lossst-a-snake-in-space";
+
+t.value = html;
+
+tweet.onclick = () => {
+  location = "https://twitter.com/intent/tweet?text=" + encodeURI(html);
+}
+</script>
 
 
 <style>
 body { max-width: 600px; margin: auto; background: #000; color: #fff; font-family: calibri, arial; padding: 50px 0 0; }
+textarea { background: #555; color: #fff; width: 600px; height: 200px; font-size: 25px;  }
+button { background: #555; color: #fff; font-size: 25px;  }
