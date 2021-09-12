@@ -70,9 +70,13 @@ draw_p = () => {
   portals2 = current_p[8] || 0;
   mirror = current_p[9] || 0;
   if(portals1 && !portals1[0][2]) portals1[0][2] = 0;
+  if(portals1 && !portals1[0][1]) portals1[0][1] = 0;
   if(portals1 && !portals1[1][2]) portals1[1][2] = 0;
+  if(portals1 && !portals1[1][1]) portals1[1][1] = 0;
   if(portals2 && !portals2[0][2]) portals2[0][2] = 0;
+  if(portals2 && !portals2[0][1]) portals2[0][1] = 0;
   if(portals2 && !portals2[1][2]) portals2[1][2] = 0;
+  if(portals2 && !portals2[1][1]) portals2[1][1] = 0;
   //console.log(mirror);
 
   // Snake globals
@@ -237,6 +241,8 @@ draw_p = () => {
   
   // Bricks
   for(i of bricks){
+    if(!i[1])i[1]=0;
+    if(!i[2])i[2]=0;
     C.cube({g:"pf",x:i[0]*50+25,y:i[1]*50+24,z:(i[2]||0)*50-(W<4 ? 17 : 0),w:50,h:50,d:50,css:"cube bricks",H:(i[1]%2)?(svg[2]+svg[3]+svg[2]):(svg[3]+svg[2]+svg[3]),Hside:((i[1]+i[2])%2)?(svg[3]+svg[2]+svg[3]):(svg[2]+svg[3]+svg[2])});
   }
   
@@ -271,7 +277,7 @@ draw_p = () => {
   // PAR sign
   C.plane({g:"pf",x:w*50+105-55,y:-50+60,w:5,h:105,z:50,rx:-65,ry:-35,css:"sign"});
   C.plane({g:"pf",x:w*50+100-55,y:17,w:5,h:30,z:2,rx:0,ry:0,rz:-23,css:"sign w"});
-  C.plane({g:"pf",x:w*50+105-55,y:-47+60,w:90,h:57,z:84,rx:-65,ry:-15,css:"sign",H:"Steps: <span id=st>0</span><br>Par: "+[par||"?"]});
+  C.plane({g:"pf",x:w*50+105-55,y:-47+60,w:90,h:49,z:84,rx:-65,ry:-15,css:"sign",H:"Steps: <span id=st>0</span><br>Par: "+[par||"?"]});
   C.plane({g:"pf",x:w*50+78-54,y:-112+89,w:60,h:60,z:2,rx:0,ry:0,rz:-20,css:"sign w"});
 };
 
@@ -357,8 +363,19 @@ check_p = () => {
       localStorage["lossst"]=JSON.stringify(save);
       p++;
       if(p >= data[W].length){
-        W++;
-        p = 1;
+        if(
+          (W == 1 && coins >24)
+          || (W == 2 && coins >49)
+          || (W == 3 && coins > 99)
+        ){
+          W++;
+          p = 1;
+        }
+        else {
+          W = -1;
+          p = 0;
+        }
+        
         if(lW== 3 && W == 4){
           if(coins > 99) W = -4; 
           else W = -1;
