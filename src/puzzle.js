@@ -69,6 +69,10 @@ draw_p = () => {
   portals1 = current_p[7] || 0;
   portals2 = current_p[8] || 0;
   mirror = current_p[9] || 0;
+  if(portals1 && !portals1[0][2]) portals1[0][2] = 0;
+  if(portals1 && !portals1[1][2]) portals1[1][2] = 0;
+  if(portals2 && !portals2[0][2]) portals2[0][2] = 0;
+  if(portals2 && !portals2[1][2]) portals2[1][2] = 0;
   //console.log(mirror);
 
   // Snake globals
@@ -150,7 +154,7 @@ draw_p = () => {
   }
   
   if(wall){
-    C.cube({g:"pf",w:w*50+4,h:h*50+2,d:4,x:w*50/2,y:-2.1,z:2,css:"wall"});
+    C.cube({g:"pf",w:w*50+4,h:h*50+2,d:6,x:w*50/2,y:-3.1,z:2,css:"wall"});
     for(j = h; j--;){
       for(i = w; i--;){
         C.plane({g:"pw",n:"wall_tile_"+i+"_"+j,x:25+i*50,y:25+j*50,w:52,h:52,css:"v wt "+(((wall[j]>>i)&1) ? "k" : "")});
@@ -181,11 +185,11 @@ draw_p = () => {
     for(i = 0; i < 10; i++){
       x = (Math.random() * 14).toFixed(1) - 5;
       y = (Math.random() * 18).toFixed(1) - 6;
-      if((y < -3 || y > h+2) && (x < w || x > w + 3)){
+      if((y < -3 || y > h+3) && (x < w || x > w + 3)){
         if(!trees.find(a => a[0] > (~~x)-4 && a[0] < (~~x)+4 && a[1] > (~~y)-3 && a[1] < (~~y)+2)){
           trees.push([~~x,~~y]);
-          C.sprite({g:"pf",x:x*50-20,y:y*50,z:5,w:65,h:75,sx:1.8,sy:1.8,sz:1.8,css:"tree e",H:[,"🌳","🌵","🌲",""][W],o:"bottom center"});
-          C.plane({g:"pf",x:x*50-20,y:y*50,z:2,rz:(W==1?280:311),w:65,h:75,sx:1.8,sy:2.5,sz:1.8,css:"tree w e",H:[,"🌳","🌵","🌲",""][W],o:"bottom center"});
+          C.sprite({g:"pf",x:x*50+10,y:y*50+15,z:5,w:65,h:75,sx:1.8,sy:1.8,sz:1.8,css:"tree e",H:[,"🌳","🌵","🌲",""][W],o:"bottom center"});
+          C.plane({g:"pf",x:x*50+10,y:y*50+15,z:2,rz:(W==1?280:311),w:65,h:75,sx:1.8,sy:2.5,sz:1.8,css:"tree w e",H:[,"🌳","🌵","🌲",""][W],o:"bottom center"});
         }
       }
     }
@@ -240,7 +244,7 @@ draw_p = () => {
   if(portals1){
     for(i of portals1){
       // Ground
-      if(i[2] == 0 && floor){
+      if(!i[2] && floor){
         C.plane({g:"pf",n:"tile_"+i+"_"+j,x:25+i[0]*50,y:25+i[1]*50,z:1,w:52,h:52,css:"v portal1"});
       }
       // Wall

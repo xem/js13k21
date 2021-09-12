@@ -146,7 +146,7 @@ move_snake = () => {
     if(target_position){
       
       if(W > 0) {
-        st.innerHTML = ++steps;
+        st.innerHTML = Math.min(99,++steps);
         I && clearInterval(I);
         if(new Date() - time > 200) play_next_note();
         I = 0;
@@ -193,7 +193,7 @@ move_snake = () => {
     // Next target set: do the move
     if(n){
       setTimeout(()=>{
-        st.innerHTML = ++steps;
+        st.innerHTML = Math.min(99,++steps);
         
         // Save current modulo angle for the 5 new steps
         for(i = 1; i <= 5; i++){
@@ -280,7 +280,7 @@ go_back = () => {
   // If it's still possible to go back (body has moved at least 5 steps)
   if(body_moves >= 5){
     
-    st.innerHTML = ++steps;
+    st.innerHTML = Math.min(99,++steps);
   
     play_last_note();
     
@@ -746,7 +746,7 @@ collision = (target) => {
   if(W > 0 && bricks.find(a=>a[0] == target[0] && a[1] == target[1] && (target[2] == (a[2]||0) || target[2] == Math.floor(a[2])))) {
     return 1;
   }
-  if(W > 0 && trees.find(a=>a[0] > target[0] - 1 && a[0] < target[0] + 2 && a[1] > target[1] - 1 && a[1] < target[1] +2)) {
+  if(W > 0 && trees.find(a=>a[0] > target[0] -1 && a[0] < target[0] + 1 && a[1] > target[1] - 1 && a[1] < target[1] +1)) {
     return 1;
   }
   if(W > 0 && animals.find(a=>a[0] == target[0] && (a[1] == target[1] || a[1] == target[1]+1))) {

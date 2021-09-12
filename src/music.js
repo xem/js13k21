@@ -119,6 +119,7 @@ play_last_note = () => {
 coin_sound = i => {
   var n=1.6e4;
   var c=n/7;
+  var t=(i,n)=>(n-i)/n;
   if (i > n) return null;
   var q=Math.pow(t(i,n),2.1);
   return ((i<c ? ((i+Math.sin(-i/900)*10)&16) : i&13) ?q:-q)/9;
@@ -126,6 +127,7 @@ coin_sound = i => {
 
 bzzt_sound = i => {
   var n=1e4;
+  var t=(i,n)=>(n-i)/n;
   if (i > n) return null;
   var q = t(i,n);
   return Math.sin(i/55*Math.sin(i/99)+Math.sin(i/100))*q/5;
@@ -133,6 +135,7 @@ bzzt_sound = i => {
 
 brrr_sound = i => {
   var n=9e5;
+  var t=(i,n)=>(n-i)/n;
   if (i > n) return null;
   var q = t(i,n);
   return Math.sin(i*0.001*Math.sin(0.001*i+Math.sin(i/100)))*q*q/5;
@@ -140,7 +143,6 @@ brrr_sound = i => {
 
 play_sound = (f) => {
   var A, m, b, i, s; 
-  t=(i,n)=>(n-i)/n;
   var A=new AudioContext()
   var m=A.createBuffer(1,2e5,48e3)
   var b=m.getChannelData(0)

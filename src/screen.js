@@ -379,7 +379,7 @@ intro = () => {
     setTimeout(()=>{
       W= 1;
       p = 1;
-      fadeout("<h1>LOSSST</h1>");
+      fadeout("<h1>LOSSST</h1>A Snake in Space");
     }, 30000);
     
     setTimeout(()=>{
