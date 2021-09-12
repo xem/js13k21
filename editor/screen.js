@@ -1,20 +1,20 @@
-W.onchange = W.oninput = 
-H.onchange = H.oninput =
+WI.onchange = WI.oninput = 
+HE.onchange = HE.oninput =
 onload = () => {
   checks();
   states = {};
-  w = +W.value;
-  h = +H.value;
-  puzzlefloor.style.width = puzzlewall.style.width = w * 50 + "px";
-  puzzlefloor.style.height = puzzlewall.style.height = h * 50 + "px";
-  puzzlefloor.innerHTML = puzzlewall.innerHTML = "";
-  C.move({n:"puzzlewall",y:-h*50});
+  w = +WI.value;
+  h = +HE.value;
+  pf.style.width = pw.style.width = w * 50 + "px";
+  pf.style.height = pw.style.height = h * 50 + "px";
+  pf.innerHTML = pw.innerHTML = "";
+  C.move({n:"pw",y:-h*50});
   
   for(i = 0; i < w; i++){
     for(j = 0; j < h; j++){
-      C.plane({g:"puzzlefloor",n:"tile_"+i+"_"+j,w:50,h:50,x:i*50+25,y:j*50+25,css:"tile",html:svg[9]+svg[10]+svg[9]});
+      C.plane({g:"pf",n:"tile_"+i+"_"+j,w:50,h:50,x:i*50+25,y:j*50+25,css:"v",H:svg[3]+svg[2]+svg[3]});
       states["tile_"+i+"_"+j] = 0;
-      C.plane({g:"puzzlewall",n:"walltile_"+i+"_"+j,w:50,h:50,x:i*50+25,y:j*50+25,css:"tile",html:svg[9]+svg[10]+svg[9]});
+      C.plane({g:"pw",n:"walltile_"+i+"_"+j,w:50,h:50,x:i*50+25,y:j*50+25,css:"v",H:svg[2]+svg[3]+svg[2]});
       states["walltile_"+i+"_"+j] = 0;
     }
   }
@@ -39,30 +39,30 @@ draw_screen = () => {
   
   // HTML string
   var i, j, html = "";
-  b.classList.add("world1");
+  b.classList.add("w1");
   w = W.value;
   h = H.value;
   
   // Scene
-  camrx = 45;
-  camrz = 0;
+  rx = 45;
+  rz = 0;
   
-  C.camera({z:-300+8*50,y:h*10,rx:camrx,rz:camrz});
+  C.c({z:-300+8*50,y:h*10,rx,rz});
   
   // Puzzle
-  C.plane({n:"floordiv",w:1500,h:1500,css:"floor circle"});
-  setTimeout(()=>{floordiv.style.height = '1450px'},500); // Fx fix
+  C.plane({n:"fd",w:1500,h:1500,css:"r c"});
+  setTimeout(()=>{fd.style.height = '1450px'},500); // Fx fix
   
-  C.group({n:"puzzlefloor",x:0,y:0,w:w*50,h:h*50,z:2});
-  C.group({n:"puzzlewall",x:0,y:0,w:50,h:50,y:-50/2,z:2,rx:-90,o:"bottom"});
+  C.group({n:"pf",x:0,y:0,w:w*50,h:h*50,z:2});
+  C.group({n:"pw",x:0,y:0,w:50,h:50,y:-50/2,z:2,rx:-90,o:"bottom"});
   C.cube({n:"wrap",w:w*50,h:h*50,d:h*50,x:0,y:h-50/2+25});
 }
 
 onclick = e => {
-  if(e.target.classList.contains("tile")){
+  if(e.target.classList.contains("v")){
     states[e.target.id]++;
     states[e.target.id] %= 5;
-    e.target.className = "tile tile" + states[e.target.id];
+    e.target.className = "v tile" + states[e.target.id];
   }
 }
 
@@ -154,9 +154,9 @@ share = () => {
 }
 
 wor.onchange = wor.oninput = () => {
-  b.classList.remove("world1");
-  b.classList.remove("world2");
-  b.classList.remove("world3");
-  b.classList.remove("world4");
-  b.classList.add("world" + wor.value);
+  b.classList.remove("w1");
+  b.classList.remove("w2");
+  b.classList.remove("w3");
+  b.classList.remove("w4");
+  b.classList.add("w" + wor.value);
 }

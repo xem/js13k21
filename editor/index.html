@@ -8,15 +8,15 @@
 <title>LOSSST</title>
 <body id=body>
 <div id=b class='menu world0'>
-  <div id=viewport>
-    <div id=camera>
-      <div id=scene></div>
+  <div id=v>
+    <div id=c>
+      <div id=s></div>
     </div>
   </div>
   <div class=back onclick="nav_back()">&lt;</div>
   <div id=ui>
-    Puzzle width <input type=range id=W min=3 max=7 value=5> &nbsp; &nbsp;
-    Height <input type=range id=H min=3 max=8 value=5>
+    Puzzle width <input type=range id=WI min=3 max=7 value=5> &nbsp; &nbsp;
+    Height <input type=range id=HE min=3 max=8 value=5>
     <br>
     Snake length <input type=number id=SNAKE min=3 max=30 value=3>&nbsp; &nbsp;
     World <input type=number id=wor min=1 max=4 value=1>
@@ -43,19 +43,20 @@
 <style>
 #camera { top: 80% }
 #ui { color: #fff; position: fixed; top: 20px; left: 0; width: 100%; text-align: center; font-size: 20px; line-height: 30px; }
-input, button { background: #555; color: #fff; font: 20px calibri, arial; padding: 0 3px; }
+input, button { background: #555; color: #fff; font: 20px calibri, arial; padding: 0 3px; pointer-events: all; }
 input { max-width: 100px }
-#puzzlefloor .tile { opacity: 0; }
-#puzzlewall .tile { opacity: 0; }
+.v { pointer-events: all }
+#pf .v { opacity: 0; }
+#pw .v { opacity: 0; }
 #wrap div { opacity: 0; pointer-events: none; }
-.hasfloor #puzzlefloor .tile { opacity: 1; }
-.haswall #puzzlewall .tile { opacity: 1; }
+.hasfloor #pf .v { opacity: 1; }
+.haswall #pw .v { opacity: 1; }
 .haswrap #wrap div { opacity: 1; }
-.tile * { opacity: 0; pointer-events: none; background: #e40; border: 2px solid #000; }
-.tile :nth-child(1) { background: linear-gradient(90deg, #e40 24px, #000 24px, #000 26px, #e40 26px); }
-.tile :nth-child(2) { background: linear-gradient(90deg, #e40 17px, #000 17px, #000 19px, #e40 19px, #e40 34px, #000 34px, #000 36px, #e40 36px); }
-.tile :nth-child(3) { background: linear-gradient(90deg, #e40 24px, #000 24px, #000 26px, #e40 26px); }
-#puzzlefloor { background: linear-gradient(#0005 50px, #0000 50px) }
+.v * { opacity: 0; pointer-events: none; background: #e40; border: 2px solid #000; }
+.v :nth-child(1) { background: linear-gradient(90deg, #e40 24px, #000 24px, #000 26px, #e40 26px); }
+.v :nth-child(2) { background: linear-gradient(90deg, #e40 17px, #000 17px, #000 19px, #e40 19px, #e40 34px, #000 34px, #000 36px, #e40 36px); }
+.v :nth-child(3) { background: linear-gradient(90deg, #e40 24px, #000 24px, #000 26px, #e40 26px); }
+#pf { background: linear-gradient(#0005 50px, #0000 50px) }
 #wrap .cubefront, #wrap .cubeback, #wrap .cubeleft, #wrap .cuberight {  background: linear-gradient(#0000,#55fd); }
 .tile1 { background : #000 }
 .tile2 { background : radial-gradient(#e0e, #505 70%, #000 75%) }
