@@ -1,6 +1,8 @@
 ﻿<meta name=viewport content=width=device-width,initial-scale=1>
 <meta name=apple-mobile-web-app-capable content=yes>
 <meta name=mobile-web-app-capable content=yes>
+<meta name=monetization content="$pay.stronghold.co/1a1fbf27169a5334158b2c531b946427ceb">
+<link rel=icon href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐍</text></svg>">
 <link rel=stylesheet href='../src/global.css'>
 <link rel=stylesheet href='../src/menu.css'>
 <link rel=stylesheet href='../src/snake.css'>
@@ -38,7 +40,15 @@
 <script src='../src/snake.js'></script>
 <script src='../src/puzzle.js'></script>
 <script src='../src/music.js'></script>
-<script>draw_screen()</script>
+<script>
+draw_screen();
+inte = setInterval(()=>{
+  if(document.monetization && document.monetization.state === 'started'){
+	console.log("thanks for enabling WebMonetization");
+	clearInterval(inte);
+  }
+}, 1000);
+</script>
 
 <style>
 #camera { top: 80% }
