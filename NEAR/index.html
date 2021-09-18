@@ -68,13 +68,13 @@ login.onclick = async () => {
   keyStore = new keyStores.BrowserLocalStorageKeyStore();
 
   config = {
-    networkId: "testnet",
+    networkId: "mainnet",
     keyStore, // optional if not signing transactions
-    contractName: "xem06.testnet",
-    nodeUrl: "https://rpc.testnet.near.org",
-    walletUrl: "https://wallet.testnet.near.org",
-    helperUrl: "https://helper.testnet.near.org",
-    explorerUrl: "https://explorer.testnet.near.org",
+    contractName: "xem06.near",
+    nodeUrl: "https://rpc.mainnet.near.org",
+    walletUrl: "https://wallet.mainnet.near.org",
+    helperUrl: "https://helper.mainnet.near.org",
+    explorerUrl: "https://explorer.mainnet.near.org",
   };
   
   // connect to NEAR
@@ -84,7 +84,7 @@ login.onclick = async () => {
   wallet = new WalletConnection(near);
 
   wallet.requestSignIn(
-    "xem06.testnet", // contract requesting access
+    "xem06.near", // contract requesting access
     "LOSSST", // optional
   );
   
@@ -92,7 +92,7 @@ login.onclick = async () => {
     start.remove();
     shop.style.display = "block";
     console.log("logged");
-    account = await wallet.account("xem06.testnet");
+    account = await wallet.account("xem06.near");
     console.log(b = await account.getAccountBalance());
     balance.innerHTML = nearApi.utils.format.formatNearAmount(b.available,2);
   }
@@ -114,7 +114,7 @@ buy2.onclick = /*async e => {
   // sends NEAR tokens
   const contract = new nearAPI.Contract(
     account, // the account object that is connecting
-    "xem06.testnet", // destination
+    "xem06.near", // destination
     {
       viewMethods: [],
       changeMethods: ["add"],
