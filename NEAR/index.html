@@ -1,26 +1,60 @@
 ﻿<!doctype html>
 <script src="https://js13kgames.com/src/near-api-js.js"></script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐍</text></svg>">
+<link rel=stylesheet href=../src/global.css>
+<link rel=stylesheet href=../src/menu.css>
+<link rel=stylesheet href=../src/snake.css>
+<link rel=stylesheet href=../src/puzzle.css>
 <title>Shop</title>
-<h1>Welcome to the shop</h1>
+<h1>Welcome to the NEAR bonus shop</h1>
+<br>
 <div id=start>
 <p><button id=login>Log in to your NEAR wallet</button>
 </div>
 <div id=shop>
-  <h3>Your balance: <span id=balance>0.0</span> NEAR</h3>
-  
+  <button onclick="localStorage.clear();location=location">Log out</button>
+  <br>
+  <br>
+  <h3>Your balance: <span id=balance>...</span> NEAR</h3>
+  <br>
   <h3>Buy in-game coins<h3>
-  <p><button id=buy1>1 coin: 0.1 NEAR</button>
-  <br><button id=buy2 hidden>10 coins: 0.8 NEAR</button>
-  <br><button id=buy3 hidden>20 coins: 1.7 NEAR</button>
-  <br><button id=buy4 hidden>50 coins: 3 NEAR</button>
-  <br><button id=buy5 hidden>99 coins: 5 NEAR</button>
+  <br>
+  <p><button id=buy1>1 <span class=e>🪙</span> = FREE</button>
+  <button id=buy2>10 <span class=e>🪙</span> = 1𝝢</button>
+  <button id=buy3>20 <span class=e>🪙</span> = 1.5𝝢</button>
+  <button id=buy4>50 <span class=e>🪙</span> = 3𝝢</button>
+  <button id=buy5>99 <span class=e>🪙</span> = 5𝝢</button>
   
+  <!--br><br>
   <h3>Buy exclusive skins</h3>
-  <p>(Coming soon...)
+  <br>
+  <p>
+  <button id=buy6>Skin 1 = 1𝝢</button>
+  <button id=buy7>Skin 2 = 1𝝢</button>
+  <button id=buy8>Skin 3 = 1𝝢</button-->
   
-  <h3>Buy exclusive puzzles</h3>
-  <p>(Coming soon...)
+  <br><br>
+  <h3>Buy extra puzzles</h3>
+  <br>
+  <button id=buy6>10 puzzles = 1𝝢</button>
+  <br>
+  <p id=puzzles hidden>
+  <button id=p1>1</button>
+  <button id=p2>2</button>
+  <button id=p3>3</button>
+  <button id=p4>4</button>
+  <button id=p5>5</button>
+  <button id=p6>6</button>
+  <button id=p7>7</button>
+  <button id=p8>8</button> 
+  <button id=p9>9</button>
+  <button id=p10>10</button>
+  </p>
+  
+  <br><br>
+  <br><br>
+  <br><br>
+  <div style="font-size:14px;">If a problem occurs, please DM me <a href="//twitter.com/maximeeuziere">@maximeeuziere</a> and I'll send you an activation code</div>
 </div>
 
 <script>
@@ -58,7 +92,7 @@ login.onclick = async () => {
     start.remove();
     shop.style.display = "block";
     console.log("logged");
-    account = await near.account("xem06.testnet");
+    account = await wallet.account("xem06.testnet");
     console.log(b = await account.getAccountBalance());
     balance.innerHTML = nearApi.utils.format.formatNearAmount(b.available,2);
   }
@@ -68,29 +102,55 @@ login.onclick = async () => {
 // Buy
 buy1.onclick = async () => {
 
+  buy1.innerHTML = "REDEEM";
+  buy1.onclick = () => {
+	hash = encodeURI(`localStorage.lossst_e=(eval(localStorage.lossst_e)||0)+1;custom=0;W=0;p=0;draw_p_back=draw_p;fadeout();setTimeout(()=>{W=0;p=0;custom=0;draw_p=draw_p_back,location.hash = '';coins+=1;t.innerHTML = '<span class=e>🪙</span> x ' + coins;},100)`);localStorage.buy1=1;window.open("../src/#"+hash);
+  
+  }
+}
+
+buy2.onclick = /*async e => {
+
   // sends NEAR tokens
   const contract = new nearAPI.Contract(
-    wallet.account(), // the account object that is connecting
+    account, // the account object that is connecting
     "xem06.testnet", // destination
     {
       viewMethods: [],
       changeMethods: ["add"],
-      sender: wallet.account(),
+      sender: account,
     }
   );
   
   await contract.add(
     {}, // message
     "300000000000000", // gas
-    "100000000000000000" //  deposit (0.1N = 10000000000000000000000000)
+    "100000000000000000000000" //  deposit (1N = 1000000000000000000000000)
   );
+}*/
+
+
+buy3.onclick =
+buy4.onclick =
+buy5.onclick =
+buy6.onclick =
+
+e => {
+  alert("Hey, xem here. I'm still working on making smart contracts work in my NEAR shop, sorry for the inconvenience! Come back later, or send me NEAR coins manually and DM me on Twitter for a redeem code")
+}
+
+onload = () => {
+  if(localStorage.buy1) buy1.remove();
+  if(localStorage.length > 1) login.onclick();
 }
 
 </script>
 
 <style>
-body { font-size: 22px; max-width: 600px; margin: auto; text-align: center; background: #000; color: #fff; font-family: calibri, arial; padding: 20px 0 0; }
-button, input { background: #555; color: #fff; font-family: calibri, arial; font-size: 24px; margin: 3px; }
+body { font-size: 22px; max-width: 600px; margin: auto; text-align: center; background: #000; color: #fff; font-family: calibri, arial; padding: 20px 0 0; overflow: auto; }
+button, input { background: #555; color: #fff; font-family: calibri, arial; font-size: 20px; margin: 3px; padding: 3px; }
 #shop { display: none }
 input { width: 600px }
+h1 { font-size: 30px }
+* { pointer-events: all !important }
 </style>

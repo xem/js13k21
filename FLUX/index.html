@@ -39,7 +39,7 @@
 onload = code.oninput = code.onchange = e => st.innerHTML = code.value.replace(/\r/g,"").replace(/\n/g,"").replace(/\/\*.*?\*\//g,"").replace(/'/g,'"');
 ok.onclick = e => {
   console.log(st.innerHTML);
-  hash = encodeURI(`document.body.insertAdjacentHTML('beforeEnd','<style>${st.innerHTML}</style>');custom=0;W=0;p=0;draw_p_back=draw_p;fadeout();setTimeout(()=>{W=0;p=0;custom=0;draw_p=draw_p_back,location.hash = '';},1000)`);console.log(hash);window.open("../src/#"+hash);
+  hash = encodeURI(`document.body.insertAdjacentHTML('beforeEnd','<style>${st.innerHTML}</style>');custom=0;W=0;p=0;draw_p_back=draw_p;fadeout();setTimeout(()=>{W=0;p=0;custom=0;draw_p=draw_p_back,location.hash = '';},1000)`);console.log(hash);window.open("https://js13kgames.com/games/lossst-a-snake-in-space/index.html#"+hash);
 }
 </script>
 
