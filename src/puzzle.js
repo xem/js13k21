@@ -45,6 +45,11 @@ draw_p = () => {
       set_song(9)
     }
   }
+  
+  if(custom){
+    song = ~~(Math.random()*10) + 1;
+    note = 0;
+  }
   //console.log(custom);
   // Keep track of current world/puzzle for easter-eggs
   lW = W;
