@@ -62,9 +62,9 @@ draw_p = () => {
   current_p = custom || data[W][p];
   //console.log(current_p);
   
-  if(p > 5 && !(location.host.includes("s13k") || location.host.includes("calh")  || location.host.includes("xem.github.io"))){
-    location = "//xem.github.io/js13k21";
-  }
+  //if(p > 5 && !(location.host.includes("s13k") || location.host.includes("calh")  || location.host.includes("xem.github.io"))){
+  //  location = "//xem.github.io/js13k21";
+  //}
   
   w = current_p[2];
   h = current_p[3] || w;
