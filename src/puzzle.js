@@ -138,8 +138,8 @@ draw_p = () => {
     
     // Rocket
     if(p == 1){
-      C.plane({w:100,h:100,x:-200,y:-350,z:72,H:svg[1],rx:-90,sx:3,sy:3,sz:3,css:"t"});
-      C.plane({w:100,h:100,x:-237,y:-395,z:3,H:svg[1],rx:356,ry:0,rz:319,sx:3,sy:3.5,sz:3,css:"t w"});
+      C.plane({w:1000,h:1000,x:-200,y:-350,z:72,H:svg[1],rx:-90,sx:.3,sy:.3,sz:.3,css:"t"});
+      C.plane({w:1000,h:1000,x:-237,y:-395,z:3,H:svg[1],rx:356,ry:0,rz:319,sx:.3,sy:.35,sz:.3,css:"t w"});
     }
     
     // Craters
@@ -210,7 +210,7 @@ draw_p = () => {
       if(!(x > -9 && x < w+1 && y > -2 && y < h+1)){
         if(!flowers.find(a => a[0] > (~~x)-2 && a[0] < (~~x)+2 && a[1] > (~~y)-2 && a[1] < (~~y)+2) && (y < 2 || y > 4) && !trees.find(a => a[0] > (~~x)-2 && a[0] < (~~x)+2 && a[1] > (~~y)-2 && a[1] < (~~y)+2)){
           flowers.push([~~x,~~y]);
-          C.plane({g:"pf",w:45,h:W==1?34:42,z:5,x:x*50,y:y*50,z:1,rx:0,o:"bottom",css:"e flower",H:[,"🌼","🪨","❄️",""][W]});
+          C.plane({g:"pf",w:45,h:W==1?34:42,z:5,x:x*50,y:y*50,z:2,rx:0,o:"bottom",css:"e flower",H:[,"🌼","🪨","❄️",""][W]});
         }
       }
     }

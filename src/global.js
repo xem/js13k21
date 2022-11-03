@@ -39,7 +39,7 @@ svg = [
   '<svg fill="#aaa">'+H+'</svg>',
   
   // 1: Rocket
-  '<svg width=99 height=99><path d="M28 50L20 60L20 75L80 75L80 60L72 50Z" fill="#a01"/><path d="M50 0Q20 44 30 75L70 75Q80 44 50 0" fill="#5AE"/><circle cx=50 cy=35 r=9 fill="#000"/><path d="M46 75M45 75Q50 25 55 75" fill="#a01"/><path d="M35 75Q30 84 50 99Q70 84 65 75Z" fill="#fa3"/><path d="M42 75Q35 80 50 90Q65 80 58 76Z" fill="#fc4"/></svg>',
+  '<svg width=990 height=990><path d="M280 500L200 600L200 750L800 750L800 600L720 500Z" fill="#a01"/><path d="M500 0Q200 440 300 750L700 750Q800 440 500 0" fill="#5AE"/><circle cx=500 cy=350 r=90 fill="#000"/><path d="M460 750M450 750Q500 250 550 750" fill="#a01"/><path d="M350 750Q300 840 500 990Q700 840 650 750Z" fill="#fa3"/><path d="M420 750Q350 800 500 900Q650 800 580 760Z" fill="#fc4"/></svg>',
 
   
   // 2, 3: Brick

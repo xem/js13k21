@@ -340,7 +340,7 @@ intro = () => {
     // Look down
     setTimeout(()=>{
       C.c({x:-200,y:50,z:-200,rx:50,rz:30});
-      C.plane({w:100,h:100,x:397,y:145,z:72,H:svg[1],rx:-90,ry:-22,sx:4,sy:4.5,sz:4,css:"t"});
+      C.plane({w:1000,h:1000,x:397,y:145,z:72,H:svg[1],rx:-90,ry:-22,sx:.4,sy:.45,sz:.4,css:"t"});
     }, 10200);
     
     setTimeout(()=>{
@@ -375,7 +375,7 @@ intro = () => {
       C.c({x:370,y:0,z:-400,rx:60,rz:-40});
     }, 23500);
     
-    // Fade out
+    /*// Fade out
     setTimeout(()=>{
       W= 1;
       p = 1;
@@ -386,12 +386,12 @@ intro = () => {
       clearInterval(I);
       song = 1;
       note = 75;
-    }, 33000);
+    }, 33000);*/
   }
   
   // World 4
   else {
-    C.plane({n:"rocket",w:100,h:100,x:-150,y:200,z:72,H:svg[1],rx:-90,sx:4,sy:4.5,sz:4,css:"t"});
+    C.plane({n:"rocket",w:1000,h:1000,x:-150,y:200,z:72,H:svg[1],rx:-90,sx:.4,sy:.45,sz:.4,css:"t"});
     
     // Remove snake
     // Play sound
