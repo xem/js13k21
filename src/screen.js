@@ -306,7 +306,7 @@ intro = () => {
       if(!flowers.find(a => a[0] > x-2 && a[0] < x+2 && a[1] > y-2 && a[1] < Y+2) && (Y < -3 || Y > 3)){
         flowers.push([x,Y]);
         //console.log(x, y);
-        C.plane({g:"pf",w:40,h:34,z:5,x:x*50,y:Y*50,z:1,rx:0,o:"bottom",css:"e flower",H:"🌼"});
+        C.plane({g:"pf",w:40,h:34,z:5,x:x*50,y:Y*50,z:2,rx:0,o:"bottom",css:"e flower",H:"🌼"});
       }
     }
   }
@@ -375,7 +375,7 @@ intro = () => {
       C.c({x:370,y:0,z:-400,rx:60,rz:-40});
     }, 23500);
     
-    /*// Fade out
+    // Fade out
     setTimeout(()=>{
       W= 1;
       p = 1;
@@ -386,7 +386,7 @@ intro = () => {
       clearInterval(I);
       song = 1;
       note = 75;
-    }, 33000);*/
+    }, 33000);
   }
   
   // World 4
